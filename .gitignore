@@ -113,3 +113,6 @@ dmypy.json
 
 # PDFs
 *.pdf
+
+# Visual Studio Code
+.vscode
