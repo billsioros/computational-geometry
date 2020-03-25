@@ -1,8 +1,6 @@
 
 import math
 
-import numpy as np
-
 
 def lattice_points(radius):
     points = []
@@ -15,4 +13,5 @@ def lattice_points(radius):
     return points
 
 
-print(lattice_points(1000))
+if __name__ == "__main__":
+    print(lattice_points(100))
