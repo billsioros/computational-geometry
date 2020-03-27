@@ -1,10 +1,6 @@
 
 def counterclockwise(p1, p2, p3):
-    x1, y1 = p1
-    x2, y2 = p2
-    x3, y3 = p3
-
-    return (y2 - y1) * (x3 - x2) < (x2 - x1) * (y3 - y2)
+    return (p3[1] - p1[1]) * (p2[0] - p1[0]) > (p2[1] - p1[1]) * (p3[0] - p1[0])
 
 
 def jarvis(points):
@@ -14,12 +10,12 @@ def jarvis(points):
     leftmost, convex_hull = sorted(points, key=lambda point: point[0])[0], []
 
     current = leftmost
-    while not convex_hull or current != convex_hull[-1]:
+    while not convex_hull or current != convex_hull[0]:
         convex_hull.append(current)
 
         current = points[0]
         for point in points[1:]:
-            if counterclockwise(convex_hull[-1], current, point):
+            if current == convex_hull[-1] or counterclockwise(convex_hull[-1], current, point):
                 current = point
 
     return convex_hull
@@ -40,9 +36,9 @@ if __name__ == "__main__":
     ]
 
     points = [
-        (-1, +1), (+0, +0), (+1, +1),
+        (-1, +1), (+0, +1), (+1, +1),
         (-1, +0), (+0, +0), (+1, +0),
-        (-1, -1), (+0, +0), (+1, +1)
+        (-1, -1), (+0, -1), (+1, -1)
     ]
 
     print(jarvis(points))
