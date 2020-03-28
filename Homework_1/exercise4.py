@@ -53,4 +53,4 @@ if __name__ == "__main__":
         (-1, -1), (+0, -1), (+1, -1)
     ]
 
-    print(jarvis(points))
+    assert(jarvis(points) == [(-1, -1), (-1, +1), (+1, +1), (+1, -1)])
