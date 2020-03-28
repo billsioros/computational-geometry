@@ -1,7 +1,4 @@
 
-import math
-
-
 def lattice_points(radius):
     points = []
 
