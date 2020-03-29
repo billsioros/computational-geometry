@@ -5,9 +5,9 @@
 
 ## Homework
 
-* [Homework 1](Homework_1/README.md)
+* [Homework 1](Homework_1/report.pdf)
 
 ## Contributors
 
-* [Σιώρος Βασίλειος](https://github.com/billsioros)
-* [Ανδρινοπούλου Χριστίνα](https://github.com/ChristinaAndrinopoyloy)
+* [Sioros Vasileios](https://github.com/billsioros)
+* [Andrinopoulou Christina](https://github.com/ChristinaAndrinopoyloy)

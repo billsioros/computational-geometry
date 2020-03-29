@@ -111,6 +111,16 @@ dmypy.json
 
 # PDFs
 *.pdf
+!report.pdf
+
+# LaTeX
+*synctex*
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
 
 # virtualenv
 .env
