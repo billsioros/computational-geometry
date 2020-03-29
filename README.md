@@ -5,7 +5,7 @@
 
 ## Homework
 
-* [Homework 1](Homework_1/README.md)
+* [Homework 1](Homework_1/report.pdf)
 
 ## Contributors
 
