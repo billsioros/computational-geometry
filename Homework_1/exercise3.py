@@ -1,10 +1,3 @@
-#############################################
-# Homework 1
-# Exercise 3
-# Christina Andrinopoulou 1115201500006
-# Vasileios Sioros 1115201500144
-#############################################
-
 from matplotlib.patches import Polygon
 import matplotlib.pyplot as plt
 import numpy as np
