@@ -96,10 +96,11 @@ if __name__ == "__main__":
     cxs = [point[0] for point in convex_hull]
     cys = [point[1] for point in convex_hull]
 
-    plt.plot(pxs, pys, 'k.')
+    plt.plot(pxs, pys, 'k.', markersize=12)
     plt.plot(cxs + [convex_hull[0][0]], cys + [convex_hull[0][1]], 'b-')
+    plt.plot(cxs, cys, 'm.', markersize=12)
 
-    plt.title(f"The Convex Hull of {argv.number} randomly generated points")
+    plt.title(f"The {len(convex_hull)} points of the Convex Hull of {argv.number} randomly generated points")
     plt.grid()
     plt.xlim([argv.xrange[0], argv.xrange[1]])
     plt.xlim([argv.yrange[0], argv.yrange[1]])
