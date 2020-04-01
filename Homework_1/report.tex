@@ -32,7 +32,7 @@
 
 % Environments
 \newenvironment{matlab}
-	{\begin{figure}[hp]\centering\captionsetup{justification=centering}}
+	{\begin{figure}[H]\centering\captionsetup{justification=centering}}
 	{\end{figure}}
 
 \newenvironment{rcases}
@@ -103,69 +103,204 @@
 
 
 \subsection*{1. Implement an algorithm that takes as input three points in the plane. checks
-    that they form a triangle and whether the interior of the triangle contains the origin (0, 0) or
-    not.}
-
-\vspace{2in}
+that they form a triangle and whether the interior of the triangle contains the origin (0, 0) or
+not.}
 
 \pagebreak
 
 \subsection*{2. Given a circle of radius r in the plane with (0, 0) as center, implement an
-    algorithm that finds the total lattice points on the circumference. Lattice Points are points
-    with integer coordinates.}
-
-\vspace{2in}
+algorithm that finds the total lattice points on the circumference. Lattice Points are points
+with integer coordinates.}
 
 \subsubsection*{Thought Process}
 
 Σε ένα καρτεσιανό σύστημα συντεταγμένων, ένας κύκλος με κέντρο το σημείο (a, b)
 και ακτίνα r είναι ένα σχήμα το οποίο αποτελείται από όλα τα σημεία των οποίων
-οι συντεταγμένες ικανοποιούν την παρακάτω εξίσωση. \\
+οι συντεταγμένες ικανοποιούν την εξίσωση \\
 
 \[ (x - a) ^ 2 + (y - b) ^ 2 = r ^ 2 \]
 
+Από την παρπάνω εξίσωση, μπορούμε να συμπεράνουμε,
+ότι οποιοδήποτε σημείο, του οποίου η Ευκλείδια απόσταση από το κέντρο του κύκλου
+είναι μεγαλύτερη της ακτίνας του, βρίσκεται εκτός του κύκλου. \\
+
 Αν ο κύκλος έχει ως κέντρο την αρχή των αξόνων, δηλαδή το σημείο \( (0, 0) \), τότε
-η παραπάνω εξίσωση παίρνει την παρακάτω απλούστερη μορφή. \\
+η παραπάνω εξίσωση παίρνει την εξής απλούστερη μορφή \\
 
 \[ x ^ 2 + y ^ 2 = r ^ 2 \]
 
-Τα σημεία πλέγματος, επί της περιφέρειας ενός κύκλου, είναι τα σημεία που ανήκουν
-στην περιφέρεια του και έχουν ακέραιες συντεταγμένες. \\
+Σε αυτή την περίπτωση, είτε η τετμημένη είτε η τεταγμένη ενός σημείου
+αρκεί να είναι μεγαλύτερη της ακτίνας του έτσι ώστε να μην ανήκει στον κύκλο. \\
 
-The lattice points on the circumference of a circle, are the points along the circumference that have integer coordinates.
+Ως εκ τούτου, τα σημεία πλέγματος ενός κύκλου ακτίνας r με κέντρο το (0, 0)
+είναι υποσύνολο του συνόλου που απαρτίζεται από σημεία με ακέραιες συνταγμένες
+στο εύρος \( [-r, +r] \) και στις δύο διαστάσεις, με την πρόσθετη συνθήκη
+να ικανοποιούν την παραπάνω εξίσωση έτσι ώστε να βρίσκονται επί της
+περιφέρειάς του. \\
 
-Any point whose euclidean distance to the center of the circle is greater than the radius of the circle does not belong to the circle.
+Για παράδειγμα, για έναν κύκλο ακτίνας 1 με κέντρο το (0, 0) αρκεί να
+ελέγξουμε ποιά από τα σημεία εντός του συνόλου \\
 
-Thus, if the circle is centred at the origin `(0, 0)`, any point whose x or y coordinate' s absolute value is greater than the radius of the circle does not belong to the circle.
+\[ \{ (-1, 0), (0, -1), (0, +1), (+1, 0) \} \]
 
-Hence, the lattice points are a subset of the set of points which have as x and y coordinates, integer values in the range `[-radius, +radius]`.
+ικανοποιούν την εξίσωση
 
-For example, for a circle with a radius of 1 we only need to check the points
+\[ x^2 + y^2 = 1 \]
+
+\pagebreak
+
+\subsubsection*{Implementation}
+
+Δεδομένου ότι δεν ήταν ξεκάθαρο, αν το πρόβλημα ζητούσε μόνο
+το πλήθος ή και τα ακριβή σημεία πλέγματος,
+αποφασίσαμε να ακολουθήσαμε την παρακάτω προσέγγιση η οποία μπορεί να
+χρησιμοποιηθεί για την εύρεση και των δύο όπως θα δείτε
+στην συνέχεια. \\
+
+\begin{lstlisting}
+def lattice_points(radius):
+    points = []
+
+    for x in range(-radius, radius + 1):
+        for y in range(-radius, radius + 1):
+            if x ** 2 + y ** 2 == radius ** 2:
+                points.append((x, y))
+
+    return points
+\end{lstlisting}
+
+\pagebreak
 
 \subsubsection*{Running the code}
 
 \begin{matlab}
-    \includegraphics[scale=0.140]{images/exercise2.png}
+    \includegraphics[scale=0.140]{images/lattice_points.png}
+\end{matlab}
+
+\subsubsection*{Example Usage}
+
+\begin{matlab}
+    \includegraphics[scale=1]{images/lattice_points.eps}
 \end{matlab}
 
 \pagebreak
 
 \subsection*{3. Implement the incremental 2D algorithm for computing the convex hull of a
-    finite set of points in the plane.}
-
-\vspace{2in}
+finite set of points in the plane.}
 
 \pagebreak
 
 \subsection*{4. Implement the gift wrap algorithm for computing the convex hull of a finite
-    set of points in the plane .}
+set of points in the plane .}
 
-\vspace{2in}
+\subsubsection*{Thought Process}
+
+Ο \textbf{Gift Wrapping} αλγόριθμος, που στην περίπτωση των δύο διαστάσεων είναι
+επίσης γνωστός και ως ο \textbf{Jarvis March} αλγόριθμος, μπορεί να περιγραφεί από τα εξής
+απλά βήματα \\
+
+\begin{enumerate}
+    \item Δεδομένου ενός συνόλου σημείων στον \( \R^2 \),
+    επιλέγει ένα σημείο το οποίο είναι γνωστό ότι
+    ανήκει στο \textbf{Convex Hull} του συνόλου,
+    όπως π.χ. το αριστερότερο σημείο μεταξύ των δεδομένων σημείων.
+
+    \item Στη συνέχεια, επιλέγει ως επόμενο σημείο το σημείο για το οποίο,
+    όλα τα υπόλοιπα σημεία βρίσκονται δεξιά της ευθείας που ορίζουν
+    το τρέχον και το σημείο αυτό.
+
+    \item Αν το τρέχον σημείο ταυτίζεται με το αρχικά επιλεχθέν σημείο,
+    τότε τερμάτησε καθώς το \textbf{Convex Hull} υπολογίστηκε και αποτελείται
+    από το σύνολο επιλεχθέντων σημείων έως τώρα. Διαφορετικά επανάλαβε
+    το βήμα 2.
+\end{enumerate}
+
+\pagebreak
+
+\subsubsection*{Implementation}
+
+Ορίσαμε 3 βοηθητικές συναρτήσεις
+
+\begin{itemize}
+    \item \textbf{orientation}: Υπολογίζει τον προσανατολισμο
+    των δύο διανυσμάτων που ορίζουν τα 3 σημεία στην είσοδό της
+
+    \item \textbf{counterclockwise}: Με τη βοήθεια της συνάρτηση
+    \textbf{orientation} επιστρέφει αν τα τρία αυτά σημεία είναι
+    τοποθετημένα με την αντίστροφη φορά του ρολογιού.
+
+    \item \textbf{between}: Με τη βοήθεια της συνάρτηση
+    \textbf{orientation} επιστρέφει αν τα τρία αυτά σημεία είναι
+    συνευθειακά.
+\end{itemize}
+
+\begin{lstlisting}
+def orientation(p1, p2, p3):
+    return (p3[1] - p1[1]) * (p2[0] - p1[0]) - (p2[1] - p1[1]) * (p3[0] - p1[0])
+
+
+def counterclockwise(p1, p2, p3):
+    return orientation(p1, p2, p3) > 0
+
+
+def between(p1, p2, p3):
+    if orientation(p1, p2, p3) != 0:
+        return False
+
+    if min(p1[0], p3[0]) > p2[0] or p2[0] > max(p1[0], p3[0]):
+        return False
+
+    if min(p1[1], p3[1]) > p2[1] or p2[1] > max(p1[1], p3[1]):
+        return False
+
+    return True
+\end{lstlisting}
+
+\pagebreak
+
+Τέλος η συνάρτηση \textbf{jarvis} είναι υπεύθυνη για τον υπολογισμό
+του \textbf{Convex Hull}, του συνόλου σημείων που δέχεται στην είσοδό
+της και αποτελεί μία μικρή επέκταση του παραπάνω αλγορίθμου, έτσι ώστε
+να λαμβάνει υπ' όψιν και την ακραία περίπτωση 3 συνεθειακών σημείων. \\
+
+\begin{lstlisting}
+def jarvis(points):
+    if len(points) < 3:
+        return []
+
+    points = sorted(points)
+
+    convex_hull = [points[0]]
+
+    current = None
+    while True:
+        current = points[0]
+        for point in points[1:]:
+            if current == convex_hull[-1] or \
+                between(convex_hull[-1], current, point) or \
+                    counterclockwise(convex_hull[-1], current, point):
+                current = point
+
+        if current == convex_hull[0]:
+            break
+
+        convex_hull.append(current)
+
+    return convex_hull
+\end{lstlisting}
+
+\pagebreak
 
 \subsubsection*{Running the code}
 
 \begin{matlab}
-    \includegraphics[scale=0.140]{images/exercise4.png}
+    \includegraphics[scale=0.140]{images/gift_wrapping_algorithm.png}
+\end{matlab}
+
+\subsubsection*{Example Usage}
+
+\begin{matlab}
+    \includegraphics[scale=1]{images/gift_wrapping_algorithm.eps}
 \end{matlab}
 
 \pagebreak

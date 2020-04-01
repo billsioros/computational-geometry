@@ -51,10 +51,14 @@ if __name__ == "__main__":
 
     plt.plot(lxs, lys, 'b.', markersize=16)
 
+    for point in lattice_points:
+        x, y = point
+        plt.text(x, y, '({}, {})'.format(x, y))
+
     plt.plot([0], [0], "kX", markersize=8)
 
     plt.title(
-        "The lattice points of a "
+        f"The {len(lattice_points)} lattice points of a "
         f"circle of radius {argv.radius} "
         "with (0, 0) as center"
     )
