@@ -39,7 +39,7 @@
             "\\end{aligned}\\right\\rbrace"
         ],
         "matlab": [
-            "\\begin{figure}[hp]\\centering\\captionsetup{justification=centering}",
+            "\\begin{figure}[H]\\centering\\captionsetup{justification=centering}",
             "\\end{figure}"
         ]
     }
