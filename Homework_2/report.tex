@@ -263,7 +263,7 @@ class KNearestNeighbor:
 		return {"train": self.train, "k": self.k, "accuracy": self.accuracy}         
 \end{lstlisting}
 
-Η απόσταση μεταξύ των δειγμάτων ελέγχου και εκπαίδευσης γίνεται σύμφωνα με την Ευκλείδια απόσταση, η οποία υλοποιήθηκε όπως φαίνεται παραπάνω στη συνάρτηση get\_distance. Η αποστάσεις που υπολογίζονται ταξινομούνται και επιλέγονται μόνο οι k καλύτερες, δηλαδή αυτές που είναι μικρότερες, άρα και τα αντίστοιχα αντικείμενα που είναι πιο κοντά στο δείγμα ελέγχου. Η λειτουργία αυτή υλοποιείται στις συναρτήσεις get\_neighbours και get\_tuple\_distance. Η τελική επιλογή label γίνεται με majority voting, όπως περιγράψαμε και στο θεωρητικό μέρος παραπάνω και η αντίστοιχη υλοποίηση βρίσκεται στη ρουτίνα get\_majority\_vote. Επίσης, έχει υλοποιηθεί και μία συνάρτηση accuracy\_calc που υπολογίζει την ακρίβεια των αποτελεσμάτων του αλγορίθμου. \\
+Η απόσταση μεταξύ των δειγμάτων ελέγχου και εκπαίδευσης γίνεται σύμφωνα με την Ευκλείδια απόσταση, η οποία υλοποιήθηκε όπως φαίνεται παραπάνω στη συνάρτηση get\_distance. Η αποστάσεις που υπολογίζονται ταξινομούνται και επιλέγονται μόνο οι k καλύτερες, δηλαδή αυτές που είναι μικρότερες, άρα και τα αντίστοιχα αντικείμενα που είναι πιο κοντά στο δείγμα ελέγχου. Η λειτουργία αυτή υλοποιείται στις συναρτήσεις get\_neighbours και get\_tuple\_distance. Η τελική επιλογή label γίνεται με majority voting, όπως περιγράψαμε και στο θεωρητικό μέρος παραπάνω και η αντίστοιχη υλοποίηση βρίσκεται στη ρουτίνα get\_majority\_vote. Επίσης, έχει υλοποιηθεί και μία συνάρτηση accuracy\_calc που υπολογίζει την ακρίβεια των αποτελεσμάτων του αλγορίθμου. Τέλος, έχουμε υλοποιήση τη συνάρτηση normalization, που κανονικοποιεί τα δεδομένα. Η κανονικοποίηση είναι ιδιαιτέρως σημαντική, καθώς τα χαρακτηριστικά πρέπει να έχουν το ίδιο εύρος τιμών. Σε περίπτωση που ένα χαρακτηριστικό λαμβάνει τιμές από το διάστημα \([0,1]\) και ένα δεύτερο χαρακτηριστικό από το διάστημα \([0,100]\), το δεύτερο χαρακτηριστικό θα θεωρηθεί από τον αλγόριθμο, που συγκρίνει τα δεδομένα με βάση την Ευκλείδια απόσταση, πιο σημαντικό. \\
 
 Για να μπορέσει κανείς να στήσει τον κατηγοριοποιητή, πρέπει αρχικά να καλέσει τον constructor της κλάσης με κατάλληλο train dataset και επιλογή k και έπειτα να καλέσει τη συνάρτηση get\_predict με όρισμα το επιθυμητό test dataset, η οποία θα αποφανθεί για την κατηγορία κάθε test instance. \\
 
@@ -612,6 +612,94 @@ for k in neighboors:
 	the first 100 rows and make predictions for the rest 50. How your predictions are compared to
 	the actual? Explain your methodology.}
 
+\subsubsection*{Thought Process}
+
+Στο ερώτημα αυτό εργαστήκαμε με βάση την υλοποίηση του αλγορίθμου k-NN που κατασκευάσαμε στο ερώτημα 1. Χρησιμοποιήσαμε τον κώδικα αυτόν με train dataset το Iris.csv, που περιέχεται στο παραδοταίο αρχείο και μπορεί κανείς να το αποκτήσει με τον τρόπο που περιγράφεται στην εκφώνηση της παρούσας ερώτησης. \\
+
+Το σύνολο δεδομένων απαρτίζεται από αντικείμενα που αναπαριστούν ίριδες. Κάθε αντικείμενο διαθέτει έναν αναγνωριστικό αριθμό (id) και τα χαρακτηριστικά SepalLengthCm, SepalWidthCm, PetalLengthCm, PetalWidthCm, που κωδικοποιούν το μήκος και το πλάτος των φύλλων και των πετάλων σε εκατοστά (cm). Επίσης, τα αντικείμενα διαθέτουν ένα ακόμη χαρακτηριστικό που καλείται Species και είναι ένα string με το είδος του κάθε αντικειμένου. Το παρόν σύνολο δεδομένων περιέχει 3 είδη ίριδας: "Iris-setosa", "Iris-versicolor" και "Iris-virginica".
+
+\begin{matlab}
+	\includegraphics[scale=0.8]{images/iris_setosa.jpg}
+	\caption{Iris Setosa}
+\end{matlab}
+
+\begin{matlab}
+	\includegraphics[scale=0.89]{images/iris_versicolor.jpeg}
+	\caption{Iris Versicolor}
+\end{matlab}
+
+\begin{matlab}
+	\includegraphics[scale=0.8]{images/iris_virginica.jpg}
+	\caption{Iris Virginica}
+\end{matlab}
+
+Το dataset που βρίσκεται στο Iris.csv αποτελείται από 150 εγγραφές. Ωστόσο, επειδή είναι "ταξινομημένο" σύμφωνα με το είδος, δηλαδή οι πρώτες 50 εγγραφές είναι εγγραφές που ανήκουν στην κατηγορία "Iris-setosa", οι επόμενες 50 στην κατηγορία "Iris-versicolor" και οι τελευταίες 50 στην κατηγορία "Iris-virginica", έπρεπε να "ανακατέψουμε" τα records του dataset και έπειτα να προχωρήσουμε στην κατηγοριοποίηση με k-NN. Η μεθοδολογία που χρησιμοποιήσαμε περιγράφεται αναλυτικότερα παρακάτω. \\ 
+
+\subsubsection*{Implementation}
+
+Όπως ήδη έχουμε αναφέρει χρησιμοποιήσαμε για την κατηγοριοποίηση των αντικειμένων τον k-NN που υλοποιήθηκε στο ερώτημα 1, χωρίς να προβούμε σε κάποια αλλαγή. Χρειάστηκε να δημιουργήσουμε μερικές ακόμα συναρτήσεις για την καταλληλη επεξεργασία του συγκεκριμένου συνόλου δεδομένων. \\
+
+Αρχικά, υλοποιήσαμε την συνάρτηση read\_from\_csv η οποία είναι υπεύθυνη για το διάβασμα των δεδομένων από το αρχείο csv. Η ίδια συνάρτηση επεξεργάζεται τα χαρακτηριστικά των εγγραφών. Συγκεκριμένα, απομακρύνει το id, διότι είναι ένα χαρακτηριστικό που δεν περιέχει απολύτως καμία χρήσιμη πληροφορία για τον αλγόριθμο και αν επιλέγαμε να το διατηρήσουμε και ο αλγόριθμος να το λαμβάνει υπ' όψιν κατά τη κατηγοριοποίηση, τότε θα παρήγαγε λανθασμένα αποτελέσματα, για προφανείς λόγους. Επίσης, αντικαθιστούμε το χαρακτηριστικό "Species" με έναν ακέραιο αριθμό στο διάστημα \([0,2]\), αφού έχουμε μόνο 3 κατηγορίες. Η αντιστοίχιση γίνεται ως εξής: 
+
+\begin{align*}
+	& \bullet 0 \rightarrow \text{ Iris-setosa} \\
+	& \bullet 1 \rightarrow \text{ Iris-versicolor} \\	
+	& \bullet 2 \rightarrow \text{ Iris-virginica}	
+\end{align*}
+
+με τη χρήση κατάλληλου dictionary. Τέλος, όλα τα πεδία μετατρέπονται σε float πεδία. 
+
+\begin{lstlisting}
+	# read dataset from csv file
+    # give appropriate delimiter and labels of dataset
+    def read_from_csv(filename, delimiter, labels):
+    	dataset = []
+        with open(filename, 'r') as csv_file:
+        csv_reader = reader(csv_file, delimiter=delimiter)
+        header = next(csv_reader)  # avoid header of csv file
+        if header == None:  # empty csv file
+        	return dataset
+       	else:
+        	for row in csv_reader:
+          		del row[0]  # remove id
+          		# change label from string to 0,1,2
+          		row.append(labels[row[-1]])
+          		del row[-2]  # remove string label
+          		for idx in range(len(row)):  # convert string data to float data
+          			row[idx] = float(row[idx])
+          		dataset.append(row)
+ 	return dataset
+\end{lstlisting}
+
+Ακόμα, υλοποιήσαμε τη συνάρτηση construct\_folds, η οποία χωρίζει το dataset σε number\_of\_folds ισάριθμα (από άποψη πλήθους εγγραφών) folds. Όπως ήδη αναφέραμε, το συγκεκριμένο dataset είναι "ταξινομημένο" ως προς το πεδίο "Species", γι' αυτό επιλέξαμε να "ανακατέψουμε" τα records. Ουσιαστικά, κάθε φορά που πρέπει να επιλεγεί ένα record από το dataset για να εισαχθεί στο τρέχον υπό κατασκευή fold, επιλέγεται τυχαία κάποιο και διαγράφεται, ώστε να μη μπορεί να επιλεγεί ξανά. 
+
+\begin{lstlisting}
+	# dataset into k folds
+	def construct_folds(dataset, number_of_folds):
+		records_per_fold = int(len(dataset) / number_of_folds)
+
+		dataset_folds = []
+		for i in range(number_of_folds):
+			fold = []   # construct fold
+			for j in range(records_per_fold):
+				# pick random record for fold
+				random_index = random.randrange(len(dataset))
+				record = dataset[random_index]
+				fold.append(record)
+				del dataset[random_index]
+			dataset_folds.append(fold)
+		return dataset_folds
+\end{lstlisting}
+
+Η πλήρης υλοποίηση βρίσκεται στο αρχείο exercise5.py του παραδοταίου. \\
+
+\subsubsection*{Running the code}
+
+\begin{matlab}
+	\includegraphics[scale=0.3]{images/exercise5_run.png}
+	\caption{Οδηγίες εκτέλεσης προγράμματος}
+\end{matlab}
+
 \pagebreak
 
 \begin{thebibliography}{9}
@@ -634,6 +722,13 @@ for k in neighboors:
 	Springer, 2006,
 	pages. 33-38, 
 	ISBN: 978-0-387-31073-2
+	
+	\bibitem{datamining} 
+	Εισαγωγή στην εξόρυξη δεδομένων, 	
+	Pang-Ning Tan, Michael Steinbach, Vipin Kumar,
+	Εκδόσεις Τζιόλα, 2017,
+	pages. 57-59, 78-80, 247-251, 
+	ISBN: 978-960-418-162-9
 	
 \end{thebibliography}
 

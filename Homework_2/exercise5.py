@@ -26,7 +26,7 @@ def read_from_csv(filename, delimiter, labels):
                 # change label from string to 0,1,2
                 row.append(labels[row[-1]])
                 del row[-2]  # remove string label
-                for idx in range(len(row) - 1):  # convert string data to float data
+                for idx in range(len(row)):  # convert string data to float data
                     row[idx] = float(row[idx])
                 dataset.append(row)
     return dataset
@@ -56,37 +56,31 @@ if __name__ == "__main__":
         'Iris-versicolor': 1,
         'Iris-virginica': 2
     }
+    # read dataset
     dataset = read_from_csv("./Iris.csv", ',', flower_labels)
 
-    # Knn = KNearestNeighbor(train=dataset, k=3)
-    # prediction = Knn.get_predict(test)
-    # print(f"expected  {test[-1][-1]} prediction {prediction}")
-    # Knn.accuracy_calc(test, prediction)
-    # print(f"KNN Accuracu = {Knn.accuracy}")
-
+    # split dataset into folds
     number_of_folds = 3
     backup_dataset = dataset
     fold_dataset = construct_folds(
         backup_dataset, number_of_folds)  # split dataset
-    # for fold in fold_dataset:
-    #     print("#"*40)
-    #     for rec in fold:
-    #         print(rec)
+
+    # trainset
     trainset = [rec for fold in fold_dataset[:number_of_folds - 1]
         for rec in fold]
-    testset = fold_dataset[-1]
-    # print("TRAIN SET")
-    # for rec in trainset:
-    #     print(rec)
-    # print("TEST SET")
-    # for rec in testset:
-    #     print(rec)
 
+    # testset    
+    testset = fold_dataset[-1]
+
+    # k-NN
     number_of_neighboors = 10
     Knn = KNearestNeighbor(train=trainset, k=number_of_neighboors)
     prediction = Knn.get_predict(testset)
-    for i in range(len(testset)):
-        print(f"Real flower scecie is |{get_species(flower_labels, testset[i][-1])}| and k-NN predicted |{get_species(flower_labels, prediction[i])}|")    
 
+    # print predictions
+    for i in range(len(testset)):
+        print(f"Real flower specie is |{get_species(flower_labels, testset[i][-1])}| and k-NN predicted |{get_species(flower_labels, prediction[i])}|")    
+
+    # accuracy
     Knn.accuracy_calc(testset, prediction)
     print(f"k-NN with k = {Knn.k} has Accuracy = {Knn.accuracy}")    

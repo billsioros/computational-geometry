@@ -68,9 +68,9 @@ class KNearestNeighbor:
    # getting majority vote (selects category with the most votes)
     def get_majority_vote(self, neighbours):
         categories = [neighbour[-1] for neighbour in neighbours]
-        print(f"Categories: {categories}")
+        # print(f"Categories: {categories}")
         count = Counter(categories)
-        print(f"count: {count}")
+        # print(f"count: {count}")
         return count.most_common()[0][0]
 
     # predicting
@@ -100,14 +100,17 @@ class KNearestNeighbor:
     def normalization(self, instances):
         min_feature = []
         max_feature = []
-        for i, val in enumerate(instances[0]):
+        feature_row = instances[0]
+        feature_row = feature_row[:len(feature_row) - 1]
+        for i, val in enumerate(feature_row):
             column = []
             for feature in instances:
                 column.append(feature[i])
             min_feature.append(min(column))
             max_feature.append(max(column))
         for row in instances:
-            for i, val in enumerate(row):
+            feature_row = row[:len(row) - 1]
+            for i, val in enumerate(feature_row):
                 num = float(row[i] - min_feature[i])
                 den = float(max_feature[i] - min_feature[i])
                 row[i] = num / den
