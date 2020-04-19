@@ -12,7 +12,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 @click.command()
 @click.option("--neighbors", default=1, help="the number of neighbors to use")
-@click.option("--metric", default='minkowski', help="the distance metric to use")
+@click.option("--metric", default="minkowski", help="the distance metric to use")
 @click.option("--p", default=2, help="power parameter for the Minkowski metric")
 @click.option("--step", default=0.02, help="The step size in the mesh")
 @click.option("--offset", default=0.1, help="the coordinate label offset")
@@ -59,15 +59,15 @@ def classify(
     classes = np.array(classes)
 
     # Create color maps
-    cmap_light = ListedColormap(['#FFAAAA', '#AAAAFF'])
-    cmap_bold = ListedColormap(['#FF0000', '#0000FF'])
+    cmap_light = ListedColormap(["#FFAAAA", "#AAAAFF"])
+    cmap_bold = ListedColormap(["#FF0000", "#0000FF"])
 
     title = f"{neighbors}-NN Classification using the {metric} ({p}) metric"
 
     # We create an instance of Neighbours Classifier and fit the data.
     clf = KNeighborsClassifier(
         neighbors,
-        weights='uniform',
+        weights="uniform",
         metric=metric,
         p=p
     )
@@ -91,7 +91,7 @@ def classify(
     for x, y in zip(fit[:, 0], fit[:, 1]):
         dx = +offset if x > 0 else -offset
         dy = +offset if y > 0 else -offset
-        plt.text(x + dx, y + dy, '({}, {})'.format(x, y))
+        plt.text(x + dx, y + dy, f"({x}, {y})", fontsize=10)
 
     if predict:
         # Plot the testing points
@@ -101,12 +101,12 @@ def classify(
 
         for i in range(len(predict)):
             x, y, c = predict[i][0], predict[i][1], classes[i]
-            color = 'blue' if c else 'red'
+            color = "blue" if c else "red"
             plt.scatter(x, y, c=color)
             dx = +offset if x > 0 else -offset
             dy = +offset if y > 0 else -offset
-            plt.text(x + dx, y + dy, '({}, {})'.format(x, y))
-        plt.scatter(predict[:, 0], predict[:, 1], c='black', marker="x", s=16)
+            plt.text(x + dx, y + dy, f"({x}, {y})", fontsize=10)
+        plt.scatter(predict[:, 0], predict[:, 1], edgecolors="black", facecolors="none", s=48)
 
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
@@ -123,7 +123,7 @@ def classify(
 
             filename = f"{title}"
             filename = filename.lower()
-            filename = sub(r' |-|=|\(|\)|\{|\}|\!', '_', filename)
+            filename = sub(r" |-|=|\(|\)|\{|\}|\!", "_", filename)
             filename = path.join(folder, f"{filename}.eps")
 
         figure.savefig(filename, format="eps")
