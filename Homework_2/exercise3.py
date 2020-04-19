@@ -54,7 +54,8 @@ def classify(
     in regards to K-NN classification
     """
 
-    fit = np.array([np.array(x) for x in set(fit)])
+    fit = list(dict.fromkeys(fit))
+    fit = np.array([np.array(x) for x in fit])
     classes = np.array(classes)
 
     # Create color maps
@@ -94,7 +95,8 @@ def classify(
 
     if predict:
         # Plot the testing points
-        predict = np.array([np.array(p) for p in set(predict)])
+        predict = list(dict.fromkeys(predict))
+        predict = np.array([np.array(p) for p in predict])
         classes = clf.predict(predict)
 
         for i in range(len(predict)):
