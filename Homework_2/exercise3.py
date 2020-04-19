@@ -94,15 +94,17 @@ def classify(
 
     if predict:
         # Plot the testing points
-        P = np.array([np.array(p) for p in predict])
-        l = clf.predict(P)
+        predict = np.array([np.array(p) for p in predict])
+        classes = clf.predict(predict)
 
-        plt.scatter(P[:, 0], P[:, 1], c=l, cmap=cmap_bold)
-        plt.plot(P[:, 0], P[:, 1], "kx")
-        for x, y in zip(P[:, 0], P[:, 1]):
+        for i in range(len(predict)):
+            x, y, c = predict[i][0], predict[i][1], classes[i]
+            color = 'blue' if c else 'red'
+            plt.scatter(x, y, c=color)
             dx = +offset if x > 0 else -offset
             dy = +offset if y > 0 else -offset
             plt.text(x + dx, y + dy, '({}, {})'.format(x, y))
+        plt.scatter(predict[:, 0], predict[:, 1], c='black', marker="x", s=16)
 
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
