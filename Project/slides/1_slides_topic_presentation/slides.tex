@@ -1,0 +1,89 @@
+\documentclass[xcolor=dvipsnames, 11pt]{beamer}
+
+\usetheme{Warsaw}
+
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\usepackage{alphabeta}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\tcbuselibrary{theorems}
+
+\newtcbtheorem{mytheorem}{\el Ορισμός}%
+{colback=blue!5,colframe=black!15!black,fonttitle=\bfseries}{th}
+
+\newtcbtheorem{mytheor}{\el Θεώρημα}%
+{colback=blue!5,colframe=black!15!black,fonttitle=\bfseries}{th}
+
+\newcommand{\en}{\selectlanguage{english}}
+\newcommand{\el}{\selectlanguage{greek}}
+
+\setbeamertemplate{itemize items}[ball]
+\setbeamertemplate{itemize subitem}[ball]
+
+\begin{document}
+
+\title{Travelling Salesman Problem}
+\subtitle{TSP}
+
+\author[\el Σιώρος Βασίλειος, Ανδρινοπούλου Χριστίνα]{\el Σιώρος Βασίλειος \and \el Ανδρινοπούλου Χριστίνα}
+\date{\el Απρίλιος, 2020}
+
+\frame{\titlepage}
+
+\begin{frame}
+	\frametitle{\el Ορισμός}
+	\begin{itemize}
+		\item \el ..
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Είδη \en TSP}
+	\begin{itemize}
+		\item \el ..
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Εφαρμογές}
+	\begin{itemize}
+		\item \el αρα και γιατι ειναι σημαντικο ως προβλημα
+		\item \el αρα και γιατι το επιλεξαμε
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Προσεγγίσεις}
+	\begin{itemize}
+		\item \el εδώ μπορουμε να πουμε και για την υλοποιηση
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{References}
+	\begin{itemize}
+		\item \textit{\en Exact and Approximation Algorithms for Time-Window TSP, 
+			Jie Gao, Su Jia, Joseph S. B. Mitchell,
+			CG:YRF, Boston, MA, USA, June 14-18, 2016}
+		\item \textit{\en An Optimal Lower Bound for the Hilbert-type, Planar Universal Traveling Salesman Problem, Patrick Eades, Julián Mestre,	CG:YRF, Brisbane, Australia, July 4-7, 2017}
+		\item \textit{\en The Geometric Maximum Traveling Salesman Problem,	David S. Johnson, Arie Tamir,
+			Article in Journal of the ACM · May 2002}	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{References}
+	\begin{itemize}
+		\item \textit{\el Εισαγωγή στους αλγορίθμους, Δεύτερη έκδοση, \en Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein, \el Πανεπιστημιακές εκδόσεις Κρήτης, 2011, \en ISBN: 978-960-524-473-6}
+		\item \textit{\el Τεχνητή Νοημοσύνη, Μία σύγχρονη προσέγγιση, Δεύτερη Αμερικανική έκδοση, \en Stuart Russel, Peter Norvig, \el σελ.: 101,	Κλειδάριθμος 2005, \en ISBN: 960-209-873-2}
+		\item \textit{\el Στοιχεία διακριτών μαθηματικών, \en C. L. Liu, \el σελ.: 171-172, 178-179, 190-201, Πανεπιστημιακές εκδόσεις Κρήτης 2014, \en ISBN: 978-960-524-072-1}	
+	\end{itemize}
+\end{frame}
+
+\end{document}
