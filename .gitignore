@@ -128,5 +128,6 @@ dmypy.json
 # Visual Studio Code
 .vscode
 
-# EPS Files
+# Image Files
 *.eps
+*.png
