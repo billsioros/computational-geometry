@@ -70,6 +70,26 @@
 \end{frame}
 
 \begin{frame}
+	\frametitle{\el Μελέτη}
+	\begin{itemize}
+		\item \en Time Window TSP
+		\begin{itemize}
+			\item \el Κάθε σημείο επίσκεψης \(v\) \el έχει ένα χρονικό \en deadline \(D(v)\).
+			\item \el Κάθε σημείο επίσκεψης \(v\) χαρακτηρίζεται από έναν χρόνο ελευθέρωσης \en (release time) \(R(v)\).
+			\item \el Ο πωλητής μπορεί να επισκεφτεί ένα σήμειο μόνο εντός του χρονικού πλαισίου \([R(v), D(v)]\).
+		\end{itemize}
+		\item Universal TSP
+		\begin{itemize}
+			\item \el Κάθε μέρα ο πωλητής πρέπει να επισκέπτεται ένα διαφορετικό υποσύνολο πόλεων.
+			\item \el Δημιουργία ενός κατάλληλου \en master tour \el που περιλαμβάνει όλες τις πόλεις.
+			\item \el Προσαρμογή του καθημερινού δρομολογίου με βάση το \en master tour \el σύμφωνα με τις εκάστοτε ανάγκες.
+			\item \el Στόχος: Δημιουργία κατάλληλου \en master tour \el, ώστε τα καθημερινά δρομολόγια να είναι αποδοτικά. 
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
 	\frametitle{References}
 	\begin{itemize}
 		\item \textit{\en Exact and Approximation Algorithms for Time-Window TSP, 
@@ -77,7 +97,8 @@
 			CG:YRF, Boston, MA, USA, June 14-18, 2016}
 		\item \textit{\en An Optimal Lower Bound for the Hilbert-type, Planar Universal Traveling Salesman Problem, Patrick Eades, Julián Mestre,	CG:YRF, Brisbane, Australia, July 4-7, 2017}
 		\item \textit{\en An O(nlogn) Heuristic for the Euclidean Traveling Salesman Problem, 
-			Evgeny Yanenko, EckartSchuhmacher, Ulrich Spörlein, Kurt Tutschku,
+			Evgeny Yanenko, Eckart
+Schuhmacher, Ulrich Spörlein, Kurt Tutschku,
 			April 25, 2005}	
 		\item \text{\en Applications of the TSP,} \\
 			 \text{http://www.math.uwaterloo.ca/tsp/apps/index.html}
