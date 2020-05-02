@@ -1,9 +1,6 @@
 
 from random import shuffle
 
-import crossovers
-import metrics
-import mutations
 from annealing import SimulatedAnnealing
 from genetic import GeneticAlgorithm
 
@@ -11,83 +8,22 @@ from genetic import GeneticAlgorithm
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def __init__(
         self,
-        metric='euclidean', mutate='random_swap', crossover='interleave',
+        metric='euclidean', fitness='todo',
+        mutate='random_swap', crossover='interleave',
         mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
         max_iterations=10000
     ):
-        self.metric = metric
-        self.mutate = mutate
-        self.crossover = crossover
-
-        self.MUTATION_PROBABILITY = mutation_probability
-        self.FITNESS_THRESHOLD = fitness_threshold
-        self.POPULATION_SIZE = population_size
-
-        self.MAX_TEMPERATURE = max_temperature
-        self.COOLING_RATE = cooling_rate
-
-        self.MAX_ITERATIONS = max_iterations
-
-    @property
-    def metric(self):
-        return self.__metric
-
-    @metric.setter
-    def metric(self, metric):
-        if isinstance(metric, str):
-            try:
-                metric = metric.lower().replace("-", "_")
-                self.__metric = getattr(metrics, metric)
-            except:
-                raise AssertionError(f'No metric named {metric}')
-        elif callable(metric):
-            self.__metric
-        elif isinstance(metric, list):
-            self.__metric = lambda v1, v2: metric[v1][v2]
-        else:
-            raise AssertionError(f'Unexpected metric type {type(metric)}')
-
-    @property
-    def mutate(self):
-        return self.__mutate
-
-    @mutate.setter
-    def mutate(self, mutate):
-        if isinstance(mutate, str):
-            try:
-                mutate = mutate.lower().replace("-", "_")
-                self.__mutate = getattr(mutations, mutate)
-            except:
-                raise AssertionError(f'No mutation named {mutate}')
-        elif callable(mutate):
-            self.__mutate = mutate
-        else:
-            raise AssertionError(f'Unexpected mutation type {type(mutate)}')
-
-    @property
-    def crossover(self):
-        return self.__crossover
-
-    @crossover.setter
-    def crossover(self, crossover):
-        if isinstance(crossover, str):
-            try:
-                crossover = crossover.lower().replace("-", "_")
-                self.__crossover = getattr(crossovers, crossover)
-            except:
-                raise AssertionError(f'No crossover named {crossover}')
-        elif callable(crossover):
-            self.__crossover = crossover
-        else:
-            raise AssertionError(
-                f'Unexpected crossover type {type(crossover)}')
-
-    def cost(self, cities):
-        return sum([self.metric(cities[i], cities[i + 1]) for i in range(len(cities) - 1)])
-
-    def fitness(self, individual):
-        return 0
+        super(TravellingSalesman, self).__init__(
+            metric=metric,
+            mutate=mutate,
+            max_temperature=max_temperature, cooling_rate=cooling_rate,
+            crossover=crossover, fitness=fitness,
+            mutation_probability=mutation_probability,
+            fitness_threshold=fitness_threshold,
+            population_size=population_size,
+            max_iterations=max_iterations
+        )
 
     def nearest_neighbor(self, depot, cities):
         route, remaining = [depot], cities[:]
@@ -128,11 +64,6 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         return SimulatedAnnealing.fit(self, [depot] + cities + [depot])
 
     def genetic_algorithm(self, depot, cities):
-        population, partial = [[depot] + cities + [depot]], cities[:]
-        for _ in range(self.POPULATION_SIZE - 1):
-            shuffle(partial)
-            population.append([depot] + partial + [depot])
-
-        fittest = GeneticAlgorithm.fit(self, population)
+        fittest = GeneticAlgorithm.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)

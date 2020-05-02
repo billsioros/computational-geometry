@@ -1,12 +1,23 @@
 
-from random import random
 from math import exp
+from random import random
 
-from abc import ABC, abstractmethod
+from base import Metric, Mutate
 
 
-class SimulatedAnnealing(ABC):
-    def __init__(self, max_temperature, cooling_rate, max_iterations):
+class SimulatedAnnealing(Metric, Mutate):
+    def __init__(
+        self,
+        *args,
+        metric='euclidean', mutate='random_swap',
+        max_temperature=100000, cooling_rate=0.000005,
+        max_iterations=10000,
+        **kwargs
+    ):
+        super(SimulatedAnnealing, self).__init__(
+            metric=metric, mutate=mutate
+        )
+
         self.MAX_TEMPERATURE = max_temperature
         self.COOLING_RATE = cooling_rate
         self.MAX_ITERATIONS = max_iterations
@@ -37,11 +48,3 @@ class SimulatedAnnealing(ABC):
             temperature *= (1 - self.COOLING_RATE)
 
         return best, best_cost
-
-    @abstractmethod
-    def cost(self, individual, *args, **kwargs):
-        raise NotImplementedError("This method must be overridden")
-
-    @abstractmethod
-    def mutate(self, individual, *args, **kwargs):
-        raise NotImplementedError("This method must be overridden")

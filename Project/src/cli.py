@@ -33,7 +33,11 @@ def plot(method):
         plt.scatter(xs, ys, c='blue', label='Depot')
 
         plt.scatter([dx], [dy], c='red', label='Cities')
-        plt.text(dx, dy, f"({dx}, {dy})", fontsize=10)
+        plt.text(
+            dx - 0.5 if dx < 0 else dx + 0.5,
+            dy - 0.5 if dy < 0 else dy + 0.5,
+            f"({dx}, {dy})", fontsize=10
+        )
 
         plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
 
@@ -171,7 +175,7 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='interleave',
+    type=click.STRING, default='todo',
     help='the crossover function to be used'
 )
 @click.option(
