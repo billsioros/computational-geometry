@@ -12,7 +12,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def __init__(
         self,
         metric='euclidean', mutate='random_swap', crossover='interleave',
-        mutation_probability=0.3, fitness_threshold=0.8,
+        mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
         max_iterations=10000
     ):
@@ -22,6 +22,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
         self.MUTATION_PROBABILITY = mutation_probability
         self.FITNESS_THRESHOLD = fitness_threshold
+        self.POPULATION_SIZE = population_size
 
         self.MAX_TEMPERATURE = max_temperature
         self.COOLING_RATE = cooling_rate
@@ -126,9 +127,9 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def simulated_annealing(self, depot, cities):
         return SimulatedAnnealing.fit(self, [depot] + cities + [depot])
 
-    def genetic_algorithm(self, depot, cities, population_size=100):
+    def genetic_algorithm(self, depot, cities):
         population, partial = [[depot] + cities + [depot]], cities[:]
-        for _ in range(population_size - 1):
+        for _ in range(self.POPULATION_SIZE - 1):
             shuffle(partial)
             population.append([depot] + partial + [depot])
 

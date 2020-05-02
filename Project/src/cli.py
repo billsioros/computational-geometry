@@ -58,17 +58,17 @@ def plot(method):
 
 @click.group(chain=True)
 @click.option(
-    '-s', '--start',
+    '-d', '--depot',
     type=click.Tuple([int, int]), default=(None, None),
-    help='the starting point'
+    help='the depot (starting point)'
 )
 @click.option(
-    '-n', '--number',
+    '-c', '--cities',
     type=click.INT, default=10,
-    help='the number of points'
+    help='the number of cities'
 )
 @click.option(
-    '-d', '--distance-metric', 'metric',
+    '-m', '--metric',
     type=click.STRING, default='euclidean',
     help='the distance metric to be used'
 )
@@ -90,7 +90,7 @@ def plot(method):
 @click.pass_context
 def cli(
     ctx,
-    start, number, metric,
+    depot, cities, metric,
     x_axis, y_axis,
     rng_seed
 ):
@@ -98,19 +98,19 @@ def cli(
     if rng_seed is not None:
         seed(rng_seed)
 
-    if start != (None, None):
-        number -= 1
+    if depot != (None, None):
+        cities -= 1
 
     cities = [
         (randrange(x_axis[0], x_axis[1]), randrange(y_axis[0], y_axis[1]))
-        for i in range(number)
+        for i in range(cities)
     ]
 
-    if start == (None, None):
-        start, cities = cities[0], cities[1:]
+    if depot == (None, None):
+        depot, cities = cities[0], cities[1:]
 
     ctx.obj = {
-        'depot': start,
+        'depot': depot,
         'cities': cities,
         'metric': metric,
         'x_axis': x_axis,
@@ -144,7 +144,7 @@ def opt_2(ctx):
     help='the maximum temperature'
 )
 @click.option(
-    '-r', '--cooling-rate', 'cooling_rate',
+    '-c', '--cooling-rate', 'cooling_rate',
     type=click.FLOAT, default=0.000005,
     help='the cooling rate'
 )
@@ -177,7 +177,7 @@ def simulated_annealing(
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
     type=click.FLOAT, default=0.3,
-    help='the mutation probability of an individual'
+    help='the probability of an individual mutating'
 )
 @click.option(
     '-f', '--fitness-threshold', 'fitness_threshold',
@@ -188,6 +188,11 @@ def simulated_annealing(
     '-i', '--max-iterations', 'max_iterations',
     type=click.INT, default=10000,
     help='the maximum number of iterations'
+)
+@click.option(
+    '-s', '--population-size', 'population_size',
+    type=click.INT, default=100,
+    help='the size of the population'
 )
 @click.pass_context
 @plot
