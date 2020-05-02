@@ -34,7 +34,7 @@ class SimulatedAnnealing(Metric, Mutate):
 
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
-            candidate = self.mutate(current)
+            candidate = self.mutate(self, current)
             candidate_cost = self.cost(candidate)
 
             if self.acceptance_probability(current_cost, candidate_cost, temperature) > random():

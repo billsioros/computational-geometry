@@ -1,6 +1,7 @@
 
 import crossover
 import fitness
+import heuristic
 import metric
 import mutate
 
@@ -54,7 +55,7 @@ class Mutate(Trait):
 
 
 class Crossover(Trait):
-    def __init__(self, *args, crossover='todo', **kwargs):
+    def __init__(self, *args, crossover='cut_and_stitch', **kwargs):
         super(Crossover, self).__init__(*args, **kwargs)
         self.crossover = crossover
 
@@ -84,7 +85,7 @@ class Metric(Trait):
 
     def cost(self, cities):
         return sum([
-            self.metric(cities[i], cities[i + 1])
+            self.metric(self, cities[i], cities[i + 1])
             for i in range(len(cities) - 1)
         ])
 
@@ -101,4 +102,19 @@ class Fitness(Trait):
     @fitness.setter
     @multi_type('fitness')
     def fitness(self, value):
+        pass
+
+
+class Heuristic(Trait):
+    def __init__(self, *args, heuristic='kruskal', **kwargs):
+        super(Heuristic, self).__init__(*args, **kwargs)
+        self.heuristic = heuristic
+
+    @property
+    def heuristic(self):
+        return self._heuristic
+
+    @heuristic.setter
+    @multi_type('heuristic')
+    def heuristic(self, value):
         pass

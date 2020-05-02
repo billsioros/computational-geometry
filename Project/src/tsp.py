@@ -8,7 +8,7 @@ from genetic import GeneticAlgorithm
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def __init__(
         self,
-        metric='euclidean', fitness='todo',
+        metric='euclidean', fitness='weighted_mst',
         mutate='random_swap', crossover='interleave',
         mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
@@ -29,10 +29,10 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         route, remaining = [depot], cities[:]
 
         while len(remaining) > 0:
-            nearest = (0, self.metric(route[-1], remaining[0]))
+            nearest = (0, self.metric(self, route[-1], remaining[0]))
             for i in range(1, len(remaining)):
                 city = remaining[i]
-                distance = self.metric(route[-1], city)
+                distance = self.metric(self, route[-1], city)
                 if distance < nearest[1]:
                     nearest = (i, distance)
 
@@ -42,12 +42,12 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         return route + [depot], self.cost(route + [depot])
 
     def opt_2(self, depot, cities):
-        def reverse_sublist(points, i, j):
-            mutation = points[:]
+        def reverse_sublist(elements, i, j):
+            copy = elements[:]
 
-            mutation[i:j] = mutation[i:j][::-1]
+            copy[i:j] = copy[i:j][::-1]
 
-            return mutation
+            return copy
 
         route = cities[:]
         cost = self.cost([depot] + route + [depot])
@@ -64,6 +64,11 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         return SimulatedAnnealing.fit(self, [depot] + cities + [depot])
 
     def genetic_algorithm(self, depot, cities):
+        self.fitness.heuristic = self.heuristic(
+            self,
+            [depot] + cities + [depot]
+        )
+
         fittest = GeneticAlgorithm.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)

@@ -2,20 +2,22 @@
 from math import isclose
 from random import randint, random
 
-from base import Crossover, Fitness, Mutate
+from base import Crossover, Fitness, Heuristic, Mutate
 
 
-class GeneticAlgorithm(Crossover, Mutate, Fitness):
+class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
     def __init__(
         self,
         *args,
-        mutate='random_swap', crossover='todo', fitness='todo',
+        mutate='random_swap', crossover='cut_and_stitch',
+        fitness='weighted_mst', heuristic='kruskal',
         mutation_probability=0.3, fitness_threshold=0.8,
         population_size=100, max_iterations=10000,
         **kwargs
     ):
         super(GeneticAlgorithm, self).__init__(
-            crossover=crossover, mutate=mutate, fitness=fitness
+            crossover=crossover, mutate=mutate,
+            fitness=fitness, heuristic=heuristic
         )
 
         self.MUTATION_PROBABILITY = mutation_probability
@@ -25,14 +27,16 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness):
         self.MAX_ITERATIONS = max_iterations
 
     def fit(self, individual):
-        population = [individual[:]]
+        population = [individual]
         for _ in range(self.POPULATION_SIZE - 1):
-            population.append(self.mutate(individual))
+            population.append(self.mutate(self, individual))
 
-        fitest, max_fitness = population[0], self.fitness(population[0])
-
+        fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
-            _fitness = {tuple(p): self.fitness(p) for p in population}
+            _fitness = {
+                tuple(individual): self.fitness(self, individual)
+                for individual in population
+            }
 
             population.sort(key=lambda p: _fitness[tuple(p)], reverse=True)
 
@@ -49,10 +53,10 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness):
                 father = population[randint(0, len(population) / 2 - 1)]
                 mother = population[randint(0, len(population) / 2 - 1)]
 
-                child = self.crossover(father, mother)
+                child = self.crossover(self, father, mother)
 
                 if random() < self.MUTATION_PROBABILITY:
-                    child = self.mutate(child)
+                    child = self.mutate(self, child)
 
                 successors.append(child)
 

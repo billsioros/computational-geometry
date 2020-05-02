@@ -175,34 +175,44 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='todo',
+    type=click.STRING, default='weighted_mst',
     help='the crossover function to be used'
 )
+# @click.option(
+#     '-h', '--heuristic',
+#     type=click.STRING, default='kruskal',
+#     help='the heuristic to be used in the calculation of the fitness'
+# )
+# @click.option(
+#     '-f', '--fitness',
+#     type=click.STRING, default='weighted_mst',
+#     help='the function determining the fitness of an individual'
+# )
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
     type=click.FLOAT, default=0.3,
     help='the probability of an individual mutating'
 )
 @click.option(
-    '-f', '--fitness-threshold', 'fitness_threshold',
+    '-t', '--fitness-threshold', 'fitness_threshold',
     type=click.FLOAT, default=0.8,
     help='the fitness threshold of acceptable solutions'
 )
 @click.option(
     '-i', '--max-iterations', 'max_iterations',
-    type=click.INT, default=10000,
+    type=click.INT, default=1000,
     help='the maximum number of iterations'
 )
 @click.option(
     '-s', '--population-size', 'population_size',
-    type=click.INT, default=100,
+    type=click.INT, default=50,
     help='the size of the population'
 )
 @click.pass_context
 @plot
 def genetic_algorithm(
     ctx,
-    mutate, crossover,
+    mutate, crossover,# heuristic, fitness,
     mutation_probability, fitness_threshold, max_iterations
 ):
     pass
