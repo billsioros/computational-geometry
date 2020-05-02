@@ -10,6 +10,7 @@
 \usepackage{alphabeta}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{caption}
 
 \tcbuselibrary{theorems}
 
@@ -36,29 +37,55 @@
 \frame{\titlepage}
 
 \begin{frame}
-	\frametitle{\el Προσεγγίσεις}
+	\frametitle{\el Θεωρητική Προσέγγιση}
 	\begin{itemize}
-		\item \el Γεωμετρική προσέγγιση
-		\begin{itemize}
-			\item \en Delaunay \el τριγωνοποίηση: εύρεση κατάλληλης διαδρομής για τον πλανόδιο πωλητή. \item \el Δεν είναι απαραίτητο ότι θα καταφέρει να εντοπίσει τηνβέλτιστη διαδρομή
-		\end{itemize}
 		\item \el Γραφοθεωρητική προσέγγιση
 		\begin{itemize}
-			\item \el Tο πρόβλημα του περιοδεύονοτς πωλητή είναι μία επέκταση του προβλήματος εύρεσης κυκλώματος \en Hamilton.
+			\item \el Tο \en TSP \el είναι μία επέκταση του προβλήματος εύρεσης κυκλώματος \en Hamilton.
 		\end{itemize}
-		\item \el .............. προσέγγιση
+		\item \el Γεωμετρική προσέγγιση
 		\begin{itemize}
-			\item \el ...........
+			\item \en Delaunay \el τριγωνοποίηση
+			\begin{itemize}
+				\item \el Προσεγγιστική εύρεση μονοπατιου 
+				\item \el Αλγόριθμος εύρεσης μονοπατιού
+			\end{itemize} 
+			\item \en Time Window TSP \el και \en Time Window Prize Collecting
+			\begin{itemize}
+				\item \en 1D
+				\item \en Metric Space
+			\end{itemize}
+			\item \en Universal TSP
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{\el Υλοποίηση}
-	\begin{itemize}
-		\item \el Εφαρμογή εύρεσης δρομολογίου για τον πλανόδιο πωλητή από τον χρήστη για δεδομένο σύνολο πόλεων
-		\item \el Σύγκριση της διαδρομής του χρήστη με διαδρομές που παράγονται αυτοματοποιημένα από κλασσικούς αλγορίθμους \en TSP.
-	\end{itemize}
+	\begin{columns}[t]
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/nearest_neighbor_030_2090.png}
+		\captionof{figure}{Nearest neighbor με Ευκλείδια μετρική}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/genetic_algorithm_028_3510.png}
+		\captionof{figure}{Opt-2 με Ευκλείδια μετρική}
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/opt_2_030_2758.png}
+		\captionof{figure}{Genetic Algorithm με Ευκλείδια μετρική}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/simulated_annealing_030_10352.png}
+		\captionof{figure}{Simulated Annealing με Ευκλείδια μετρική}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση}
+	\begin{columns}[t]
+		\column{.6\textwidth}
+		\includegraphics[width=\columnwidth,height=4cm]{images/combo_annealing_opt.png}
+		\captionof{figure}{Simulated Annealing \(\rightarrow\) Opt-2}
+		\column{.6\textwidth}
+		\includegraphics[width=\columnwidth,height=4cm]{images/combo_genetic_neighbor.png}
+		\captionof{figure}{Genetic Algorithm \(\rightarrow\) Nearest Neighbor}
+	\end{columns}
 \end{frame}
 
 
@@ -70,7 +97,11 @@
 			CG:YRF, Boston, MA, USA, June 14-18, 2016}
 		\item \textit{\en An Optimal Lower Bound for the Hilbert-type, Planar Universal Traveling Salesman Problem, Patrick Eades, Julián Mestre,	CG:YRF, Brisbane, Australia, July 4-7, 2017}
 		\item \textit{\en An O ( n log n ) Heuristic for the Euclidean Traveling Salesman Problem, 
-			Evgeny Yanenko, EckartSchuhmacher, Ulrich Spörlein, Kurt Tutschku,	April 25, 2005}
+			Evgeny Yanenko, Eckart
+		Schuhmacher, Ulrich Spörlein, Kurt Tutschku,	April 25, 2005}
+		\item \textit{Approximation Algorithms for Time-Window TSP and Prize Collecting TSP Problems,
+			Jie Gao, Su Jia, Joseph S. B. Mitchell, Lu Zhao,
+			Stony Brook University, Stony Brook, NY 11794, USA.}
 		\item \text{\en Applications of the TSP,} \\
 		\text{http://www.math.uwaterloo.ca/tsp/apps/index.html}	
 \end{itemize}
