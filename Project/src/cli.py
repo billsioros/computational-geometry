@@ -36,7 +36,7 @@ def plot(method):
         plt.text(
             dx - 0.5 if dx < 0 else dx + 0.5,
             dy - 0.5 if dy < 0 else dy + 0.5,
-            f"({dx}, {dy})", fontsize=10
+            f'({dx}, {dy})', fontsize=10
         )
 
         plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
@@ -53,7 +53,11 @@ def plot(method):
         plt.tight_layout()
         plt.grid()
         plt.legend()
-        plt.show()
+
+        figure.savefig(
+            f'{method.__name__}_{len(route) - 1:03d}_{cost:04d}.png',
+            format='png'
+        )
 
         ctx.obj['cities'] = route[1:-1]
 
