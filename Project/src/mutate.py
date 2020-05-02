@@ -2,7 +2,7 @@
 from random import randrange
 
 
-def random_swap(elements):
+def random_swap(self, elements):
     neighbor = elements[:]
 
     i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)
@@ -11,7 +11,7 @@ def random_swap(elements):
     return neighbor
 
 
-def reverse_random_sublist(elements):
+def reverse_random_sublist(self, elements):
     neighbor = elements[:]
 
     i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)

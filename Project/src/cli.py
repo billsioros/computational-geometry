@@ -33,7 +33,11 @@ def plot(method):
         plt.scatter(xs, ys, c='blue', label='Depot')
 
         plt.scatter([dx], [dy], c='red', label='Cities')
-        plt.text(dx, dy, f"({dx}, {dy})", fontsize=10)
+        plt.text(
+            dx - 0.5 if dx < 0 else dx + 0.5,
+            dy - 0.5 if dy < 0 else dy + 0.5,
+            f"({dx}, {dy})", fontsize=10
+        )
 
         plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
 
@@ -58,17 +62,17 @@ def plot(method):
 
 @click.group(chain=True)
 @click.option(
-    '-s', '--start',
+    '-d', '--depot',
     type=click.Tuple([int, int]), default=(None, None),
-    help='the starting point'
+    help='the depot (starting point)'
 )
 @click.option(
-    '-n', '--number',
+    '-c', '--cities',
     type=click.INT, default=10,
-    help='the number of points'
+    help='the number of cities'
 )
 @click.option(
-    '-d', '--distance-metric', 'metric',
+    '-m', '--metric',
     type=click.STRING, default='euclidean',
     help='the distance metric to be used'
 )
@@ -90,7 +94,7 @@ def plot(method):
 @click.pass_context
 def cli(
     ctx,
-    start, number, metric,
+    depot, cities, metric,
     x_axis, y_axis,
     rng_seed
 ):
@@ -98,19 +102,19 @@ def cli(
     if rng_seed is not None:
         seed(rng_seed)
 
-    if start != (None, None):
-        number -= 1
+    if depot != (None, None):
+        cities -= 1
 
     cities = [
         (randrange(x_axis[0], x_axis[1]), randrange(y_axis[0], y_axis[1]))
-        for i in range(number)
+        for i in range(cities)
     ]
 
-    if start == (None, None):
-        start, cities = cities[0], cities[1:]
+    if depot == (None, None):
+        depot, cities = cities[0], cities[1:]
 
     ctx.obj = {
-        'depot': start,
+        'depot': depot,
         'cities': cities,
         'metric': metric,
         'x_axis': x_axis,
@@ -144,7 +148,7 @@ def opt_2(ctx):
     help='the maximum temperature'
 )
 @click.option(
-    '-r', '--cooling-rate', 'cooling_rate',
+    '-c', '--cooling-rate', 'cooling_rate',
     type=click.FLOAT, default=0.000005,
     help='the cooling rate'
 )
@@ -171,29 +175,44 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='interleave',
+    type=click.STRING, default='weighted_mst',
     help='the crossover function to be used'
 )
+# @click.option(
+#     '-h', '--heuristic',
+#     type=click.STRING, default='kruskal',
+#     help='the heuristic to be used in the calculation of the fitness'
+# )
+# @click.option(
+#     '-f', '--fitness',
+#     type=click.STRING, default='weighted_mst',
+#     help='the function determining the fitness of an individual'
+# )
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
     type=click.FLOAT, default=0.3,
-    help='the mutation probability of an individual'
+    help='the probability of an individual mutating'
 )
 @click.option(
-    '-f', '--fitness-threshold', 'fitness_threshold',
+    '-t', '--fitness-threshold', 'fitness_threshold',
     type=click.FLOAT, default=0.8,
     help='the fitness threshold of acceptable solutions'
 )
 @click.option(
     '-i', '--max-iterations', 'max_iterations',
-    type=click.INT, default=10000,
+    type=click.INT, default=1000,
     help='the maximum number of iterations'
+)
+@click.option(
+    '-s', '--population-size', 'population_size',
+    type=click.INT, default=50,
+    help='the size of the population'
 )
 @click.pass_context
 @plot
 def genetic_algorithm(
     ctx,
-    mutate, crossover,
+    mutate, crossover,# heuristic, fitness,
     mutation_probability, fitness_threshold, max_iterations
 ):
     pass
