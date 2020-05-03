@@ -27,10 +27,11 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
         self.MAX_ITERATIONS = max_iterations
 
         self.logger = getLogger(self.__class__.__name__)
+        self.cache = {}
 
     def fit(self, individual):
         if self.heuristic is not None:
-            self.fitness.heuristic = self.heuristic(self, individual)
+            self.cache['heuristic'] = self.heuristic(self, individual)
 
         population = [individual]
         for _ in range(self.POPULATION_SIZE - 1):

@@ -10,4 +10,4 @@ def unweighted_mst(self, individual):
 
 
 def weighted_mst(self, individual):
-    return weighted_mst.heuristic / self.cost(individual)
+    return self.cache['heuristic'] / self.cost(individual)
