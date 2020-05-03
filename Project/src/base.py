@@ -19,13 +19,13 @@ def multi_type(package_name):
                     value = value.lower().replace("-", "_")
                     setattr(self, f"_{package_name}", getattr(package, value))
                 except:
-                    raise AssertionError(f'No {package_name} named {value}')
-            elif callable(value):
+                    raise ImportError(f'No {package_name} named {value}')
+            elif value is None or callable(value):
                 setattr(self, f"_{package_name}", value)
             elif isinstance(value, list):
                 setattr(self, f"_{package_name}", lambda v1, v2: value[v1][v2])
             else:
-                raise AssertionError(
+                raise TypeError(
                     f'Unexpected {package_name} type {type(value)}'
                 )
 
@@ -36,13 +36,13 @@ def multi_type(package_name):
 
 class Trait(object):
     def __init__(self, *args, **kwargs):
-        super(Trait, self).__init__(*args, **kwargs)
+        super(Trait, self).__init__()
 
 
 class Mutate(Trait):
-    def __init__(self, *args, mutate='random_swap', **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Mutate, self).__init__(*args, **kwargs)
-        self.mutate = mutate
+        self.mutate = kwargs['mutate']
 
     @property
     def mutate(self):
@@ -55,9 +55,9 @@ class Mutate(Trait):
 
 
 class Crossover(Trait):
-    def __init__(self, *args, crossover='cut_and_stitch', **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Crossover, self).__init__(*args, **kwargs)
-        self.crossover = crossover
+        self.crossover = kwargs['crossover']
 
     @property
     def crossover(self):
@@ -70,9 +70,9 @@ class Crossover(Trait):
 
 
 class Metric(Trait):
-    def __init__(self, *args, metric='euclidean', **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Metric, self).__init__(*args, **kwargs)
-        self.metric = metric
+        self.metric = kwargs['metric']
 
     @property
     def metric(self):
@@ -91,9 +91,9 @@ class Metric(Trait):
 
 
 class Fitness(Trait):
-    def __init__(self, *args, fitness='euclidean', **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Fitness, self).__init__(*args, **kwargs)
-        self.fitness = fitness
+        self.fitness = kwargs['fitness']
 
     @property
     def fitness(self):
@@ -106,9 +106,9 @@ class Fitness(Trait):
 
 
 class Heuristic(Trait):
-    def __init__(self, *args, heuristic='kruskal', **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Heuristic, self).__init__(*args, **kwargs)
-        self.heuristic = heuristic
+        self.heuristic = kwargs['heuristic']
 
     @property
     def heuristic(self):

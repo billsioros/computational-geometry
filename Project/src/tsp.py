@@ -65,11 +65,6 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         return SimulatedAnnealing.fit(self, [depot] + cities + [depot])
 
     def genetic_algorithm(self, depot, cities):
-        self.fitness.heuristic = self.heuristic(
-            self,
-            [depot] + cities + [depot]
-        )
-
         fittest = GeneticAlgorithm.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)

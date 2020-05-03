@@ -165,7 +165,7 @@ def opt_2(ctx):
 )
 @click.option(
     '-c', '--cooling-rate', 'cooling_rate',
-    type=click.FLOAT, default=0.000005,
+    type=click.FLOAT, default=0.000625,
     help='the cooling rate'
 )
 @click.option(

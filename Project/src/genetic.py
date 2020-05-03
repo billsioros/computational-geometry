@@ -29,6 +29,9 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
         self.logger = getLogger(self.__class__.__name__)
 
     def fit(self, individual):
+        if self.heuristic is not None:
+            self.fitness.heuristic = self.heuristic(self, individual)
+
         population = [individual]
         for _ in range(self.POPULATION_SIZE - 1):
             population.append(self.mutate(self, individual))
@@ -49,6 +52,7 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
             if (_max_fitness > max_fitness):
                 fitest, max_fitness = _fitest, _max_fitness
 
+            # TODO
             # if max_fitness > self.FITNESS_THRESHOLD:
             #     break
 
