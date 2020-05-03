@@ -39,7 +39,10 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
-            self.logger.info(f'Iteration: {i}, Fitness: {max_fitness}')
+            self.logger.info(
+                f'Iteration: {i:04d}, '
+                f'Fitness: {max_fitness:5.3f}'
+            )
 
             _fitness = {
                 tuple(individual): self.fitness(self, individual)
