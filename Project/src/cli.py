@@ -191,7 +191,7 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='weighted_mst',
+    type=click.STRING, default='cut_and_stitch',
     help='the crossover function to be used'
 )
 @click.option(
@@ -229,7 +229,8 @@ def simulated_annealing(
 def genetic_algorithm(
     ctx,
     mutate, crossover, heuristic, fitness,
-    mutation_probability, fitness_threshold, max_iterations
+    mutation_probability, fitness_threshold,
+    max_iterations, population_size
 ):
     pass
 

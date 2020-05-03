@@ -9,7 +9,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def __init__(
         self,
         metric='euclidean', fitness='weighted_mst',
-        mutate='random_swap', crossover='interleave',
+        mutate='random_swap', crossover='cut_and_stitch',
         heuristic='kruskal',
         mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
