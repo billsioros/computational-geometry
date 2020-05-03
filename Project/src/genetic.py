@@ -1,5 +1,5 @@
 
-from math import isclose
+from logging import getLogger
 from random import randint, random
 
 from base import Crossover, Fitness, Heuristic, Mutate
@@ -26,6 +26,8 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
         self.POPULATION_SIZE = population_size
         self.MAX_ITERATIONS = max_iterations
 
+        self.logger = getLogger(self.__class__.__name__)
+
     def fit(self, individual):
         population = [individual]
         for _ in range(self.POPULATION_SIZE - 1):
@@ -33,6 +35,8 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
+            self.logger.info(f'Iteration: {i}, Fitness: {max_fitness}')
+
             _fitness = {
                 tuple(individual): self.fitness(self, individual)
                 for individual in population
@@ -45,8 +49,8 @@ class GeneticAlgorithm(Crossover, Mutate, Fitness, Heuristic):
             if (_max_fitness > max_fitness):
                 fitest, max_fitness = _fitest, _max_fitness
 
-            if isclose(max_fitness, self.FITNESS_THRESHOLD):
-                break
+            # if max_fitness > self.FITNESS_THRESHOLD:
+            #     break
 
             successors = []
             for i in range(len(population)):

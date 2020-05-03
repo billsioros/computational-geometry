@@ -1,4 +1,5 @@
 
+import logging
 from functools import partial, wraps
 from random import randrange, seed, shuffle
 
@@ -54,10 +55,13 @@ def plot(method):
         plt.grid()
         plt.legend()
 
-        figure.savefig(
-            f'{method.__name__}_{len(route) - 1:03d}_{cost:04d}.png',
-            format='png'
-        )
+        if ctx.obj['format'] is not None:
+            figure.savefig(
+                f'{method.__name__}_{len(route) - 1:03d}_{cost:04d}.{ctx.obj["format"]}',
+                format=ctx.obj['format']
+            )
+        else:
+            plt.show()
 
         ctx.obj['cities'] = route[1:-1]
 
@@ -95,12 +99,17 @@ def plot(method):
     type=click.INT, default=None,
     help='the random number generator seed'
 )
+@click.option(
+    '-f', '--format', 'fmt',
+    type=click.STRING, default=None,
+    help='the format of the resulting figure file'
+)
 @click.pass_context
 def cli(
     ctx,
     depot, cities, metric,
     x_axis, y_axis,
-    rng_seed
+    rng_seed, fmt
 ):
     """Visualization of various `Travelling Salesman` algorithms"""
     if rng_seed is not None:
@@ -122,8 +131,11 @@ def cli(
         'cities': cities,
         'metric': metric,
         'x_axis': x_axis,
-        'y_axis': y_axis
+        'y_axis': y_axis,
+        'format': fmt
     }
+
+    logging.basicConfig(level=logging.INFO)
 
 
 @cli.command()
@@ -182,16 +194,16 @@ def simulated_annealing(
     type=click.STRING, default='weighted_mst',
     help='the crossover function to be used'
 )
-# @click.option(
-#     '-h', '--heuristic',
-#     type=click.STRING, default='kruskal',
-#     help='the heuristic to be used in the calculation of the fitness'
-# )
-# @click.option(
-#     '-f', '--fitness',
-#     type=click.STRING, default='weighted_mst',
-#     help='the function determining the fitness of an individual'
-# )
+@click.option(
+    '-h', '--heuristic',
+    type=click.STRING, default='kruskal',
+    help='the heuristic to be used in the calculation of the fitness'
+)
+@click.option(
+    '-f', '--fitness',
+    type=click.STRING, default='weighted_mst',
+    help='the function determining the fitness of an individual'
+)
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
     type=click.FLOAT, default=0.3,
@@ -216,7 +228,7 @@ def simulated_annealing(
 @plot
 def genetic_algorithm(
     ctx,
-    mutate, crossover,# heuristic, fitness,
+    mutate, crossover, heuristic, fitness,
     mutation_probability, fitness_threshold, max_iterations
 ):
     pass

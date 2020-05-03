@@ -10,6 +10,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         self,
         metric='euclidean', fitness='weighted_mst',
         mutate='random_swap', crossover='interleave',
+        heuristic='kruskal',
         mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
         max_iterations=10000
@@ -18,7 +19,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
             metric=metric,
             mutate=mutate,
             max_temperature=max_temperature, cooling_rate=cooling_rate,
-            crossover=crossover, fitness=fitness,
+            crossover=crossover, fitness=fitness, heuristic=heuristic,
             mutation_probability=mutation_probability,
             fitness_threshold=fitness_threshold,
             population_size=population_size,

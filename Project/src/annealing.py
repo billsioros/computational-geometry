@@ -1,4 +1,5 @@
 
+from logging import getLogger
 from math import exp
 from random import random
 
@@ -22,6 +23,8 @@ class SimulatedAnnealing(Metric, Mutate):
         self.COOLING_RATE = cooling_rate
         self.MAX_ITERATIONS = max_iterations
 
+        self.logger = getLogger(self.__class__.__name__)
+
     def acceptance_probability(self, current_cost, candidate_cost, temperature):
         if candidate_cost < current_cost:
             return 1
@@ -34,6 +37,12 @@ class SimulatedAnnealing(Metric, Mutate):
 
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
+            self.logger.info(
+                f'Iteration: {iteration} '
+                f'Temperature: {temperature} '
+                f'Score: {best_cost}'
+            )
+
             candidate = self.mutate(self, current)
             candidate_cost = self.cost(candidate)
 
