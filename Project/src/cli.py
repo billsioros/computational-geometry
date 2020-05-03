@@ -57,7 +57,7 @@ def plot(method):
 
         if ctx.obj['format'] is not None:
             figure.savefig(
-                f'{method.__name__}_{len(route) - 1:03d}_{cost:04d}.{ctx.obj["format"]}',
+                f'{method.__name__}_{len(route) - 1:03d}_{cost:05d}.{ctx.obj["format"]}',
                 format=ctx.obj['format']
             )
         else:
@@ -191,7 +191,7 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='cut_and_stitch',
+    type=click.STRING, default=None, #TODO
     help='the crossover function to be used'
 )
 @click.option(
