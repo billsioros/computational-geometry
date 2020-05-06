@@ -10,10 +10,8 @@ def kruskal(self, route):
 
     cost, components = 0, {v: set([v]) for v in route}
 
-    mst = set()
     for u, v, d in edges:
         if not components[u].intersection(components[v]):
-            mst.add((u, v))
             cost += d
 
             components[u] = components[u].union(components[v])
@@ -25,4 +23,4 @@ def kruskal(self, route):
                         components[root] = components[root].union(
                             components[vertex])
 
-    return mst, cost
+    return cost
