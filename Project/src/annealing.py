@@ -28,13 +28,13 @@ class SimulatedAnnealing(MetricMixin, MutateMixin):
 
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
-            self.logger.info(
+            self.logger.debug(
                 f'Iteration: {iteration:04d}, '
                 f'Temperature: {temperature:09.3f}, '
                 f'Score: {best_cost:04d}'
             )
 
-            candidate = self.mutate(self, current)
+            candidate = self.mutate(current)
             candidate_cost = self.cost(candidate)
 
             if self.acceptance_probability(current_cost, candidate_cost, temperature) > random():

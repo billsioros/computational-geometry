@@ -25,7 +25,7 @@ class GeneticAlgorithm(CrossoverMixin, MutateMixin, FitnessMixin, HeuristicMixin
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
-            self.logger.info(
+            self.logger.debug(
                 f'Iteration: {i:04d}, '
                 f'FitnessMixin: {max_fitness:5.3f}'
             )
@@ -47,8 +47,8 @@ class GeneticAlgorithm(CrossoverMixin, MutateMixin, FitnessMixin, HeuristicMixin
 
             successors = []
             for i in range(len(population)):
-                father = population[randint(0, len(population) / 2 - 1)]
-                mother = population[randint(0, len(population) / 2 - 1)]
+                father = self.select(population)
+                mother = self.select(population)
 
                 child = self.crossover(father, mother)
 

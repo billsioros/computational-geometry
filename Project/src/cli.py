@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 
 from tsp import TravellingSalesman
 
+logger = logging.getLogger("CLI")
+
 
 def plot(method):
     from functools import wraps
@@ -28,6 +30,8 @@ def plot(method):
             f'{method.__name__.replace("_", " ").title()} '
             f'(Cities: {len(route) - 1}, Cost: {cost})'
         )
+
+        logger.info(f"{method.__name__}: {cost}")
 
         dx, dy = route[0]
         xs, ys = [c[0] for c in route[1:]], [c[1] for c in route[1:]]
@@ -69,7 +73,6 @@ def plot(method):
     return wrapper
 
 
-
 @click.group(chain=True)
 @click.option(
     '-d', '--depot',
@@ -77,7 +80,7 @@ def plot(method):
     help='the depot (starting point)'
 )
 @click.option(
-    '-c', '--cities',
+    '-n', '--cities',
     type=click.INT, default=10,
     help='the number of cities'
 )
@@ -106,12 +109,17 @@ def plot(method):
     type=click.STRING, default=None,
     help='the format of the resulting figure file'
 )
+@click.option(
+    '-l', '--logging-lvl', 'logging_lvl',
+    type=click.STRING, default='INFO',
+    help='the logging level (INFO, DEBUG, e.t.c)'
+)
 @click.pass_context
 def cli(
     ctx,
     depot, cities, metric,
     x_axis, y_axis,
-    rng_seed, fmt
+    rng_seed, fmt, logging_lvl
 ):
     """Visualization of various `Travelling Salesman` algorithms"""
     if rng_seed is not None:
@@ -137,7 +145,18 @@ def cli(
         'format': fmt
     }
 
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level={
+            "CRITICAL": logging.CRITICAL,
+            "FATAL": logging.FATAL,
+            "ERROR": logging.ERROR,
+            "WARNING": logging.WARNING,
+            "WARN": logging.WARN,
+            "INFO": logging.INFO,
+            "DEBUG": logging.DEBUG,
+            "NOTSET": logging.NOTSET,
+        }[logging_lvl.upper()]
+    )
 
 
 @cli.command()
