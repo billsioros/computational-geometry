@@ -9,17 +9,18 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     def __init__(
         self,
         metric='euclidean', fitness='weighted_mst',
-        mutate='random_swap', crossover='cut_and_stitch',
+        mutate='random_swap', crossover='cut_and_stitch', select='random_top_half',
         heuristic='kruskal',
         mutation_probability=0.3, fitness_threshold=0.8, population_size=100,
         max_temperature=100000, cooling_rate=0.000005,
         max_iterations=10000
     ):
-        super(TravellingSalesman, self).__init__(
+        super().__init__(
             metric=metric,
             mutate=mutate,
             max_temperature=max_temperature, cooling_rate=cooling_rate,
-            crossover=crossover, fitness=fitness, heuristic=heuristic,
+            crossover=crossover, select=select,
+            fitness=fitness, heuristic=heuristic,
             mutation_probability=mutation_probability,
             fitness_threshold=fitness_threshold,
             population_size=population_size,
@@ -30,10 +31,10 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         route, remaining = [depot], cities[:]
 
         while len(remaining) > 0:
-            nearest = (0, self.metric(self, route[-1], remaining[0]))
+            nearest = (0, self.metric(route[-1], remaining[0]))
             for i in range(1, len(remaining)):
                 city = remaining[i]
-                distance = self.metric(self, route[-1], city)
+                distance = self.metric(route[-1], city)
                 if distance < nearest[1]:
                     nearest = (i, distance)
 

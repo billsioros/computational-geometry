@@ -191,8 +191,13 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default=None, #TODO
+    type=click.STRING, default='cut_and_stitch',
     help='the crossover function to be used'
+)
+@click.option(
+    '-s', '--select',
+    type=click.STRING, default='random_top_half',
+    help='the selection function to be used'
 )
 @click.option(
     '-h', '--heuristic',
@@ -220,7 +225,7 @@ def simulated_annealing(
     help='the maximum number of iterations'
 )
 @click.option(
-    '-s', '--population-size', 'population_size',
+    '-n', '--population-size', 'population_size',
     type=click.INT, default=50,
     help='the size of the population'
 )
@@ -228,7 +233,7 @@ def simulated_annealing(
 @plot
 def genetic_algorithm(
     ctx,
-    mutate, crossover, heuristic, fitness,
+    mutate, crossover, select, heuristic, fitness,
     mutation_probability, fitness_threshold,
     max_iterations, population_size
 ):

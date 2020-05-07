@@ -3,25 +3,16 @@ from logging import getLogger
 from math import exp
 from random import random
 
-from base import Metric, Mutate
+from base import MetricMixin, MutateMixin
 
 
-class SimulatedAnnealing(Metric, Mutate):
-    def __init__(
-        self,
-        *args,
-        metric='euclidean', mutate='random_swap',
-        max_temperature=100000, cooling_rate=0.000005,
-        max_iterations=10000,
-        **kwargs
-    ):
-        super(SimulatedAnnealing, self).__init__(
-            metric=metric, mutate=mutate
-        )
+class SimulatedAnnealing(MetricMixin, MutateMixin):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        self.MAX_TEMPERATURE = max_temperature
-        self.COOLING_RATE = cooling_rate
-        self.MAX_ITERATIONS = max_iterations
+        self.MAX_TEMPERATURE = kwargs['max_temperature']
+        self.COOLING_RATE = kwargs['cooling_rate']
+        self.MAX_ITERATIONS = kwargs['max_iterations']
 
         self.logger = getLogger(self.__class__.__name__)
 
