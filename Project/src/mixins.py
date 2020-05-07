@@ -2,6 +2,19 @@
 from random import randint, random, randrange
 
 
+def cached(method):
+    from functools import wraps
+
+    @wraps(method)
+    def wrapper(*args, **kwargs):
+        if not hasattr(wrapper, 'cache'):
+            setattr(wrapper, 'cache', method(*args, **kwargs))
+
+        return wrapper.cache
+
+    return wrapper
+
+
 class TraitMixin(object):
     def __init__(self, *args, **kwargs):
         super().__init__()
@@ -115,7 +128,7 @@ class FitnessMixin(TraitMixin):
         return ((v * v) - v + 1) / self.cost(individual)
 
     def weighted_mst(self, individual):
-        return self.cache['heuristic'] / self.cost(individual)
+        return self.heuristic(individual) / self.cost(individual)
 
     @property
     def fitness(self):
@@ -132,6 +145,7 @@ class HeuristicMixin(TraitMixin):
 
         self.heuristic = kwargs['heuristic']
 
+    @cached
     def kruskal(self, route):
         edges = []
         for u in route[:-1]:

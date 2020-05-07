@@ -3,7 +3,7 @@ from logging import getLogger
 from random import randint, random
 
 from mixins import (CrossoverMixin, FitnessMixin, HeuristicMixin, MutateMixin,
-                  SelectionMixin)
+                    SelectionMixin)
 
 
 class GeneticAlgorithm(CrossoverMixin, MutateMixin, FitnessMixin, HeuristicMixin, SelectionMixin):
@@ -17,12 +17,8 @@ class GeneticAlgorithm(CrossoverMixin, MutateMixin, FitnessMixin, HeuristicMixin
         self.MAX_ITERATIONS = kwargs['max_iterations']
 
         self.logger = getLogger(self.__class__.__name__)
-        self.cache = {}
 
     def fit(self, individual):
-        if self.heuristic is not None:
-            self.cache['heuristic'] = self.heuristic(individual)
-
         population = [individual]
         for _ in range(self.POPULATION_SIZE - 1):
             population.append(self.mutate(individual))

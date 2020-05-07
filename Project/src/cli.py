@@ -1,7 +1,6 @@
 
 import logging
-from functools import partial, wraps
-from random import randrange, seed, shuffle
+from random import randrange, seed
 
 import click
 from matplotlib import pyplot as plt
@@ -10,6 +9,8 @@ from tsp import TravellingSalesman
 
 
 def plot(method):
+    from functools import wraps
+
     @wraps(method)
     def wrapper(ctx, **kwargs):
         tsp = TravellingSalesman(**{
@@ -66,6 +67,7 @@ def plot(method):
         ctx.obj['cities'] = route[1:-1]
 
     return wrapper
+
 
 
 @click.group(chain=True)
