@@ -3,7 +3,7 @@ from logging import getLogger
 from math import exp
 from random import random
 
-from base import MetricMixin, MutateMixin
+from mixins import MetricMixin, MutateMixin
 
 
 class SimulatedAnnealing(MetricMixin, MutateMixin):

@@ -2,7 +2,7 @@
 from logging import getLogger
 from random import randint, random
 
-from base import (CrossoverMixin, FitnessMixin, HeuristicMixin, MutateMixin,
+from mixins import (CrossoverMixin, FitnessMixin, HeuristicMixin, MutateMixin,
                   SelectionMixin)
 
 
