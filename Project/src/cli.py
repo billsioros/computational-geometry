@@ -1,6 +1,6 @@
 
-from functools import partial, wraps
-from random import randrange, seed, shuffle
+import logging
+from random import randrange, seed
 
 import click
 from matplotlib import pyplot as plt
@@ -9,6 +9,8 @@ from tsp import TravellingSalesman
 
 
 def plot(method):
+    from functools import wraps
+
     @wraps(method)
     def wrapper(ctx, **kwargs):
         tsp = TravellingSalesman(**{
@@ -54,10 +56,13 @@ def plot(method):
         plt.grid()
         plt.legend()
 
-        figure.savefig(
-            f'{method.__name__}_{len(route) - 1:03d}_{cost:04d}.png',
-            format='png'
-        )
+        if ctx.obj['format'] is not None:
+            figure.savefig(
+                f'{method.__name__}_{len(route) - 1:03d}_{cost:05d}.{ctx.obj["format"]}',
+                format=ctx.obj['format']
+            )
+        else:
+            plt.show()
 
         ctx.obj['cities'] = route[1:-1]
 
@@ -71,7 +76,7 @@ def plot(method):
     help='the depot (starting point)'
 )
 @click.option(
-    '-c', '--cities',
+    '-n', '--cities',
     type=click.INT, default=10,
     help='the number of cities'
 )
@@ -95,12 +100,22 @@ def plot(method):
     type=click.INT, default=None,
     help='the random number generator seed'
 )
+@click.option(
+    '-f', '--format', 'fmt',
+    type=click.STRING, default=None,
+    help='the format of the resulting figure file'
+)
+@click.option(
+    '-l', '--logging-lvl', 'logging_lvl',
+    type=click.STRING, default='INFO',
+    help='the logging level (INFO, DEBUG, e.t.c)'
+)
 @click.pass_context
 def cli(
     ctx,
     depot, cities, metric,
     x_axis, y_axis,
-    rng_seed
+    rng_seed, fmt, logging_lvl
 ):
     """Visualization of various `Travelling Salesman` algorithms"""
     if rng_seed is not None:
@@ -122,8 +137,13 @@ def cli(
         'cities': cities,
         'metric': metric,
         'x_axis': x_axis,
-        'y_axis': y_axis
+        'y_axis': y_axis,
+        'format': fmt
     }
+
+    logging.basicConfig(
+        level=logging._levelToName.get(logging_lvl.upper(), "INFO")
+    )
 
 
 @cli.command()
@@ -153,7 +173,7 @@ def opt_2(ctx):
 )
 @click.option(
     '-c', '--cooling-rate', 'cooling_rate',
-    type=click.FLOAT, default=0.000005,
+    type=click.FLOAT, default=0.000625,
     help='the cooling rate'
 )
 @click.option(
@@ -179,19 +199,24 @@ def simulated_annealing(
 )
 @click.option(
     '-c', '--crossover',
-    type=click.STRING, default='weighted_mst',
+    type=click.STRING, default='cut_and_stitch',
     help='the crossover function to be used'
 )
-# @click.option(
-#     '-h', '--heuristic',
-#     type=click.STRING, default='kruskal',
-#     help='the heuristic to be used in the calculation of the fitness'
-# )
-# @click.option(
-#     '-f', '--fitness',
-#     type=click.STRING, default='weighted_mst',
-#     help='the function determining the fitness of an individual'
-# )
+@click.option(
+    '-s', '--select',
+    type=click.STRING, default='random_top_half',
+    help='the selection function to be used'
+)
+@click.option(
+    '-h', '--heuristic',
+    type=click.STRING, default='kruskal',
+    help='the heuristic to be used in the calculation of the fitness'
+)
+@click.option(
+    '-f', '--fitness',
+    type=click.STRING, default='weighted_mst',
+    help='the function determining the fitness of an individual'
+)
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
     type=click.FLOAT, default=0.3,
@@ -208,7 +233,7 @@ def simulated_annealing(
     help='the maximum number of iterations'
 )
 @click.option(
-    '-s', '--population-size', 'population_size',
+    '-n', '--population-size', 'population_size',
     type=click.INT, default=50,
     help='the size of the population'
 )
@@ -216,8 +241,9 @@ def simulated_annealing(
 @plot
 def genetic_algorithm(
     ctx,
-    mutate, crossover,# heuristic, fitness,
-    mutation_probability, fitness_threshold, max_iterations
+    mutate, crossover, select, heuristic, fitness,
+    mutation_probability, fitness_threshold,
+    max_iterations, population_size
 ):
     pass
 

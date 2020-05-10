@@ -1,26 +1,27 @@
 
+from logging import getLogger
 from math import exp
 from random import random
 
-from base import Metric, Mutate
+from trait import Trait
 
 
-class SimulatedAnnealing(Metric, Mutate):
-    def __init__(
-        self,
-        *args,
-        metric='euclidean', mutate='random_swap',
-        max_temperature=100000, cooling_rate=0.000005,
-        max_iterations=10000,
-        **kwargs
-    ):
-        super(SimulatedAnnealing, self).__init__(
-            metric=metric, mutate=mutate
-        )
+class SimulatedAnnealing(Trait):
+    traits = ['mutate', 'cost']
 
-        self.MAX_TEMPERATURE = max_temperature
-        self.COOLING_RATE = cooling_rate
-        self.MAX_ITERATIONS = max_iterations
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if 'mutate' in kwargs:
+            self.mutate = kwargs['mutate']
+        if 'cost' in kwargs:
+            self.cost = kwargs['cost']
+
+        self.MAX_TEMPERATURE = kwargs['max_temperature']
+        self.COOLING_RATE = kwargs['cooling_rate']
+        self.MAX_ITERATIONS = kwargs['max_iterations']
+
+        self.logger = getLogger(self.__class__.__name__)
 
     def acceptance_probability(self, current_cost, candidate_cost, temperature):
         if candidate_cost < current_cost:
@@ -34,7 +35,13 @@ class SimulatedAnnealing(Metric, Mutate):
 
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
-            candidate = self.mutate(self, current)
+            self.logger.info(
+                f'Iteration: {iteration:04d}, '
+                f'Temperature: {temperature:09.3f}, '
+                f'Score: {best_cost:04d}'
+            )
+
+            candidate = self.mutate(current)
             candidate_cost = self.cost(candidate)
 
             if self.acceptance_probability(current_cost, candidate_cost, temperature) > random():
