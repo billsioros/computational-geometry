@@ -35,7 +35,7 @@ class SimulatedAnnealing(Trait):
 
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
-            self.logger.debug(
+            self.logger.info(
                 f'Iteration: {iteration:04d}, '
                 f'Temperature: {temperature:09.3f}, '
                 f'Score: {best_cost:04d}'

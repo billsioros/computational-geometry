@@ -7,9 +7,6 @@ from matplotlib import pyplot as plt
 
 from tsp import TravellingSalesman
 
-logger = logging.getLogger("CLI")
-
-
 def plot(method):
     from functools import wraps
 
@@ -30,8 +27,6 @@ def plot(method):
             f'{method.__name__.replace("_", " ").title()} '
             f'(Cities: {len(route) - 1}, Cost: {cost})'
         )
-
-        logger.info(f"{method.__name__}: {cost}")
 
         dx, dy = route[0]
         xs, ys = [c[0] for c in route[1:]], [c[1] for c in route[1:]]

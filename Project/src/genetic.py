@@ -35,7 +35,7 @@ class GeneticAlgorithm(Trait):
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
-            self.logger.debug(
+            self.logger.info(
                 f'Iteration: {i:04d}, '
                 f'FitnessMixin: {max_fitness:5.3f}'
             )
