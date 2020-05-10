@@ -3,31 +3,28 @@ class TraitMeta(type):
     def __init__(self, name, bases, attrs):
         super().__init__(name, bases, attrs)
 
-        for field in attrs['traits']:
-            assert not hasattr(
-                self, f'_{field}'
-            ), f'{self}._{field} already set'
-            assert not hasattr(
-                self, field
-            ), f'{self}.{field} already set'
+        for trait in attrs['traits']:
+            attr = f'_{trait}'
+            assert not hasattr(self, attr), f'{self}.{attr} already set'
+            assert not hasattr(self, trait), f'{self}.{trait} already set'
 
-            def getter(self, field=field):
-                return getattr(self, f'_{field}')
+            def getter(self, attr=attr):
+                return getattr(self, attr)
 
-            def setter(self, value, field=field):
+            def setter(self, value, attr=attr):
                 if value is None or callable(value):
-                    setattr(self, f'_{field}', value)
+                    setattr(self, attr, value)
                 elif isinstance(value, str):
                     value = value.lower().replace("-", "_")
                     value = getattr(self, value)
-                    setattr(self, f'_{field}', value)
+                    setattr(self, attr, value)
                 elif isinstance(value, list):
                     def value(v1, v2): return value[v1][v2]
-                    setattr(self, f'_{field}', value)
+                    setattr(self, attr, value)
                 else:
                     raise TypeError(f'Unexpected type {type(value)}')
 
-            setattr(self, field, property(getter, setter))
+            setattr(self, trait, property(getter, setter))
 
 
 class Trait(object, metaclass=TraitMeta):
