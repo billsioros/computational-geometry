@@ -15,19 +15,26 @@ def cached(method):
     return wrapper
 
 
+def trait(method):
+    from functools import wraps
+
+    @wraps(method)
+    def wrapper(self, value):
+        if value is None or callable(value):
+            method(self, value)
+        elif isinstance(value, str):
+            method(self, getattr(self, value.lower().replace("-", "_")))
+        elif isinstance(value, list):
+            method(self, lambda v1, v2: value[v1][v2])
+        else:
+            raise TypeError(f'Unexpected type {type(value)}')
+
+    return wrapper
+
+
 class TraitMixin(object):
     def __init__(self, *args, **kwargs):
         super().__init__()
-
-    def to_method(self, value):
-        if value is None or callable(value):
-            return value
-        elif isinstance(value, str):
-            return getattr(self, value.lower().replace("-", "_"))
-        elif isinstance(value, list):
-            return lambda v1, v2: value[v1][v2]
-        else:
-            raise TypeError(f'Unexpected type {type(value)}')
 
 
 class MutateMixin(TraitMixin):
@@ -57,8 +64,9 @@ class MutateMixin(TraitMixin):
         return self._mutate
 
     @mutate.setter
+    @trait
     def mutate(self, value):
-        self._mutate = self.to_method(value)
+        self._mutate = value
 
 
 class CrossoverMixin(TraitMixin):
@@ -82,8 +90,9 @@ class CrossoverMixin(TraitMixin):
         return self._crossover
 
     @crossover.setter
+    @trait
     def crossover(self, value):
-        self._crossover = self.to_method(value)
+        self._crossover = value
 
 
 class MetricMixin(TraitMixin):
@@ -103,8 +112,9 @@ class MetricMixin(TraitMixin):
         return self._metric
 
     @metric.setter
+    @trait
     def metric(self, value):
-        self._metric = self.to_method(value)
+        self._metric = value
 
     def cost(self, cities):
         return sum([
@@ -135,8 +145,9 @@ class FitnessMixin(TraitMixin):
         return self._fitness
 
     @fitness.setter
+    @trait
     def fitness(self, value):
-        self._fitness = self.to_method(value)
+        self._fitness = value
 
 
 class HeuristicMixin(TraitMixin):
@@ -177,8 +188,9 @@ class HeuristicMixin(TraitMixin):
         return self._heuristic
 
     @heuristic.setter
+    @trait
     def heuristic(self, value):
-        self._heuristic = self.to_method(value)
+        self._heuristic = value
 
 
 class SelectionMixin(TraitMixin):
@@ -195,5 +207,6 @@ class SelectionMixin(TraitMixin):
         return self._select
 
     @select.setter
+    @trait
     def select(self, value):
-        self._select = self.to_method(value)
+        self._select = value
