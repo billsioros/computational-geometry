@@ -2,13 +2,19 @@
 from logging import getLogger
 from random import randint, random
 
-from mixins import (CrossoverMixin, FitnessMixin, HeuristicMixin, MutateMixin,
-                    SelectionMixin)
+from trait import Trait
 
 
-class GeneticAlgorithm(CrossoverMixin, MutateMixin, FitnessMixin, HeuristicMixin, SelectionMixin):
+class GeneticAlgorithm(Trait):
+    traits = ['mutate', 'crossover', 'fitness', 'select']
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.mutate = kwargs['mutate']
+        self.crossover = kwargs['crossover']
+        self.fitness = kwargs['fitness']
+        self.select = kwargs['select']
 
         self.MUTATION_PROBABILITY = kwargs['mutation_probability']
         self.FITNESS_THRESHOLD = kwargs['fitness_threshold']

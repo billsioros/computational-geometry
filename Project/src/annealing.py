@@ -3,12 +3,17 @@ from logging import getLogger
 from math import exp
 from random import random
 
-from mixins import MetricMixin, MutateMixin
+from trait import Trait
 
 
-class SimulatedAnnealing(MetricMixin, MutateMixin):
+class SimulatedAnnealing(Trait):
+    traits = ['mutate', 'cost']
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.mutate = kwargs['mutate']
+        self.cost = kwargs['cost']
 
         self.MAX_TEMPERATURE = kwargs['max_temperature']
         self.COOLING_RATE = kwargs['cooling_rate']
