@@ -43,6 +43,12 @@ class Metric:
     def manhattan(self, p1, p2):
         return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
+    def _cost(self, cities):
+        return sum([
+            self.metric(cities[i], cities[i + 1])
+            for i in range(len(cities) - 1)
+        ])
+
 
 class Fitness:
     def inverse_cost(self, individual):
@@ -103,14 +109,8 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm, Mutate, Crossover
         max_temperature=100000, cooling_rate=0.000005,
         max_iterations=10000
     ):
-        def cost(cities):
-            return sum([
-                self.metric(cities[i], cities[i + 1])
-                for i in range(len(cities) - 1)
-            ])
-
         super().__init__(
-            metric=metric, cost=cost,
+            metric=metric,
             mutate=mutate,
             max_temperature=max_temperature, cooling_rate=cooling_rate,
             crossover=crossover, select=select,

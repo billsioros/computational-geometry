@@ -11,10 +11,14 @@ class GeneticAlgorithm(Trait):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.mutate = kwargs['mutate']
-        self.crossover = kwargs['crossover']
-        self.fitness = kwargs['fitness']
-        self.select = kwargs['select']
+        if 'mutate' in kwargs:
+            self.mutate = kwargs['mutate']
+        if 'crossover' in kwargs:
+            self.crossover = kwargs['crossover']
+        if 'fitness' in kwargs:
+            self.fitness = kwargs['fitness']
+        if 'select' in kwargs:
+            self.select = kwargs['select']
 
         self.MUTATION_PROBABILITY = kwargs['mutation_probability']
         self.FITNESS_THRESHOLD = kwargs['fitness_threshold']

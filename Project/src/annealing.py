@@ -12,8 +12,10 @@ class SimulatedAnnealing(Trait):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.mutate = kwargs['mutate']
-        self.cost = kwargs['cost']
+        if 'mutate' in kwargs:
+            self.mutate = kwargs['mutate']
+        if 'cost' in kwargs:
+            self.cost = kwargs['cost']
 
         self.MAX_TEMPERATURE = kwargs['max_temperature']
         self.COOLING_RATE = kwargs['cooling_rate']
