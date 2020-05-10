@@ -146,16 +146,7 @@ def cli(
     }
 
     logging.basicConfig(
-        level={
-            "CRITICAL": logging.CRITICAL,
-            "FATAL": logging.FATAL,
-            "ERROR": logging.ERROR,
-            "WARNING": logging.WARNING,
-            "WARN": logging.WARN,
-            "INFO": logging.INFO,
-            "DEBUG": logging.DEBUG,
-            "NOTSET": logging.NOTSET,
-        }[logging_lvl.upper()]
+        level=logging._levelToName.get(logging_lvl.upper(), "INFO")
     )
 
 
