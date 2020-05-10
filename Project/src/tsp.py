@@ -6,7 +6,92 @@ from decorators import cached
 from genetic import GeneticAlgorithm
 
 
-class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
+class Mutate:
+    def random_swap(self, elements):
+        neighbor = elements[:]
+
+        i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)
+        neighbor[i], neighbor[j] = neighbor[j], neighbor[i]
+
+        return neighbor
+
+    def reverse_random_sublist(self, elements):
+        neighbor = elements[:]
+
+        i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)
+        neighbor[i:j] = neighbor[i:j][::-1]
+
+        return neighbor
+
+
+class Crossover:
+    def cut_and_stitch(self, individual_a, individual_b):
+        individual_a, individual_b
+
+        offsprint = individual_a[1:len(individual_a) // 2]
+        for b in individual_b[1:-1]:
+            if b not in offsprint:
+                offsprint.append(b)
+
+        return [individual_a[0]] + offsprint + [individual_b[0]]
+
+
+class Metric:
+    def euclidean(self, p1, p2):
+        return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
+
+    def manhattan(self, p1, p2):
+        return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+
+
+class Fitness:
+    def inverse_cost(self, individual):
+        return 1.0 / self.cost(individual)
+
+    def unweighted_mst(self, individual):
+        v = len(individual) - 1
+
+        return ((v * v) - v + 1) / self.cost(individual)
+
+    def weighted_mst(self, individual):
+        return self.heuristic(individual) / self.cost(individual)
+
+
+class Heuristic:
+    @cached
+    def kruskal(self, route):
+        edges = []
+        for u in route[:-1]:
+            for v in route[:-1]:
+                if u != v:
+                    edges.append((u, v, self.metric(u, v)))
+
+        edges.sort(key=lambda edge: edge[2])
+
+        cost, components = 0, {v: set([v]) for v in route}
+
+        for u, v, d in edges:
+            if not components[u].intersection(components[v]):
+                cost += d
+
+                components[u] = components[u].union(components[v])
+                components[v] = components[u]
+
+                for root, component in components.items():
+                    if u in component or v in component:
+                        for vertex in component:
+                            components[root] = components[root].union(
+                                components[vertex])
+
+        return cost
+
+
+class Select:
+    def random_top_half(self, population):
+        return population[randint(0, len(population) // 2 - 1)]
+
+
+class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm, Mutate, Crossover, Metric, Fitness, Heuristic, Select):
     traits = ['metric', 'heuristic']
 
     def __init__(
@@ -81,76 +166,3 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         fittest = GeneticAlgorithm.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)
-
-    def random_swap(self, elements):
-        neighbor = elements[:]
-
-        i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)
-        neighbor[i], neighbor[j] = neighbor[j], neighbor[i]
-
-        return neighbor
-
-    def reverse_random_sublist(self, elements):
-        neighbor = elements[:]
-
-        i, j = randrange(1, len(elements) - 1), randrange(1, len(elements) - 1)
-        neighbor[i:j] = neighbor[i:j][::-1]
-
-        return neighbor
-
-    def cut_and_stitch(self, individual_a, individual_b):
-        individual_a, individual_b
-
-        offsprint = individual_a[1:len(individual_a) // 2]
-        for b in individual_b[1:-1]:
-            if b not in offsprint:
-                offsprint.append(b)
-
-        return [individual_a[0]] + offsprint + [individual_b[0]]
-
-    def euclidean(self, p1, p2):
-        return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
-
-    def manhattan(self, p1, p2):
-        return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
-
-    def inverse_cost(self, individual):
-        return 1.0 / self.cost(individual)
-
-    def unweighted_mst(self, individual):
-        v = len(individual) - 1
-
-        return ((v * v) - v + 1) / self.cost(individual)
-
-    def weighted_mst(self, individual):
-        return self.heuristic(individual) / self.cost(individual)
-
-    @cached
-    def kruskal(self, route):
-        edges = []
-        for u in route[:-1]:
-            for v in route[:-1]:
-                if u != v:
-                    edges.append((u, v, self.metric(u, v)))
-
-        edges.sort(key=lambda edge: edge[2])
-
-        cost, components = 0, {v: set([v]) for v in route}
-
-        for u, v, d in edges:
-            if not components[u].intersection(components[v]):
-                cost += d
-
-                components[u] = components[u].union(components[v])
-                components[v] = components[u]
-
-                for root, component in components.items():
-                    if u in component or v in component:
-                        for vertex in component:
-                            components[root] = components[root].union(
-                                components[vertex])
-
-        return cost
-
-    def random_top_half(self, population):
-        return population[randint(0, len(population) // 2 - 1)]
