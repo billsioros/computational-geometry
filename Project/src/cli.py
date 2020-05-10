@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 
 from tsp import TravellingSalesman
 
+
 def plot(method):
     from functools import wraps
 
