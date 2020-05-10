@@ -10,6 +10,7 @@
 \usepackage{alphabeta}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{caption}
 
 \tcbuselibrary{theorems}
 
@@ -61,6 +62,30 @@
 
 \begin{frame}
 	\frametitle{\el Υλοποίηση}
+	\begin{columns}[t]
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/nearest_neighbor_030_2090.png}
+		\captionof{figure}{Nearest neighbor με Ευκλείδια μετρική}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/genetic_algorithm_028_3510.png}
+		\captionof{figure}{Opt-2 με Ευκλείδια μετρική}
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/opt_2_030_2758.png}
+		\captionof{figure}{Genetic Algorithm με Ευκλείδια μετρική}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/simulated_annealing_030_10352.png}
+		\captionof{figure}{Simulated Annealing με Ευκλείδια μετρική}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση}
+	\begin{columns}[t]
+		\column{.6\textwidth}
+		\includegraphics[width=\columnwidth,height=4cm]{images/combo_annealing_opt.png}
+		\captionof{figure}{Simulated Annealing \(\rightarrow\) Opt-2}
+		\column{.6\textwidth}
+		\includegraphics[width=\columnwidth,height=4cm]{images/combo_genetic_neighbor.png}
+		\captionof{figure}{Genetic Algorithm \(\rightarrow\) Nearest Neighbor}
+	\end{columns}
 \end{frame}
 
 
