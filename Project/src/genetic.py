@@ -6,25 +6,16 @@ from trait import Trait
 
 
 class GeneticAlgorithm(Trait):
-    traits = ['mutate', 'crossover', 'fitness', 'select']
+    TRAITS = {'mutate', 'crossover', 'fitness', 'select'}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        if 'mutate' in kwargs:
-            self.mutate = kwargs['mutate']
-        if 'crossover' in kwargs:
-            self.crossover = kwargs['crossover']
-        if 'fitness' in kwargs:
-            self.fitness = kwargs['fitness']
-        if 'select' in kwargs:
-            self.select = kwargs['select']
+        self.MUTATION_PROBABILITY = kwargs.get('mutation_probability', None)
+        self.FITNESS_THRESHOLD = kwargs.get('fitness_threshold', None)
 
-        self.MUTATION_PROBABILITY = kwargs['mutation_probability']
-        self.FITNESS_THRESHOLD = kwargs['fitness_threshold']
-
-        self.POPULATION_SIZE = kwargs['population_size']
-        self.MAX_ITERATIONS = kwargs['max_iterations']
+        self.POPULATION_SIZE = kwargs.get('population_size', None)
+        self.MAX_ITERATIONS = kwargs.get('max_iterations', None)
 
         self.logger = getLogger(self.__class__.__name__)
 

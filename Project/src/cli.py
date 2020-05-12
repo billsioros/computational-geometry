@@ -3,70 +3,10 @@ import logging
 from random import randrange, seed
 
 import click
-from matplotlib import pyplot as plt
 
-from tsp import TravellingSalesman
-
-
-def plot(method):
-    from functools import wraps
-
-    @wraps(method)
-    def wrapper(ctx, **kwargs):
-        tsp = TravellingSalesman(**{
-            'metric': ctx.obj['metric'],
-            **kwargs
-        })
-
-        route, cost = getattr(tsp, method.__name__)(
-            ctx.obj['depot'], ctx.obj['cities']
-        )
-
-        figure = plt.figure()
-
-        plt.title(
-            f'{method.__name__.replace("_", " ").title()} '
-            f'(Cities: {len(route) - 1}, Cost: {cost})'
-        )
-
-        dx, dy = route[0]
-        xs, ys = [c[0] for c in route[1:]], [c[1] for c in route[1:]]
-
-        plt.scatter(xs, ys, c='blue', label='Depot')
-
-        plt.scatter([dx], [dy], c='red', label='Cities')
-        plt.text(
-            dx - 0.5 if dx < 0 else dx + 0.5,
-            dy - 0.5 if dy < 0 else dy + 0.5,
-            f'({dx}, {dy})', fontsize=10
-        )
-
-        plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
-
-        plt.xlim(
-            (ctx.obj['x_axis'][0] - 1) * 1.1,
-            (ctx.obj['x_axis'][1] + 1) * 1.1
-        )
-        plt.ylim(
-            (ctx.obj['y_axis'][0] - 1) * 1.1,
-            (ctx.obj['y_axis'][1] + 1) * 1.1
-        )
-        plt.gca().set_aspect('equal', adjustable='box')
-        plt.tight_layout()
-        plt.grid()
-        plt.legend()
-
-        if ctx.obj['format'] is not None:
-            figure.savefig(
-                f'{method.__name__}_{len(route) - 1:03d}_{cost:05d}.{ctx.obj["format"]}',
-                format=ctx.obj['format']
-            )
-        else:
-            plt.show()
-
-        ctx.obj['cities'] = route[1:-1]
-
-    return wrapper
+from decorators import plot, safe
+from helpers import Dictionary
+from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 
 
 @click.group(chain=True)
@@ -84,6 +24,11 @@ def plot(method):
     '-m', '--metric',
     type=click.STRING, default='euclidean',
     help='the distance metric to be used'
+)
+@click.option(
+    '-c', '--cost',
+    type=click.STRING, default='total',
+    help='the total cost function to be used'
 )
 @click.option(
     '-x', '--x-axis', 'x_axis',
@@ -107,17 +52,24 @@ def plot(method):
 )
 @click.option(
     '-l', '--logging-lvl', 'logging_lvl',
-    type=click.STRING, default='INFO',
-    help='the logging level (INFO, DEBUG, e.t.c)'
+    type=Dictionary(logging._nameToLevel), default='CRITICAL',
+    help='the logging level'
+)
+@click.option(
+    '-p', '--problem',
+    type=Dictionary({'tsp': TravellingSalesman, 'tsptw': TravellingSalesmanTimeWindows}), default='tsp',
+    help='the class of the problem'
 )
 @click.pass_context
 def cli(
     ctx,
-    depot, cities, metric,
+    depot, cities,
+    metric, cost,
     x_axis, y_axis,
-    rng_seed, fmt, logging_lvl
+    rng_seed, fmt, logging_lvl,
+    problem
 ):
-    """Visualization of various `Travelling Salesman` algorithms"""
+    '''Visualization of various `Travelling Salesman` algorithms'''
     if rng_seed is not None:
         seed(rng_seed)
 
@@ -136,27 +88,29 @@ def cli(
         'depot': depot,
         'cities': cities,
         'metric': metric,
+        'cost': cost,
         'x_axis': x_axis,
         'y_axis': y_axis,
-        'format': fmt
+        'format': fmt,
+        'class': problem
     }
 
-    logging.basicConfig(
-        level=logging._levelToName.get(logging_lvl.upper(), "INFO")
-    )
+    logging.basicConfig(level=logging_lvl)
 
 
 @cli.command()
 @click.pass_context
+@safe
 @plot
-def nearest_neighbor(ctx):
+def nearest_neighbor(*args, **kwargs):
     pass
 
 
 @cli.command()
 @click.pass_context
+@safe
 @plot
-def opt_2(ctx):
+def opt_2(*args, **kwargs):
     pass
 
 
@@ -182,12 +136,72 @@ def opt_2(ctx):
     help='the maximum number of iterations'
 )
 @click.pass_context
+@safe
 @plot
-def simulated_annealing(
-    ctx,
-    mutate,
-    max_temperature, cooling_rate, max_iterations
-):
+def simulated_annealing(*args, **kwargs):
+    pass
+
+
+@cli.command()
+@click.option(
+    '-m', '--mutate',
+    type=click.STRING, default='shift_1',
+    help='the mutation function to be used'
+)
+@click.option(
+    '--cooling-rate', 'cooling_rate',
+    type=click.FLOAT, default=0.05,
+    help='the cooling rate'
+)
+@click.option(
+    '-a', '--acceptance-ratio', 'acceptance_ratio',
+    type=click.INT, default=0.94,
+    help='the initial acceptance ratio'
+)
+@click.option(
+    '-p', '--initial-pressure', 'initial_pressure',
+    type=click.INT, default=0,
+    help='the initial pressure'
+)
+@click.option(
+    '--compression-rate', 'compression_rate',
+    type=click.INT, default=0.06,
+    help='the compression rate / coefficient'
+)
+@click.option(
+    '--pressure-cap-ratio', 'pressure_cap_ratio',
+    type=click.INT, default=0.9999,
+    help='the pressure cap ratio'
+)
+@click.option(
+    '-i', '--iterations-per-temperature', 'iterations_per_temperature',
+    type=click.INT, default=30000,
+    help='the number of iterations per temperature value'
+)
+@click.option(
+    '--minimum-temperature-changes', 'minimum_temperature_changes',
+    type=click.INT, default=100,
+    help='the minimum number of temperature changes that have to occur'
+)
+@click.option(
+    '--idle-temperature-changes', 'idle_temperature_changes',
+    type=click.INT, default=75,
+    help='the maximum number of idle temperature changes'
+)
+@click.option(
+    '--trial-iterations', 'trial_iterations',
+    type=click.INT, default=30000,
+    help='the number of trial iterations'
+)
+@click.option(
+    '--trial-neighbor-pairs', 'trial_neighbor_pairs',
+    type=click.INT, default=5000,
+    help='the number of trial neighbor pairs'
+)
+@click.pass_context
+@safe
+@plot
+def compressed_annealing(*args, **kwargs):
     pass
 
 
@@ -238,13 +252,9 @@ def simulated_annealing(
     help='the size of the population'
 )
 @click.pass_context
+@safe
 @plot
-def genetic_algorithm(
-    ctx,
-    mutate, crossover, select, heuristic, fitness,
-    mutation_probability, fitness_threshold,
-    max_iterations, population_size
-):
+def genetic_algorithm(*args, **kwargs):
     pass
 
 
