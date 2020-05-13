@@ -35,7 +35,7 @@ class SimulatedAnnealing(Trait, AnnealingMixin):
             self.logger.info(
                 f'Iteration: {iteration:04d}, '
                 f'Temperature: {temperature:09.3f}, '
-                f'Score: {best_cost:07.2f}'
+                f'Cost: {best_cost:07.2f}'
             )
 
             candidate = self.mutate(current)
@@ -147,8 +147,20 @@ class CompressedAnnealing(Trait, AnnealingMixin):
         current_penalty = best_penalty = self.penalty(initial)
 
         pressure, temperature = self.INITIAL_PRESSURE, self.MAX_TEMPERATURE
-        k, idle = 0, 0
+        k, idle = -1, -1
         while True:
+            k += 1
+            idle += 1
+
+            self.logger.info(
+                f'Temperature: {temperature:013.3f}, '
+                f'Pressure: {pressure:09.3f}'
+            )
+            self.logger.info(
+                f'Cost: {best_cost:07.2f}, '
+                f'Penalty: {best_penalty:07.2f}'
+            )
+
             for i in range(0, self.ITERATIONS_PER_TEMPERATURE):
                 candidate = self.mutate(current)
 

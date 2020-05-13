@@ -18,7 +18,12 @@ def plot(method):
 
     @wraps(method)
     def wrapper(ctx, **kwargs):
-        tsp = ctx.obj['class'](**{'metric': ctx.obj['metric'], **kwargs})
+        tsp = ctx.obj['class'](**{
+            'metric': ctx.obj['metric'],
+            'service': ctx.obj['service'],
+            'timewindow': ctx.obj['timewindow'],
+            **kwargs
+        })
 
         route, cost = getattr(tsp, method.__name__)(
             ctx.obj['depot'], ctx.obj['cities']
@@ -80,7 +85,8 @@ def safe(method):
         try:
             return method(*args, **kwargs)
         except Exception as e:
-            echo(style(f"Error: ", bold=True) + str(e))
+            name = method.__name__.replace("_", " ").title()
+            echo(style(f"{name}: ", bold=True) + str(e))
             exit(1)
 
     return wrapper

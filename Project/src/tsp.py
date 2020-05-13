@@ -7,6 +7,12 @@ from genetic import GeneticAlgorithm
 
 
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
+    TRAITS = {
+        *SimulatedAnnealing.TRAITS,
+        *GeneticAlgorithm.TRAITS,
+        'metric', 'heuristic'
+    }
+
     class Mutate:
         def random_swap(self, elements):
             neighbor = elements[:]
@@ -97,19 +103,14 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     class Select:
         def random_top_half(self, population):
             return population[randint(0, len(population) // 2 - 1)]
-    TRAITS = {
-        *SimulatedAnnealing.TRAITS,
-        *GeneticAlgorithm.TRAITS,
-        'metric', 'heuristic'
-    }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def cost(self, cities):
+    def cost(self, route):
         return sum([
-            self.metric(cities[i], cities[i + 1])
-            for i in range(len(cities) - 1)
+            self.metric(route[i], route[i + 1])
+            for i in range(len(route) - 1)
         ])
 
     def nearest_neighbor(self, *args, **kwargs):
@@ -168,11 +169,40 @@ class TravellingSalesmanTimeWindows(TravellingSalesman, CompressedAnnealing):
     TRAITS = {
         *TravellingSalesman.TRAITS,
         *CompressedAnnealing.TRAITS,
-        'metric', 'heuristic'
+        'service', 'timewindow'
     }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def partial_cost(self, a, b):
+        return self.service(a) + self.metric(a, b)
+
+    def cost(self, route):
+        return sum([
+            self.partial_cost(route[i], route[i + 1])
+            for i in range(len(route) - 1)
+        ])
+
+    def partial_penalty(self, arrival, a, b):
+        arrival += self.partial_cost(a, b)
+
+        timewindow = self.timewindow(b)
+
+        start_of_service = max(arrival, timewindow[0])
+
+        penalty = max(0, start_of_service + self.service(b) - timewindow[1])
+
+        return arrival, penalty
+
+    def penalty(self, route):
+        arrival, penalty = 0, 0
+
+        for i in range(len(route) - 1):
+            arrival, p = self.partial_penalty(arrival, route[i], route[i + 1])
+            penalty += p
+
+        return penalty
 
     def compressed_annealing(self, *args, **kwargs):
         depot, cities = args[0], args[1]
