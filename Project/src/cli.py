@@ -1,6 +1,6 @@
 
 import logging
-from random import randrange, seed
+from random import uniform, seed
 
 import click
 
@@ -12,11 +12,11 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 @click.group(chain=True)
 @click.option(
     '-d', '--depot',
-    type=click.Tuple([int, int]), default=(None, None),
-    help='the depot (starting point)'
+    type=click.Tuple([float, float]), default=(None, None),
+    help='the depot'
 )
 @click.option(
-    '-n', '--cities',
+    '-c', '--cities',
     type=click.INT, default=10,
     help='the number of cities'
 )
@@ -27,12 +27,12 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 )
 @click.option(
     '-x', '--x-axis', 'x_axis',
-    type=click.Tuple([int, int]), default=[0, 50],
+    type=click.Tuple([float, float]), default=[0, 50],
     help='the horizontal axis limits'
 )
 @click.option(
     '-y', '--y-axis', 'y_axis',
-    type=click.Tuple([int, int]), default=[0, 50],
+    type=click.Tuple([float, float]), default=[0, 50],
     help='the vertical axis limits'
 )
 @click.option(
@@ -72,7 +72,7 @@ def cli(
         cities -= 1
 
     cities = [
-        (randrange(x_axis[0], x_axis[1]), randrange(y_axis[0], y_axis[1]))
+        (uniform(x_axis[0], x_axis[1]), uniform(y_axis[0], y_axis[1]))
         for i in range(cities)
     ]
 
@@ -121,7 +121,7 @@ def opt_2(*args, **kwargs):
 )
 @click.option(
     '-c', '--cooling-rate', 'cooling_rate',
-    type=click.FLOAT, default=0.000625,
+    type=click.FloatRange(0, 1), default=0.000625,
     help='the cooling rate'
 )
 @click.option(
@@ -144,31 +144,31 @@ def simulated_annealing(*args, **kwargs):
 )
 @click.option(
     '--cooling-rate', 'cooling_rate',
-    type=click.FLOAT, default=0.05,
+    type=click.FloatRange(0, 1), default=0.05,
     help='the cooling rate'
 )
 @click.option(
-    '-a', '--acceptance-ratio', 'acceptance_ratio',
-    type=click.INT, default=0.94,
+    '--acceptance-ratio', 'acceptance_ratio',
+    type=click.FloatRange(0, 1), default=0.94,
     help='the initial acceptance ratio'
 )
 @click.option(
-    '-p', '--initial-pressure', 'initial_pressure',
-    type=click.INT, default=0,
+    '--initial-pressure', 'initial_pressure',
+    type=click.FLOAT, default=0,
     help='the initial pressure'
 )
 @click.option(
     '--compression-rate', 'compression_rate',
-    type=click.INT, default=0.06,
-    help='the compression rate / coefficient'
+    type=click.FloatRange(0, 1), default=0.06,
+    help='the compression rate'
 )
 @click.option(
     '--pressure-cap-ratio', 'pressure_cap_ratio',
-    type=click.INT, default=0.9999,
+    type=click.FloatRange(0, 1), default=0.9999,
     help='the pressure cap ratio'
 )
 @click.option(
-    '-i', '--iterations-per-temperature', 'iterations_per_temperature',
+    '--iterations-per-temperature', 'iterations_per_temperature',
     type=click.INT, default=30000,
     help='the number of iterations per temperature value'
 )
@@ -227,12 +227,12 @@ def compressed_annealing(*args, **kwargs):
 )
 @click.option(
     '-p', '--mutation-probability', 'mutation_probability',
-    type=click.FLOAT, default=0.3,
+    type=click.FloatRange(0, 1), default=0.3,
     help='the probability of an individual mutating'
 )
 @click.option(
     '-t', '--fitness-threshold', 'fitness_threshold',
-    type=click.FLOAT, default=0.8,
+    type=click.FloatRange(0, 1), default=0.8,
     help='the fitness threshold of acceptable solutions'
 )
 @click.option(
@@ -241,7 +241,7 @@ def compressed_annealing(*args, **kwargs):
     help='the maximum number of iterations'
 )
 @click.option(
-    '-n', '--population-size', 'population_size',
+    '--population-size', 'population_size',
     type=click.INT, default=50,
     help='the size of the population'
 )

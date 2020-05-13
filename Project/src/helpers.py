@@ -8,12 +8,12 @@ class Dictionary(Choice):
     def __init__(self, choices):
         self.__choices = {}
         for k, v in choices.items():
-            self.__choices[k.lower().replace('_', '-')] = v
+            self.__choices[k.replace('_', '-')] = v
 
-        super().__init__(sorted(self.__choices.keys()))
+        super().__init__(sorted(self.__choices.keys()), case_sensitive=False)
 
     def convert(self, value, param, ctx):
-        value = value.lower().replace('_', '-')
+        value = value.replace('_', '-')
         value = super().convert(value, param, ctx)
 
         return self.__choices[value]

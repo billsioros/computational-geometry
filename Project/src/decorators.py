@@ -28,7 +28,7 @@ def plot(method):
 
         plt.title(
             f'{method.__name__.replace("_", " ").title()} '
-            f'(Cities: {len(route) - 1}, Cost: {cost})'
+            f'(Cities: {len(route) - 1}, Cost: {cost:07.2f})'
         )
 
         dx, dy = route[0]
@@ -40,7 +40,7 @@ def plot(method):
         plt.text(
             dx - 0.5 if dx < 0 else dx + 0.5,
             dy - 0.5 if dy < 0 else dy + 0.5,
-            f'({dx}, {dy})', fontsize=10
+            f'({dx:05.2f}, {dy:5.2f})', fontsize=10
         )
 
         plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
