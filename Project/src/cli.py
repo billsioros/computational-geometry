@@ -26,11 +26,6 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     help='the distance metric to be used'
 )
 @click.option(
-    '-c', '--cost',
-    type=click.STRING, default='total',
-    help='the total cost function to be used'
-)
-@click.option(
     '-x', '--x-axis', 'x_axis',
     type=click.Tuple([int, int]), default=[0, 50],
     help='the horizontal axis limits'
@@ -64,7 +59,7 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 def cli(
     ctx,
     depot, cities,
-    metric, cost,
+    metric,
     x_axis, y_axis,
     rng_seed, fmt, logging_lvl,
     problem
@@ -88,7 +83,6 @@ def cli(
         'depot': depot,
         'cities': cities,
         'metric': metric,
-        'cost': cost,
         'x_axis': x_axis,
         'y_axis': y_axis,
         'format': fmt,

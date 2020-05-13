@@ -18,11 +18,7 @@ def plot(method):
 
     @wraps(method)
     def wrapper(ctx, **kwargs):
-        tsp = ctx.obj['class'](**{
-            'metric': ctx.obj['metric'],
-            'cost': ctx.obj['cost'],
-            **kwargs
-        })
+        tsp = ctx.obj['class'](**{'metric': ctx.obj['metric'], **kwargs})
 
         route, cost = getattr(tsp, method.__name__)(
             ctx.obj['depot'], ctx.obj['cities']

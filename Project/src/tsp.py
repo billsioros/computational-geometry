@@ -54,13 +54,6 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         def manhattan(self, p1, p2):
             return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
-    class Cost:
-        def total(self, cities):
-            return sum([
-                self.metric(cities[i], cities[i + 1])
-                for i in range(len(cities) - 1)
-            ])
-
     class Fitness:
         def inverse_cost(self, individual):
             return 1.0 / self.cost(individual)
@@ -112,6 +105,12 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def cost(self, cities):
+        return sum([
+            self.metric(cities[i], cities[i + 1])
+            for i in range(len(cities) - 1)
+        ])
 
     def nearest_neighbor(self, depot, cities):
         route, remaining = [depot], cities[:]
