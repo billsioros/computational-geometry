@@ -112,7 +112,9 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
             for i in range(len(cities) - 1)
         ])
 
-    def nearest_neighbor(self, depot, cities):
+    def nearest_neighbor(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
         route, remaining = [depot], cities[:]
 
         while len(remaining) > 0:
@@ -128,7 +130,9 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
         return route + [depot], self.cost(route + [depot])
 
-    def opt_2(self, depot, cities):
+    def opt_2(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
         def reverse_sublist(elements, i, j):
             copy = elements[:]
 
@@ -147,10 +151,14 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
         return [depot] + route + [depot], self.cost([depot] + route + [depot])
 
-    def simulated_annealing(self, depot, cities):
+    def simulated_annealing(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
         return SimulatedAnnealing.fit(self, [depot] + cities + [depot])
 
-    def genetic_algorithm(self, depot, cities):
+    def genetic_algorithm(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
         fittest = GeneticAlgorithm.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)
@@ -166,7 +174,9 @@ class TravellingSalesmanTimeWindows(TravellingSalesman, CompressedAnnealing):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def compressed_annealing(self, depot, cities):
+    def compressed_annealing(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
         fittest = CompressedAnnealing.fit(self, [depot] + cities + [depot])
 
         return fittest, self.cost(fittest)

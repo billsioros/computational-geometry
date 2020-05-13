@@ -35,7 +35,7 @@ class SimulatedAnnealing(Trait, AnnealingMixin):
             self.logger.info(
                 f'Iteration: {iteration:04d}, '
                 f'Temperature: {temperature:09.3f}, '
-                f'Score: {best_cost:04d}'
+                f'Score: {best_cost:07.2f}'
             )
 
             candidate = self.mutate(current)

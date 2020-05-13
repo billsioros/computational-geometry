@@ -111,7 +111,7 @@ def opt_2(*args, **kwargs):
 @cli.command()
 @click.option(
     '-m', '--mutate',
-    type=click.STRING, default='random_swap',
+    type=click.STRING, default='shift-1',
     help='the mutation function to be used'
 )
 @click.option(
@@ -202,7 +202,7 @@ def compressed_annealing(*args, **kwargs):
 @cli.command()
 @click.option(
     '-m', '--mutate',
-    type=click.STRING, default='random_swap',
+    type=click.STRING, default='shift-1',
     help='the mutation function to be used'
 )
 @click.option(
@@ -232,7 +232,7 @@ def compressed_annealing(*args, **kwargs):
 )
 @click.option(
     '-t', '--fitness-threshold', 'fitness_threshold',
-    type=click.FloatRange(0, 1), default=0.8,
+    type=click.FloatRange(0, 1), default=0.65,
     help='the fitness threshold of acceptable solutions'
 )
 @click.option(
