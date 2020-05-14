@@ -85,6 +85,11 @@ class CompressedAnnealing(Trait, AnnealingMixin):
     def calibrate(self, initial):
         dv, self.MAX_PRESSURE = 0, 0
         for r in range(0, 2 * self.TRIAL_NEIGHBOR_PAIRS):
+            self.logger.info(
+                f'Maximum Pressure: '
+                f'{self.MAX_PRESSURE:09.3f}'
+            )
+
             n1, n2 = self.mutate(initial), self.mutate(initial)
 
             c1, p1 = self.cost(n1), self.penalty(n1)
@@ -110,6 +115,11 @@ class CompressedAnnealing(Trait, AnnealingMixin):
 
         accepted = 0
         while True:
+            self.logger.info(
+                f'Maximum Temperature: '
+                f'{self.MAX_TEMPERATURE:013.3f}'
+            )
+
             accepted = 0
 
             current = initial

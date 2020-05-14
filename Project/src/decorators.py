@@ -20,8 +20,8 @@ def plot(method):
     def wrapper(ctx, **kwargs):
         tsp = ctx.obj['class'](**{
             'metric': ctx.obj['metric'],
-            'service': ctx.obj['service'],
-            'timewindow': ctx.obj['timewindow'],
+            'service': ctx.obj.get('service', None),
+            'timewindow': ctx.obj.get('timewindow', None),
             **kwargs
         })
 
