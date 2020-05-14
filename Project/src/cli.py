@@ -5,7 +5,7 @@ from random import seed, uniform
 import click
 
 from decorators import plot, safe
-from helpers import Dictionary, Timewindow
+from options import Dictionary, Timewindow
 from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 
 
