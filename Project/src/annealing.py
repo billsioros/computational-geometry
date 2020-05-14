@@ -86,7 +86,7 @@ class CompressedAnnealing(Trait, AnnealingMixin):
         dv, self.MAX_PRESSURE = 0, 0
         for r in range(0, 2 * self.TRIAL_NEIGHBOR_PAIRS):
             self.logger.info(
-                f'Calibrating the maximum pressure '
+                f'Maximum Pressure: '
                 f'{self.MAX_PRESSURE:09.3f}'
             )
 
@@ -116,7 +116,7 @@ class CompressedAnnealing(Trait, AnnealingMixin):
         accepted = 0
         while True:
             self.logger.info(
-                f'Calibrating the maximum temperature '
+                f'Maximum Temperature: '
                 f'{self.MAX_TEMPERATURE:013.3f}'
             )
 
