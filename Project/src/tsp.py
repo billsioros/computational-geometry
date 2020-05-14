@@ -187,11 +187,11 @@ class TravellingSalesmanTimeWindows(TravellingSalesman, CompressedAnnealing):
     def partial_penalty(self, arrival, a, b):
         arrival += self.partial_cost(a, b)
 
-        timewindow = self.timewindow(b)
+        beg, end = self.timewindow(b)
 
-        start_of_service = max(arrival, timewindow[0])
+        start_of_service = max(arrival, beg)
 
-        penalty = max(0, start_of_service + self.service(b) - timewindow[1])
+        penalty = max(0, start_of_service + self.service(b) - end)
 
         return arrival, penalty
 
