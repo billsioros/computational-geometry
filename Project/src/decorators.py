@@ -1,7 +1,8 @@
 
-def cached(method):
-    from functools import wraps
+from functools import wraps
 
+
+def cached(method):
     @wraps(method)
     def wrapper(*args, **kwargs):
         if not hasattr(wrapper, 'cache'):
@@ -14,8 +15,6 @@ def cached(method):
 
 def plot(method):
     from matplotlib import pyplot as plt
-    from functools import wraps
-
     @wraps(method)
     def wrapper(ctx, **kwargs):
         tsp = ctx.obj['class'](**{
@@ -86,8 +85,6 @@ def plot(method):
 
 def safe(method):
     from click import echo, style
-    from functools import wraps
-
     @wraps(method)
     def wrapper(*args, **kwargs):
         try:
@@ -96,5 +93,37 @@ def safe(method):
             name = method.__name__.replace("_", " ").title()
             echo(style(f"{name}: ", bold=True) + str(e))
             exit(1)
+
+    return wrapper
+
+
+def jarvis(method):
+    from jarvis import jarvis
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
+        route = jarvis([depot] + cities)
+        inner = set([depot] + cities).difference(set(route))
+        while inner:
+            best, best_i, best_angle = None, -1, float("-inf")
+            for candidate in inner:
+                for i in range(len(route) - 1):
+                    angle_candidate = method(
+                        self, route[i], candidate, route[i + 1]
+                    )
+                    if angle_candidate > best_angle:
+                        best_angle = angle_candidate
+                        best = candidate
+                        best_i = i
+
+            inner.remove(best)
+            route = route[:best_i + 1] + [best] + route[best_i + 1:]
+
+        while route[0] != depot:
+            route.insert(0, route.pop())
+
+        return route + [depot], self.cost(route + [depot])
 
     return wrapper
