@@ -37,7 +37,7 @@ def plot(method):
         )
 
         dx, dy = route[0]
-        xs, ys = [c[0] for c in route[1:]], [c[1] for c in route[1:]]
+        xs, ys = [c[0] for c in route[1:-1]], [c[1] for c in route[1:-1]]
 
         plt.scatter(xs, ys, c='blue', label='Cities')
 
@@ -48,7 +48,15 @@ def plot(method):
             f'({dx:05.2f}, {dy:5.2f})', fontsize=10
         )
 
-        plt.plot([dx] + xs, [dy] + ys, 'k--', label='Route')
+        if ctx.obj['verbose'] is True:
+            for cx, cy in zip(xs, ys):
+                plt.text(
+                    cx - 0.5 if cx < 0 else cx + 0.5,
+                    cy - 0.5 if cy < 0 else cy + 0.5,
+                    f'({cx:05.2f}, {cy:5.2f})', fontsize=6
+                )
+
+        plt.plot([dx] + xs + [dx], [dy] + ys + [dy], 'k--', label='Route')
 
         plt.xlim(
             (ctx.obj['x_axis'][0] - 1) * 1.1,

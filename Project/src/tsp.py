@@ -4,6 +4,7 @@ from random import randint, random, randrange, shuffle
 from annealing import CompressedAnnealing, SimulatedAnnealing
 from decorators import cached
 from genetic import GeneticAlgorithm
+from jarvis import jarvis
 
 
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
@@ -128,6 +129,36 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
             route.append(remaining[nearest[0]])
             del remaining[nearest[0]]
+
+        return route + [depot], self.cost(route + [depot])
+
+    def angle_comparison(self, *args, **kwargs):
+        def angle(c, b, a):
+            from math import degrees, atan2
+
+            return degrees(
+                atan2(c[1]-b[1], c[0]-b[0]) - atan2(a[1]-b[1], a[0]-b[0])
+            )
+
+        depot, cities = args[0], args[1]
+
+        route = jarvis([depot] + cities)
+        inner = set([depot] + cities).difference(set(route))
+        while inner:
+            best, best_i, best_angle = None, -1, float("-inf")
+            for candidate in inner:
+                for i in range(len(route) - 1):
+                    angle_candidate = angle(route[i], candidate, route[i + 1])
+                    if angle_candidate > best_angle:
+                        best_angle = angle_candidate
+                        best = candidate
+                        best_i = i
+
+            inner.remove(best)
+            route = route[:best_i + 1] + [best] + route[best_i + 1:]
+
+        while route[0] != depot:
+            route.insert(0, route.pop())
 
         return route + [depot], self.cost(route + [depot])
 
