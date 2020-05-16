@@ -56,9 +56,9 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     show_default=True
 )
 @click.option(
-    "-v", "--verbose",
+    '-v', '--verbose',
     is_flag=True, default=False,
-    help="enable debugging features"
+    help='enable debugging features'
 )
 @click.pass_context
 def cli(
@@ -68,9 +68,9 @@ def cli(
     random_seed, fmt, logging_lvl,
     verbose
 ):
-    """
+    '''
     Visualization of various `Travelling Salesman` algorithms
-    """
+    '''
 
     if random_seed is not None:
         seed(random_seed)
@@ -105,9 +105,9 @@ def cli(
 @cli.group(chain=True)
 @click.pass_context
 def tsp(ctx, *args, **kwargs):
-    """
+    '''
     Various algorithms targeting the `Travelling Salesman` Problem
-    """
+    '''
     ctx.obj['class'] = TravellingSalesman
 
 
@@ -126,9 +126,9 @@ def tsp(ctx, *args, **kwargs):
 )
 @click.pass_context
 def tsptw(ctx, service_time, time_window, *args, **kwargs):
-    """
+    '''
     Various algorithms targeting the `Travelling Salesman with Time Windows` Problem
-    """
+    '''
 
     def service(self, city):
         return uniform(service_time[0], service_time[1])
@@ -161,18 +161,16 @@ for group in [tsp, tsptw]:
 
 for group in [tsp, tsptw]:
     @group.command()
+    @click.option(
+        '-c', '--condition',
+        type=click.Choice(['angle', 'eccentricity']), default='eccentricity',
+        help='the method of choosing which city to integrate next into the partial route',
+        show_default=True
+    )
     @click.pass_context
     @safe
     @plot
-    def angle_comparison(*args, **kwargs):
-        pass
-
-for group in [tsp, tsptw]:
-    @group.command()
-    @click.pass_context
-    @safe
-    @plot
-    def ellipse_comparison(*args, **kwargs):
+    def convex_hull(*args, **kwargs):
         pass
 
 for group in [tsp, tsptw]:

@@ -95,35 +95,3 @@ def safe(method):
             exit(1)
 
     return wrapper
-
-
-def jarvis(method):
-    from jarvis import jarvis
-
-    @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        depot, cities = args[0], args[1]
-
-        route = jarvis([depot] + cities)
-        inner = set([depot] + cities).difference(set(route))
-        while inner:
-            best, best_i, best_angle = None, -1, float("-inf")
-            for candidate in inner:
-                for i in range(len(route) - 1):
-                    angle_candidate = method(
-                        self, route[i], candidate, route[i + 1]
-                    )
-                    if angle_candidate > best_angle:
-                        best_angle = angle_candidate
-                        best = candidate
-                        best_i = i
-
-            inner.remove(best)
-            route = route[:best_i + 1] + [best] + route[best_i + 1:]
-
-        while route[0] != depot:
-            route.insert(0, route.pop())
-
-        return route + [depot], self.cost(route + [depot])
-
-    return wrapper
