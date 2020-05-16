@@ -40,7 +40,7 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     show_default=True
 )
 @click.option(
-    '-r', '--random-seed', 'random_seed',
+    '-s', '--random-seed', 'random_seed',
     type=click.INT, default=None,
     help='the random number generator seed'
 )
@@ -165,6 +165,14 @@ for group in [tsp, tsptw]:
     @safe
     @plot
     def angle_comparison(*args, **kwargs):
+        pass
+
+for group in [tsp, tsptw]:
+    @group.command()
+    @click.pass_context
+    @safe
+    @plot
+    def ellipse_comparison(*args, **kwargs):
         pass
 
 for group in [tsp, tsptw]:
