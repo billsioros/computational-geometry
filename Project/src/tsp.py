@@ -2,7 +2,7 @@
 from random import randint, random, randrange, shuffle
 
 from annealing import CompressedAnnealing, SimulatedAnnealing
-from decorators import cached
+from decorators import cached, jarvis
 from genetic import GeneticAlgorithm
 
 
@@ -130,6 +130,22 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
             del remaining[nearest[0]]
 
         return route + [depot], self.cost(route + [depot])
+
+    @jarvis
+    def angle_comparison(self, c, b, a):
+        from math import degrees, atan2
+
+        return degrees(
+            atan2(c[1]-b[1], c[0]-b[0]) - atan2(a[1]-b[1], a[0]-b[0])
+        )
+
+    @jarvis
+    def ellipse_comparison(self, a, b, c):
+        d1 = self.metric(a, b)
+        d2 = self.metric(b, c)
+        d3 = self.metric(a, c)
+
+        return d3 / (d1 + d2)
 
     def opt_2(self, *args, **kwargs):
         depot, cities = args[0], args[1]

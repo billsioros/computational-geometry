@@ -5,7 +5,7 @@ from random import seed, uniform
 import click
 
 from decorators import plot, safe
-from helpers import Dictionary, Timewindow
+from options import Dictionary, Timewindow
 from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 
 
@@ -40,7 +40,7 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     show_default=True
 )
 @click.option(
-    '-r', '--random-seed', 'random_seed',
+    '-s', '--random-seed', 'random_seed',
     type=click.INT, default=None,
     help='the random number generator seed'
 )
@@ -55,12 +55,18 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     help='the logging level',
     show_default=True
 )
+@click.option(
+    "-v", "--verbose",
+    is_flag=True, default=False,
+    help="enable debugging features"
+)
 @click.pass_context
 def cli(
     ctx,
     depot, cities, metric,
     x_axis, y_axis,
-    random_seed, fmt, logging_lvl
+    random_seed, fmt, logging_lvl,
+    verbose
 ):
     """
     Visualization of various `Travelling Salesman` algorithms
@@ -86,10 +92,14 @@ def cli(
         'metric': metric,
         'x_axis': x_axis,
         'y_axis': y_axis,
-        'format': fmt
+        'format': fmt,
+        'verbose': verbose
     }
 
-    logging.basicConfig(level=logging_lvl)
+    if verbose is False:
+        logging.basicConfig(level=logging_lvl)
+    else:
+        logging.basicConfig(level=logging.DEBUG)
 
 
 @cli.group(chain=True)
@@ -147,6 +157,22 @@ for group in [tsp, tsptw]:
     @safe
     @plot
     def nearest_neighbor(*args, **kwargs):
+        pass
+
+for group in [tsp, tsptw]:
+    @group.command()
+    @click.pass_context
+    @safe
+    @plot
+    def angle_comparison(*args, **kwargs):
+        pass
+
+for group in [tsp, tsptw]:
+    @group.command()
+    @click.pass_context
+    @safe
+    @plot
+    def ellipse_comparison(*args, **kwargs):
         pass
 
 for group in [tsp, tsptw]:
