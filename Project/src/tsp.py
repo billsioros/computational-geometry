@@ -11,7 +11,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     TRAITS = {
         *SimulatedAnnealing.TRAITS,
         *GeneticAlgorithm.TRAITS,
-        'metric', 'heuristic', 'condition'
+        'metric', 'heuristic', 'criterion'
     }
 
     class Mutate:
@@ -132,7 +132,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
         return route + [depot], self.cost(route + [depot])
 
-    class Condition:
+    class Criterion:
         def angle(self, c, b, a):
             from math import degrees, atan2
 
@@ -156,7 +156,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
             best, best_i, best_value = None, -1, float("-inf")
             for candidate in inner:
                 for i in range(len(route) - 1):
-                    value_candidate = self.condition(
+                    value_candidate = self.criterion(
                         route[i], candidate, route[i + 1]
                     )
                     if value_candidate > best_value:
