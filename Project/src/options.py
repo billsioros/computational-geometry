@@ -1,4 +1,6 @@
 
+from inspect import getmembers, isfunction
+
 from click import Choice, Tuple
 
 
@@ -36,3 +38,14 @@ class Timewindow(Tuple):
             self.fail("Minutes should be in the range [00, 59]", param, ctx)
 
         return hours * 3600 + minutes * 60
+
+
+class Trait(Choice):
+    def __init__(self, cls):
+        super().__init__(
+            [
+                name
+                for name, _ in getmembers(cls, predicate=isfunction)
+                if not name.startswith("_")
+            ], case_sensitive=False
+        )

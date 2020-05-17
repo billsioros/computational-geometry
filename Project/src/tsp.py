@@ -2,15 +2,16 @@
 from random import randint, random, randrange, shuffle
 
 from annealing import CompressedAnnealing, SimulatedAnnealing
-from decorators import cached, jarvis
+from decorators import cached
 from genetic import GeneticAlgorithm
+from jarvis import jarvis
 
 
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
     TRAITS = {
         *SimulatedAnnealing.TRAITS,
         *GeneticAlgorithm.TRAITS,
-        'metric', 'heuristic'
+        'metric', 'heuristic', 'criterion'
     }
 
     class Mutate:
@@ -131,21 +132,45 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
         return route + [depot], self.cost(route + [depot])
 
-    @jarvis
-    def angle_comparison(self, c, b, a):
-        from math import degrees, atan2
+    class Criterion:
+        def angle(self, c, b, a):
+            from math import degrees, atan2
 
-        return degrees(
-            atan2(c[1]-b[1], c[0]-b[0]) - atan2(a[1]-b[1], a[0]-b[0])
-        )
+            return degrees(
+                atan2(c[1]-b[1], c[0]-b[0]) - atan2(a[1]-b[1], a[0]-b[0])
+            )
 
-    @jarvis
-    def ellipse_comparison(self, a, b, c):
-        d1 = self.metric(a, b)
-        d2 = self.metric(b, c)
-        d3 = self.metric(a, c)
+        def eccentricity(self, a, b, c):
+            d1 = self.metric(a, b)
+            d2 = self.metric(b, c)
+            d3 = self.metric(a, c)
 
-        return d3 / (d1 + d2)
+            return d3 / (d1 + d2)
+
+    def convex_hull(self, *args, **kwargs):
+        depot, cities = args[0], args[1]
+
+        route = jarvis([depot] + cities)
+        inner = set([depot] + cities).difference(set(route))
+        while inner:
+            best, best_i, best_value = None, -1, float("-inf")
+            for candidate in inner:
+                for i in range(len(route) - 1):
+                    value_candidate = self.criterion(
+                        route[i], candidate, route[i + 1]
+                    )
+                    if value_candidate > best_value:
+                        best_value = value_candidate
+                        best = candidate
+                        best_i = i
+
+            inner.remove(best)
+            route = route[:best_i + 1] + [best] + route[best_i + 1:]
+
+        while route[0] != depot:
+            route.insert(0, route.pop())
+
+        return route + [depot], self.cost(route + [depot])
 
     def opt_2(self, *args, **kwargs):
         depot, cities = args[0], args[1]

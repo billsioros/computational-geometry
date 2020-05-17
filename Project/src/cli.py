@@ -5,7 +5,7 @@ from random import seed, uniform
 import click
 
 from decorators import plot, safe
-from options import Dictionary, Timewindow
+from options import Dictionary, Timewindow, Trait
 from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 
 
@@ -23,7 +23,7 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
 )
 @click.option(
     '-m', '--metric',
-    type=click.STRING, default='euclidean',
+    type=Trait(TravellingSalesman.Metric), default='euclidean',
     help='the distance metric to be used',
     show_default=True
 )
@@ -56,9 +56,9 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     show_default=True
 )
 @click.option(
-    "-v", "--verbose",
+    '-v', '--verbose',
     is_flag=True, default=False,
-    help="enable debugging features"
+    help='enable debugging features'
 )
 @click.pass_context
 def cli(
@@ -68,9 +68,9 @@ def cli(
     random_seed, fmt, logging_lvl,
     verbose
 ):
-    """
+    '''
     Visualization of various `Travelling Salesman` algorithms
-    """
+    '''
 
     if random_seed is not None:
         seed(random_seed)
@@ -105,9 +105,9 @@ def cli(
 @cli.group(chain=True)
 @click.pass_context
 def tsp(ctx, *args, **kwargs):
-    """
+    '''
     Various algorithms targeting the `Travelling Salesman` Problem
-    """
+    '''
     ctx.obj['class'] = TravellingSalesman
 
 
@@ -126,9 +126,9 @@ def tsp(ctx, *args, **kwargs):
 )
 @click.pass_context
 def tsptw(ctx, service_time, time_window, *args, **kwargs):
-    """
+    '''
     Various algorithms targeting the `Travelling Salesman with Time Windows` Problem
-    """
+    '''
 
     def service(self, city):
         return uniform(service_time[0], service_time[1])
@@ -161,18 +161,16 @@ for group in [tsp, tsptw]:
 
 for group in [tsp, tsptw]:
     @group.command()
+    @click.option(
+        '-c', '--criterion',
+        type=Trait(TravellingSalesman.Criterion), default='eccentricity',
+        help='the criterion for choosing which city to integrate next into the partial tour',
+        show_default=True
+    )
     @click.pass_context
     @safe
     @plot
-    def angle_comparison(*args, **kwargs):
-        pass
-
-for group in [tsp, tsptw]:
-    @group.command()
-    @click.pass_context
-    @safe
-    @plot
-    def ellipse_comparison(*args, **kwargs):
+    def convex_hull(*args, **kwargs):
         pass
 
 for group in [tsp, tsptw]:
@@ -188,7 +186,7 @@ for group in [tsp, tsptw]:
     @group.command()
     @click.option(
         '-m', '--mutate',
-        type=click.STRING, default='shift-1',
+        type=Trait(TravellingSalesman.Mutate), default='shift-1',
         help='the mutation function to be used',
         show_default=True
     )
@@ -220,7 +218,7 @@ for group in [tsptw]:
     @group.command()
     @click.option(
         '-m', '--mutate',
-        type=click.STRING, default='shift_1',
+        type=Trait(TravellingSalesman.Mutate), default='shift_1',
         help='the mutation function to be used',
         show_default=True
     )
@@ -295,31 +293,31 @@ for group in [tsp, tsptw]:
     @group.command()
     @click.option(
         '-m', '--mutate',
-        type=click.STRING, default='shift-1',
+        type=Trait(TravellingSalesman.Mutate), default='shift-1',
         help='the mutation function to be used',
         show_default=True
     )
     @click.option(
         '-c', '--crossover',
-        type=click.STRING, default='cut_and_stitch',
+        type=Trait(TravellingSalesman.Crossover), default='cut_and_stitch',
         help='the crossover function to be used',
         show_default=True
     )
     @click.option(
         '-s', '--select',
-        type=click.STRING, default='random_top_half',
+        type=Trait(TravellingSalesman.Select), default='random_top_half',
         help='the selection function to be used',
         show_default=True
     )
     @click.option(
         '-h', '--heuristic',
-        type=click.STRING, default='kruskal',
+        type=Trait(TravellingSalesman.Heuristic), default='kruskal',
         help='the heuristic to be used in the calculation of the fitness',
         show_default=True
     )
     @click.option(
         '-f', '--fitness',
-        type=click.STRING, default='weighted_mst',
+        type=Trait(TravellingSalesman.Fitness), default='weighted_mst',
         help='the function determining the fitness of an individual',
         show_default=True
     )
