@@ -73,9 +73,9 @@ def cli(
     random_seed, fmt, path, logging_lvl,
     verbose
 ):
-    '''
+    """
     Visualization of various `Travelling Salesman` algorithms
-    '''
+    """
 
     if random_seed is not None:
         seed(random_seed)
@@ -111,9 +111,9 @@ def cli(
 @cli.group(chain=True)
 @click.pass_context
 def tsp(ctx, *args, **kwargs):
-    '''
+    """
     Various algorithms targeting the `Travelling Salesman` Problem
-    '''
+    """
     ctx.obj['class'] = TravellingSalesman
 
 
@@ -132,9 +132,9 @@ def tsp(ctx, *args, **kwargs):
 )
 @click.pass_context
 def tsptw(ctx, service_time, time_window, *args, **kwargs):
-    '''
+    """
     Various algorithms targeting the `Travelling Salesman with Time Windows` Problem
-    '''
+    """
 
     def service(self, city):
         return uniform(service_time[0], service_time[1])
