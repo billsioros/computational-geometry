@@ -50,6 +50,11 @@ from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
     help='the format of the resulting figure file'
 )
 @click.option(
+    '-p', '--path',
+    type=click.STRING, default=None,
+    help='where to save the resulting figure file'
+)
+@click.option(
     '-l', '--logging-lvl', 'logging_lvl',
     type=Dictionary(logging._nameToLevel), default='CRITICAL',
     help='the logging level',
@@ -65,7 +70,7 @@ def cli(
     ctx,
     depot, cities, metric,
     x_axis, y_axis,
-    random_seed, fmt, logging_lvl,
+    random_seed, fmt, path, logging_lvl,
     verbose
 ):
     '''
@@ -93,6 +98,7 @@ def cli(
         'x_axis': x_axis,
         'y_axis': y_axis,
         'format': fmt,
+        'path': path,
         'verbose': verbose
     }
 

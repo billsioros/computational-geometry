@@ -15,6 +15,8 @@ def cached(method):
 
 def plot(method):
     from matplotlib import pyplot as plt
+    from pathlib import Path
+
     @wraps(method)
     def wrapper(ctx, **kwargs):
         tsp = ctx.obj['class'](**{
@@ -71,6 +73,9 @@ def plot(method):
         plt.legend()
 
         if ctx.obj['format'] is not None:
+            if ctx.obj['path'] is not None:
+                Path(ctx.obj['path']).mkdir(parents=True, exist_ok=True)
+
             figure.savefig(
                 f'{method.__name__}_{len(route) - 1:03d}_{cost:05d}.{ctx.obj["format"]}',
                 format=ctx.obj['format']
@@ -85,6 +90,7 @@ def plot(method):
 
 def safe(method):
     from click import echo, style
+
     @wraps(method)
     def wrapper(*args, **kwargs):
         try:
