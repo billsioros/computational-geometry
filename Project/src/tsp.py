@@ -213,6 +213,24 @@ class TravellingSalesmanTimeWindows(TravellingSalesman, CompressedAnnealing):
         'service', 'timewindow'
     }
 
+    class Fitness(TravellingSalesman.Fitness):
+        def inverse_cost(self, individual):
+            c = 0.5 * self.cost(individual) + 0.5 * self.penalty(individual)
+
+            return 1.0 / c
+
+        def unweighted_mst(self, individual):
+            v = len(individual) - 1
+
+            c = 0.5 * self.cost(individual) + 0.5 * self.penalty(individual)
+
+            return ((v * v) - v + 1) / c
+
+        def weighted_mst(self, individual):
+            c = 0.5 * self.cost(individual) + 0.5 * self.penalty(individual)
+
+            return self.heuristic(individual) / c
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
