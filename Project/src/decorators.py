@@ -16,6 +16,7 @@ def cached(method):
 def plot(method):
     from matplotlib import pyplot as plt
     from pathlib import Path
+    from math import modf
 
     @wraps(method)
     def wrapper(ctx, **kwargs):
@@ -74,10 +75,15 @@ def plot(method):
 
         if ctx.obj['format'] is not None:
             if ctx.obj['path'] is not None:
-                Path(ctx.obj['path']).mkdir(parents=True, exist_ok=True)
+                folder = Path(ctx.obj['path'])
+                folder.mkdir(parents=True, exist_ok=True)
+
+            f, i = modf(cost)
+            f, i = int(f * 100), int(i)
 
             figure.savefig(
-                f'{method.__name__}_{len(route) - 1:03d}_{cost:05d}.{ctx.obj["format"]}',
+                folder /
+                f'{method.__name__}_{len(route) - 1:03d}_{i:04d}_{f:03d}.{ctx.obj["format"]}',
                 format=ctx.obj['format']
             )
         else:
