@@ -49,3 +49,6 @@ class Trait(Choice):
                 if not name.startswith("_")
             ], case_sensitive=False
         )
+
+    def convert(self, value, param, ctx):
+        return super().convert(value.replace('-', '_'), param, ctx)
