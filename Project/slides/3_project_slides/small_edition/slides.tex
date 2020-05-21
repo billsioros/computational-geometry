@@ -115,38 +115,6 @@
 
 \begin{frame}
 	\frametitle{\el Πολυπλοκότητα}
-	\begin{itemize}
-		\item \el Πολλές φορές τα προβλήματα που ανήκουν στην κλάση \en NP \el μοιάζουν εντυπωσιακά πολύ με κάποιο πρόβλημα που ανήκει στην κλάση \en P.
-		\item \el Δεδομένου ενός γράφου \(G = (V,E)\), η εύρεση κύκλου \en Euler \el έχει πολυπλοκότητα \(Ο(|Ε|)\). 
-		\item \el H εύρεση κύκλου \en Hamilton, \el είναι \en NP- \el πλήρες πρόβλημα.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Πολυπλοκότητα}
-	\begin{itemize}
-		\item \(P \subseteq NP\)
-		\begin{itemize}
-			\item \el Αν ένα πρόβλημα ανήκει στην κλάση \(P\), τότε θα ανήκει και στην κλάση \(NP\)
-			\item \el Ένα πρόβλημα που ανήκει στην \(P\) μπορεί να επαληθευτεί σε πολυωνυμικό χρόνο με δεδομένη κάποια λύση.
-		\end{itemize} 
-		\item \(NP \subseteq P\)
-		\begin{itemize}
-			\item \el Ούτε έχει επιβεβαιωθεί, όυτε έχει καταρριφθεί.
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Πολυπλοκότητα}
-	\begin{figure}
-		\includegraphics[scale=0.3]{images/complexity_classes.png}
-		\caption{\en P \el κλάση και \en NP \el κλάση \\ πηγή: \en https://jcaip.github.io/Reduction-and-Intractibility/}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Πολυπλοκότητα}
 	\begin{mylemma}{TSP}{}
 		Tο πρόβλημα του περιοδεύοντος πωλητή ανήκει στην κλάση NP.	
 	\end{mylemma}
@@ -158,36 +126,14 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{\el Πολυπλοκότητα}
-	\begin{itemize}
-		\item \el Προσεγγιστικός Αλγόριθμος
-		\begin{itemize}
-			\item \el Υπολογίζει σχεδόν βέλτιστες λύσεις.
-			\item \el Επιτυγχάνει λόγο προσέγγισης \(ρ(n)\), \(n\) το μέγεθος της εισόδου του αλγορίθμου.
-			\item \el
-			\begin{align*}
-				\max\left(\frac{C}{C_{OPT}}, \frac{C_{OPT}}{C}\right) \leq ρ(n)
-			\end{align*}  
-			όπου \(C\) και \(C_{OPT}\) το κόστος της λύσης του προσεγγιστικού αλγορίθμου και της βέλτιστης λύσης αντίστοιχα.
-			\item \el Καλείται \(ρ(n)\)-προσεγγιστικός.			
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
 \subsection{Μαθηματικό Υπόβαθρο}
-\begin{frame}
-	\frametitle{\el Θεωρητική Προσέγγιση}
-	\footnotesize
-	\tableofcontents[currentsubsection]
-\end{frame}
-
 \subsubsection{Γραφήματα}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
 	\footnotesize
 	\tableofcontents[currentsubsection]
 \end{frame}
+
 \begin{frame}
 	\frametitle{\el Γραφήματα}
 	\begin{itemize}
@@ -197,48 +143,6 @@
 			\item \el Ακμές \(E\)
 		\end{itemize}
 		\item \el Οι κορυφές ενώνονται με τη βοήθεια των ακμών και δημιουργούν ένα γράφημα. \\
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γραφήματα}
-	\begin{itemize}	
-		\item \el Κατευθυνόμενα γραφήματα
-		\begin{itemize}
-			\item \el Γεωμετρική αναπαράσταση: ένα σύνολο από \(V\) σημεία ενώνονται με \(E\) βέλη.
-			\item \el Το \(E\) είναι μία διμελής σχέση.
-		\end{itemize}
-			
-		\item \el Μη κατευθυνόμενα γραφήματα
-		\begin{itemize}
-			\item \el Γεωμετρική αναπαράσταση: ένα σύνολο από \(V\) σημεία ενώνονται με \(E\) ακμές, που δεν υποδεικνύουν κατεύθυνση. 
-			\item \el Το \(E\) είναι σύνολο πολυσυνόλων δύο στοιχείων.
-		\end{itemize}		
-	\end{itemize}
-	\begin{columns}[t]
-		\column{.3\textwidth}
-		\includegraphics[width=\columnwidth,height=2.5cm]{images/directed_graph_example.png}
-		\captionof{figure}{Παράδειγμα κατευθυνόμενου γράφου}
-		\column{.3\textwidth}
-		\includegraphics[width=\columnwidth,height=2.5cm]{images/undirected_graph_example.png}
-		\captionof{figure}{Παράδειγμα μη κατευθυνόμενου γράφου}
-	\end{columns}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γραφήματα - Μονοπάτια}	
-	\begin{itemize}
-		\item \el Κατευθυνόμενα Γραφήματα
-			\begin{itemize}
-				\item \el Μία ακολουθία ακμών \((e_1, e_2,...,e_k)\) όπου η τερματική κορυφή μίας ακμής \(e_j\) ταυτίζεται με την αρχική κορυφή της \(e_{(j+1)}\) καλείται μονοπάτι.
-				\item \el Κύκλωμα καλείται το μονοπάτι \((e_1, e_2,...,e_k)\), όπου η τερματική κορυφή της \(e_k\) ακμής συμπίπτει με την αρχική κορυφή της \(e_1\) ακμής. \\
-			\end{itemize}
-		\item \el Μη Κατευθυνόμενα Γραφήματα
-		\begin{itemize}
-			\item \el Με παρόμοιο τρόπο ορίζεται κι εδω η έννοια του μονοπατιου.
-		\end{itemize}
-		\item \el Απλό μονοπάτι: δεν περιέχει την ίδια ακμή δύο φορές.
-		\item \el Στοιχειώδες μονοπάτι: δεν περιέχει την ίδια κορυφή παραπάνω από μία φορά.
 	\end{itemize}
 \end{frame}
 
@@ -253,8 +157,8 @@
 \begin{frame}
 	\frametitle{\el Γραφήματα - Κύκλος \en Hamilton}
 	\begin{itemize}
-		\item \el O Ιρλανδός φυσικός και μαθηματικός William Rowan Hamilton (4 Αυγούστου 1805 – 2 Σεπτεμβρίου 1865) μελέτησε τα γραφήματα. 
-		\item \el Δημιούργησε το μαθηματικό παιχνίδι "ο γύρος του κόσμου".
+		\item \el O Ιρλανδός φυσικός και μαθηματικός \en William Rowan Hamilton \el (4 Αυγούστου 1805 – 2 Σεπτεμβρίου 1865) μελέτησε τα γραφήματα. 
+		\item \el Δημιούργησε το μαθηματικό παιχνίδι <<ο γύρος του κόσμου>>.
 		\item \el Σκοπός του παιχνιδιού ήταν η εύρεση ενός μονοπατιού από ακμές δωδεκαέδρου. Το μονοπάτι έπρεπε να περνά από κάθε κορυφή του δωδεκαέδρου ακριβώς μία φορά.
 		\item \el Ο ένας παίκτης κάρφωνε από μία βελόνα σε 5 διαδοχικές κορυφές και έπειτα ο άλλος παίκτης έπρεπε να συμπληρώσει το κύκλωμα έτσι ώστε να περιλαμβάνει όλες τις κορυφές.
 	\end{itemize}
@@ -369,57 +273,6 @@
 
 \begin{frame}
 	\frametitle{\en Delaunay \el Τριγωνοποίηση - Θεωρία - Βάσει κύκλων}
-	\begin{mytheorem}{Γωνίες που βαίνουν σε χορδή}{}
-		Έστω \(C\) να είναι ένας κύκλος και \(l\) μία ευθεία που τέμνει τον κύκλο στα σημεία \(a\) και \(b\). Έστω \(p\) και \(q\) σημεία πάνω στην περίμετρο του κύκλου. Τότε η γωνία που βαίνει στο τόξο \(ab\) με κορυφή το σημείο \(p\) είναι ίση με την γωνία που βαίνει στο ίδιο τόξο και έχει κορυφή το σημείο \(q\). 
-	\end{mytheorem}
-	\begin{columns}
-		\column{0.5\textwidth}
-		\begin{figure}
-			\includegraphics[scale=0.25]{images/circle.png}
-		\end{figure}
-		\column{0.5\textwidth}
-		\begin{figure}
-			\caption{Κύκλος C με τόξο ab \\ πηγή: "Computational Geometry, Algorithms and Applications,Third Edition", σελ. 194}
-		\end{figure}
-	\end{columns}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Θεωρία - Βάσει κύκλων}
-	\begin{mytheorem}{Γωνίες που βαίνουν σε χορδή}{}
-		Έστω \(C\) να είναι ένας κύκλος και \(l\) μία ευθεία που τέμνει τον κύκλο στα σημεία \(a\) και \(b\). Έστω \(r\) ένα σημείο εντός του κύκλου και \(s\) ένα σημείο εκτός. Τότε η γωνία που βαίνει στο τόξο \(ab\) με κορυφή το σημείο \(r\) είναι μεγαλύτερη από την γωνία που βαίνει στο ίδιο τόξο και έχει κορυφή το σημείο \(s\). 
-	\end{mytheorem}
-	\begin{columns}
-		\column{0.5\textwidth}
-		\begin{figure}
-			\includegraphics[scale=0.25]{images/circle.png}
-		\end{figure}
-		\column{0.5\textwidth}
-		\begin{figure}
-			\caption{Κύκλος C με τόξο ab \\ πηγή: "Computational Geometry, Algorithms and Applications,Third Edition", σελ. 194}
-		\end{figure}
-	\end{columns}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Θεωρία - Βάσει κύκλων}
-	\begin{mylemma}{}{}
-		Έστω \(C\) ένας κύκλος και \(p_i, p_j, p_k\) σημεία πάνω στον κύκλο και \(p_l\) σημείο εντός του κύκλου. Αν τα \(p_i, p_j, p_k, p_l\) σχηματίζουν ένα κυρτό πολύγωνο, τότε αυτό μπορεί να τριγωνοποιηθεί και να παραχθούν τα τρίγωνα \(p_i p_j p_k\) και \(p_i p_j p_l\) με κοινή ακμή την \(p_i p_j\). Η ακμή \(p_i p_j\) είναι παράνομη.
-	\end{mylemma} 	
-	\begin{mylemma}{}{}
-		Έστω \(C\) ένας κύκλος και \(p_i, p_j, p_k\) σημεία πάνω στον κύκλο και \(p_l\) σημείο εκτός του κύκλου. Αν τα \(p_i, p_j, p_k, p_l\) σχηματίζουν ένα κυρτό πολύγωνο, τότε αυτό μπορεί να τριγωνοποιηθεί και να παραχθούν τα τρίγωνα \(p_i p_j p_k\) και \(p_i p_j p_l\) με κοινή ακμή την \(p_i p_j\). Η ακμή \(p_i p_j\) είναι νόμιμη.
-	\end{mylemma} 
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Θεωρία - Βάσει κύκλων}
-	\begin{mytheorem}{Η ιδιότητα των κενών κυκλων}{}
-		Έστω \(P\) ένα σύνολο σημείων στο επίπεδο που βρίσκονται σε γενική θέση. Μία τριγωνοποίηση \(T\) είναι τριγωνοποίηση Delaunay αν και μόνο αν ο κυκλος που σχηματίζεται από κάθε τριάδα σημείων που αποτελούν τρίγωνο της τριγωνοποίησης δεν περιέχει κανένα άλλο σημείο του \(P\) στο εσωτερικό του.
-	\end{mytheorem} 
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Θεωρία - Βάσει κύκλων}
 	\begin{mytheorem}{Delaunay Τριγωνοποίηση}{}
 		Σε μία τριγωνοποίηση Delaunay \(T\) των σημείων \(P\): \\
 		1. Τρία σημεία κατασκευάζουν τρίγωνο αν και μόνο αν ο περιγεγραμμένος ανοιχτός κύκλος του δεν περιέχει κανένα άλλο σημείο του \(P\). \\
@@ -427,77 +280,11 @@
 	\end{mytheorem}
 \end{frame}
 
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Κατασκευή}
-	\begin{itemize}
-		\item \el Παρουσιάζουμε τον αυξητικό αλγόριθμο κατασκευής \en Delaunay \el Τριγωνοποίησης.
-		\item \el Λαμβάνει ένα σύνολο σημείων και σε κάθε βήμα εξετάζει ενα απο τα σημεία αυτά και παράγει την τρέχουσα \en Delaunay \el τριγωνοποίηση, μέχρι που εξετάζει όλο το σύνολο σημείων.
-		\item \el Η επιλογή σημείου σε κάθε βήμα γίνεται με τυχαίο τρόπο.
-		\item \el Μέση πολυπλοκότητα: \(Ο(n logn)\) 
-		\item \el Χείριστη περίπτωση: \(O(n^2)\).
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Κατασκευή}
-	\begin{itemize}
-		\item \el Επιλέγει 3 σημεία στο επίπεδο των οποίων το αντίστοιχο τρίγωνο περιλαμβάνει όλα τα σημεία προς τριγωνοποίηση. 
-		\item \el Για κάθε σημείο που ελέγχει εντόπίζει αν βρίσκεται
-		\begin{itemize}
-			\item \el εντός τριγώνου της ήδη κατασκευασμένης τριγωνοποίησης
-			\begin{itemize}
-				\item \el Κατασκευάζονται τρείς νέες ακμές, οι οποίες εκτείνονται από το υπό εξέταση σημείο προς την κάθε κορυφή του τριγώνου που το περιέχει. 
-			\end{itemize}
-			\item \el πάνω σε κάποια ακμής της τριγωνοποίησης.
-			\begin{itemize}
-				\item \el Η ακμή αυτή είναι κοινή ακμή για δύο τριγωνα. 
-				\item \el Δημιουργούνται δύο νέες ακμές από το σημείο που εξετάζεται προς τη μία κορυφη του ενός και του άλλου τριγώνου που δεν ανήκουν στο ευθύγραμμο τμήμα.
-			\end{itemize}
-		\end{itemize}  
-	 	\item \el Ελέγχει ότι η τριγωνοποίηση είναι 
-	 	\en Delaunay, \el διότι η προσθήκη μιας νέας ακμής μπορεί να κάνει παράνομες τις ήδη υπάρχουσες ακμές της τριγωνοποίησης και κάνει κατάλληλα flips.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\en Delaunay \el Τριγωνοποίηση - Κατασκευή}
-	\begin{figure}
-		\includegraphics[scale=0.3]{images/incremental.png}
-		\caption{Οι δύο περιπτώσεις που εξετάζει ο αυξητικός αλγόριθμος κατά την εισαγωγή ενός νέου σημείου \(p_r\). Αριστερά φαίνεται η πρώτη περίπτωση, όπου το νεό σημείο εντοπίζεται εντός τριγώνου της τριγωνοποίησης, ενώ δεξία φαίνεται η δεύτερη περίπτωση όπου το νέο σημείο βρίσκεται πάνω σε ακμή της τριγωνοποίησης \\ πηγή: "Computational Geometry, Algorithms and Applications, Third Edition", σελ.: 200}
-	\end{figure}
-\end{frame}
-
 \subsubsection{Κυρτό περίβλημα}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
 	\footnotesize
 	\tableofcontents[currentsubsection]
-\end{frame}
-\begin{frame}
-	\frametitle{\el Κυρτό Περίβλημα}
-	\begin{itemize}
-		\item \el Πολλές φορές είναι απαραίτητο, δοθέντος ενός συνόλου σημείων να βρεθεί ένα κυρτό περίβλημα που να περιέχει όλα τα σημεία στο εσωτερικό του.
-		\item \el Εμείς θα επικεντρωθούμε στην περίπτωση όπου τα σημεία ανήκουν στο επίπεδο.
-	\end{itemize}	
-	\begin{mydefinition}{Κυρτό}{}
-		Κυρτό (convex) είναι κάθε αντικείμενο ή σύνολο σημείων, στο οποίο κάθε ευθύγραμμο τμήμα με άκρα που ανήκουν στο αντικείμενο ή στο σύνολο σημείων βρίσκεται μέσα στο αντικείμενο.
-	\end{mydefinition}
-	\begin{itemize}
-		\item \el Στόχος είναι να βρεθεί μία κυρτή πολυγωνική γραμμή που να περιέχει όλα τα σημεία που επιθυμούμε.
-	\end{itemize}	
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Κυρτό Περίβλημα}
-	\begin{itemize}
-		\item \el Η πολυγωνική γραμμή πρέπει να είναι κλειστή.
-	\end{itemize}	
-	\begin{mydefinition}{Κλειστή Πολυγωνική Γραμμή}{}
-		Κλειστή πολυγωνική γραμμή καλείται η πολυγωνική γραμμή της οποίας το τέλος του τελευταίου τμήματος ταυτίζεται με την αρχή του πρώτου.
-	\end{mydefinition}
-	\begin{mydefinition}{Κλειστό Πολύγωνο}{}
-		Κλειστό πολύγωνο καλείται η ένωση μιας κλειστής πολυγωνικής γραμμής και του εσωτερικού της.
-	\end{mydefinition}		
 \end{frame}
 
 \begin{frame}
@@ -516,14 +303,6 @@
 		\includegraphics[scale=0.5]{images/convexhull.png}
 		\caption{Παράδειγμα convex hull δέκα σημείων στο επίπεδο \\ πηγή: Output αλγορίθμου που έχουμε υλοποιήσε για την εύρεση κυρτού περιβλήματος}
 	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Κυρτό Περίβλημα - Κατασκευή}
-	\begin{itemize}
-		\item \el Αυξητικός αλγόριθμος
-		\item \el Αλγόριθμος περιτύλιξης
-	\end{itemize}
 \end{frame}
 
 \subsection{Γραφοθεωρητική Προσέγγιση}
@@ -550,40 +329,11 @@
 		\begin{align}
 		w(i,k) \leq w(i,j) + w(j,k)
 		\end{align} 
+		\item \el Αλγόριθμος: Μέθοδος του πλησιέστερου γείτονα
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{\el Γραφοθεωρητική Προσέγγιση}
-	\begin{center}
-		\scalebox{0.9}{
-			\begin{minipage}{0.9\linewidth}
-				\begin{algorithm}[H]
-				\SetAlgoLined
-				\KwResult{Κύκλωμα Hamilton για το πρόβλημα του περιοδέυοντος πωλητή}
-				
-				Επέλεξε αυθαίρετα μία κορυφή v \;
-				Ανέθεσε την v στην x \;
-				\For{x} 
-				{Επέλεξε μία κορυφή v που δεν βρίσκεται στο μονοπάτι και απέχει τη μικρότερη απόσταση από την τρέχουσα x \;
-					Πρόσθεσε την ακμή (x,v) στο μονοπάτι \;
-					Ανανέωσε την x με την v \;}
-				Σχημάτισε κύκλωμα συνδέοντας την αρχική κορυφή με την τελική κορυφή του μονοπατιού \;
-				
-				\caption{Μέθοδος πλησιέστερου γείτονα}
-			\end{algorithm}
-			\end{minipage}
-		}
-	\end{center}
-\end{frame}
-
 \subsection{Γεωμετρική Προσέγγιση}
-\begin{frame}
-	\frametitle{\el Θεωρητική Προσέγγιση}
-	\footnotesize
-	\tableofcontents[currentsubsection]
-\end{frame}
-
 \subsubsection{Αλγόριθμος Σύγκρισης Γωνιών}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
@@ -658,47 +408,6 @@
 	\end{columns}
 \end{frame}
 
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος Σύγκρισης Γωνιών}
-	\begin{itemize}		
-		\item \el Το μέτρο της γωνίας \(α\) που σχηματίζεται μεταξύ δύο διανυσμάτων \(u\) και \(v\) μπορεί να βρεθεί από τη σχέση
-		\begin{align*}
-		u \cdot v = |u||v|\cos α
-		\end{align*}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος Σύγκρισης Γωνιών}	
-	\begin{center}
-		\scalebox{0.9}{
-			\begin{minipage}{0.9\linewidth}
-				\begin{algorithm}[H]
-					\SetAlgoLined
-					\KwIn{Σύνολο σημείων s στον Ευκλείδιο χώρο}
-					\KwResult{Μονοπάτι για το TSP}
-					
-					partial\_tour = convex hull των s \;
-					out\_points = Σημεία που βρίσκονται στο convex hull \; 
-					in\_points = s - out\_points \;
-					
-					\While{in\_points \(\neq \emptyset\)}
-					{
-						\For{i} 
-						{
-							Κατασκεύασε όλες τις γωνίες με κορυφή το σημείο in\_points[i] και πλευρές που τέμνουν δύο διαδοχικά σημεία του partial\_tour \; 
-							Υπολόγισε το μέτρο των γωνιών και αποθήκευσε τη μεγαλύτερη γωνία \;
-						}
-						partial\_tour += εσωτερικό σημείο με μεγαλύτερη γωνία \;
-					}
-					
-					\caption{Εύρεση μονοπατιού TSP με το μέτρο γωνιών}
-				\end{algorithm}
-			\end{minipage}
-		}
-	\end{center}
-\end{frame}
-
 \subsubsection{Αλγόριθμος Σύγκρισης Ελλείψεων}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
@@ -728,69 +437,11 @@
 	\end{figure}  
 \end{frame}
 
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος Σύγκρισης Ελλείψεων}
-	\begin{itemize}
-		\item \el Εκκεντρότητα:
-		\begin{align*}
-		e = \frac{d_3}{d_1 + d_2}
-		\end{align*}
-		όπου \(d_3\) είναι η απόσταση μεταξύ των δύο εστιών και \(d_1, d_2\) είναι η απόσταση μεταξύ ενός σημείου της έλλειψης και των δύο εστιών αντίστοιχα.
-	\end{itemize}
-	\begin{figure}
-		\includegraphics[scale=0.2]{images/geometric_approach_ellipse1.png}
-		\caption{Η εκκεντρότητα δίνεται από τον τύπο \(e = \frac{d_3}{d_1 + d_2}\)\\ πηγή: \cite{16}}
-	\end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος Σύγκρισης Ελλείψεων}	
-	\begin{center}
-		\scalebox{0.9}{
-			\begin{minipage}{0.9\linewidth}
-				\begin{algorithm}[H]
-					\SetAlgoLined
-					\KwIn{Σύνολο σημείων s στον Ευκλείδιο χώρο}
-					\KwResult{Μονοπάτι για το TSP}
-					
-					partial\_tour = convex hull των s \;
-					out\_points = Σημεία που βρίσκονται στο convex hull \;
-					in\_points = s - out\_points \;
-					
-					\While{in\_points \(\neq \emptyset\)}
-					{
-						\For{i} 
-						{
-							Κατασκεύασε όλες τις ελλείψεις με εστίες δύο διαδοχικά σημεία του partial\_tour που βαίνουν από το  in\_points[i] \; 
-							Υπολόγισε την εκκεντρότητα όλων των ελλείψεων και αποθήκευσε τη μεγαλύτερη \;
-						}
-						partial\_tour += σημείο που ανήκει στην έλλειψη με τη μεγαλύτερη εκκεντρότητα \;
-					}
-					
-					\caption{Εύρεση μονοπατιού TSP με την εκκεντρότητα ελλείψεων}
-				\end{algorithm}
-			\end{minipage}
-		}
-	\end{center}
-\end{frame}
-
 \subsubsection{Αλγόριθμος με τριγωνοποίηση Delaunay}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
 	\footnotesize
 	\tableofcontents[currentsubsection]
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{itemize}
-		\item \el Γιατί τριγωνοποίηση \en Delaunay \el στο \en TSP;
-		\begin{itemize}
-			\item \el Μεγιστοποιεί τη μικρότερη γωνία των τριγώνων της τριγωνοποίησης.
-			\item \el Μπορεί να υπολογιστεί σε χρόνο \(Ο(n \log(n))\).
-			\item \el Είναι μοναδική αν δεν υπάρχουν τέσσερα σημεία που βρίσκονται στον ίδιο κύκλο.
-		\end{itemize}
-	\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -811,82 +462,12 @@
 \begin{frame}
 	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
 	\begin{itemize}
-		\item \el Πώς επιλέγεται ποια ακμή θα διαγραφεί\en ;
-		\begin{itemize}
-			\item \el  Μία ακμή επιλέγεται να διαγραφεί, έναντι των άλλων, σύμφωνα με την ποιότητά της \(Q_{mn}\).
-			\item \el Το \(Q_{mn}\) υπολογίζεται με βάση το μήκος της ακμής και το μήκος των νεοεισαχθέντων ακμών.
-		\end{itemize}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{itemize}
 		\item \el Οι αλγόριθμοι επίλυσης του \en TSP \el με τη βοήθεια της \en Delaunay \el τριγωνοποίησης δεν παράγουν το βέλτιστο μονοπάτι.
 		\item \el  Tο βέλτιστο μονοπάτι δεν είναι πάντοτε ένα υποσύνολο του \en Delaunay \el γράφου.
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{figure}
-		\includegraphics[scale=0.14]{images/delaunay.png}
-		\caption{Οπτικό παράδειγμα \en TSP \el σε τριγωνοποιημένο γράφο \\ πηγή: \cite{18}}
-	\end{figure} 
-	\begin{mylemma}{}{}
-		Ο γράφος \(Η\) αποτελεί μία Delaunay τριγωνοποίηση των σημείων \(S\).
-	\end{mylemma}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{figure}
-		\includegraphics[scale=0.14]{images/delaunay.png}
-		\caption{Οπτικό παράδειγμα \en TSP \el σε τριγωνοποιημένο γράφο \\ πηγή: \cite{18}}
-	\end{figure} 
-	\begin{mylemma}{}{}
-		Ο υπογράφος \(ABCFEDGA\) του γράφου \(H\) είναι κύκλος Hamilton.
-	\end{mylemma}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{mydefinition}{Βάρος Τριγωνοποίησης}{}
-		Το βάρος μία τριγωνοποίησης \(T\) συμβολίζεται με \(w(T)\) και είναι το άθροισμα των μηκών των πλευρών της τριγωνοποίησης.
-	\end{mydefinition}	
-	\begin{mydefinition}{Τριγωνοποίηση Ελάχιστου Βάρους}{}
-		Μία τριγωνοποίηση \(T\) των σημείων \(S\) με βάρος \(w(T)\) καλείται τριγωνοποίηση ελάχιστου βάρους όταν δεν υπάχει άλλη τριγωνοποίηση \(Τ'\) των σημείων που ανήκουν στο \(S\), τέτοια ώστε να ισχύει ότι \(w(T') < w(T)\).
-	\end{mydefinition}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{mylemma}{}{}
-		Ο γράφος \(H\) αποτελεί την τριγωνοποίηση ελάχιστου βάρους των σημειών του συνόλου \(S\).
-	\end{mylemma}
-\end{frame}
-
-\begin{frame}
-	\frametitle{\el Γεωμετρική Προσέγγιση - Αλγόριθμος με τριγωνοποίηση \en Delaunay}
-	\begin{mytheorem}{}{}
-		Υπάρχει σύνολο σημείων για το οποίο η τριγωνοποίηση Delaunay περιέχει κύκλο Hamilton, αλλά δεν περιέχει κύκλο Hamilton ελάχιστου μήκους.
-	\end{mytheorem}
-	\begin{itemize}
-		\item \el Ο κύκλος \(ABCFDEGA\) είναι κύκλος \en Hamilton \el ελάχιστου μήκους.
-		\item \el O κύκλος \(ABCFDEGA\) έχει μικρότερο μήκος από τον κύκλο \(ABCFEDGA\).
-	\end{itemize}
-	\begin{mytheorem}{}{}
-		Υπάρχει σύνολο σημείων για το οποίο η τριγωνοποίηση ελάχιστου βάρους περιέχει κύκλο Hamilton, αλλά δεν περιέχει κύκλο Hamilton ελάχιστου μήκους.
-	\end{mytheorem}
-\end{frame}
-
 \subsection{Ειδικές Περιπτώσεις \en TSP}
-\begin{frame}
-	\frametitle{\el Θεωρητική Προσέγγιση}
-	\footnotesize
-	\tableofcontents[currentsubsection]
-\end{frame}
-
 \subsubsection{Convex Hull and Line TSP}
 \begin{frame}
 	\frametitle{\el Θεωρητική Προσέγγιση}
@@ -921,28 +502,6 @@
 		\includegraphics[scale=0.2]{images/ConvexHullLineTSP1.png}
 		\caption{Οπτικό παράδειγμα ενός στιγμιοτύπου Convex Hull and Line TSP \\ πηγή: \cite{17}}
 	\end{figure}   
-\end{frame}
-
-\begin{frame}
-	\frametitle{Convex Hull and Line TSP}
-	\begin{itemize}
-		\item \el Το βέλτιστο μονοπάτι δεν διασταυρώνεται με τον εαυτό του.
-		\item \el Το μονοπάτι ακολουθεί μία κυκλική διαδρομή μίας κατεύθυνσης, ώστε να μην υπάρξουν πιθανές διασταυρώσεις.
-		\item \el Σε κατάλληλο σημείο, δηλαδή ανάμεσα σε δύο γειτονικές πόλεις του \en convex hull \el ενσωματώνονται οι πόλεις που ανήκουν στο σύνολο \(G\).
-	\end{itemize} 
-\end{frame}
-
-\begin{frame}
-	\frametitle{Convex Hull and Line TSP}
-	\begin{itemize}
-		\item \el Ποιοι γείτονες είναι κατάλληλοι για την εισαγωγή των εσωτερικών πόλεων \en ;
-	\end{itemize} 
-	\begin{mydefinition}{Αποδεκτοί γείτονες}{}
-		Δύο σημεία \(v,w \in B\) καλούνται αποδεκτοί γείτονες και μεταξύ τους μπορεί να παρεμβληθεί παράκαμψη μονοπατιού που πειέχει το σύνολο των πόλεων \(\left\{g_i,...,g_j\right\}\), όπου \(1 \leq i < j \leq m\) αρκεί να ισχύει μία από τις παρακάτω συνθήκες: \\
-		1. Τα σημεία \(v,w\) βρίσκονται (και τα δύο) είτε πάνω από την ευθεία G, είτε κάτω από αυτήν ή \\
-		2. \(\left\{v,w\right\} = \left\{u_p, l_p\right\}\) και \(j = m\) ή \\
-		3. \(\left\{v,w\right\} = \left\{u_1, l_1\right\}\) και \(i = 1\) 
-	\end{mydefinition} 
 \end{frame}
 
 \subsubsection{Time Window TSP}
@@ -1004,33 +563,10 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Time Window TSP - \en 1D - \el 'Απειρη Ταχύτητα}
-	\begin{mytheorem}{TWTSP - 1D}{}
-		Για ένα TWTSP σε μία διάσταση με όριο ταχύτητας \(s = \infty\) και \(L_{max}\) να είναι το μέγιστο μήκος ευθύγραμμου τμήματος \(σ\), για οποιοδήποτε \(ε > 0\) μπορούμε να βρούμε μονοπάτι \(P\) σε χρόνο \(Ο(n^{O(\frac{\log L_{max}}{\log 1 + ε})} \log L_{max})\) τέτοιο ώστε: \\
-		1. Το μήκος του \(P\) να είναι το πολύ όσο το μήκος του βέλτιστου μονοπατιού και \\
-		2. Ο πωλητής επισκέπτεται κάθε \(σ_i\) σε χρόνο \([r_i - εL_i, d_i + εL_i]\). 
-	\end{mytheorem}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Time Window TSP - \en 1D - \el Πεπερασμένη Ταχύτητα}
-	\begin{mytheorem}{TWPC - 1D}{}
-		Για ένα TWPC σε μία διάσταση με περιορισμένο όριο ταχύτητας \(s\) και \(L_{max}\) να είναι το μέγιστο μήκος ευθύγραμμου τμήματος \(σ\), υποθέτοντας ότι το μικρότερο time window έχει μήκος μεγαλύτερο ή ίσο με 1, τότε για οποιοδήποτε \(ε > 0\) μπορούμε να βρούμε μονοπάτι \(P\) σε χρόνο \(Ο((nL_{max})^{O(\frac{\log L_{max}}{\log 1 + ε})})\) τέτοιο ώστε: \\
-		1. Το πλήθος των ευθυγράμμων τμημάτων που περιέχονται στο \(P\) να είναι τουλάχιστον όσα και στο βέλτιστο μονοπάτι και \\
-		2. Ο πωλητής επισκέπτεται κάθε \(σ_i\) σε χρόνο \([r_i - εL_i, d_i + εL_i]\). 
-	\end{mytheorem}
-	\begin{itemize}
-		\item \el Παρόμοια αποτελέσματα ισχύουν και για το \en TWTSP.
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
 	\frametitle{Time Window TSP στο χώρο}
 	\begin{itemize}
-		\item \el Μπορούμε πλέον να ασχοληθούμε με τη γενική περίπτωση, όπου οι πόλεις που πρέπει να επισκεφτεί ο πωλητής βρίσκονται σε κάποιον χώρο, όπου ισχύει μία μετρική \(δ\).
-		\item \el Υποθέτουμε ότι ο πωλητής μας μπορεί να κινείται με μία ταχύτητα \(s\) που ξεπερνά κάποιο \en threshold \el ταχύτητας \(s_{min}\).
-		\item \el Αν η ταχύτητά του είναι μικρότερη από αυτήν, τότε θεωρούμε ότι το πρόβλημα δεν έχει εφικτή λύση.
-		\item \el Παρουσιάζεται ένας (α,β)-προσεγγιστικός αλγόριθμος.
+		\item \el Οι πόλεις που πρέπει να επισκεφτεί ο πωλητής βρίσκονται σε κάποιον χώρο, όπου ισχύει μία μετρική \(δ\).
+		\item \el Παρουσιάζεται ένας \((α,β)\)-προσεγγιστικός αλγόριθμος.
 		\item \el Τα \(α\) και \(β\) αναφέρονται στην ταχύτητα και το μήκος του μονοπατιού αντίστοιχα.
 		\item \el Ο αλγόριθμος ικανοποιεί τις παρακάτω σχέσεις:
 		\begin{align}
@@ -1040,38 +576,129 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Time Window TSP στο χώρο}
-	\begin{itemize}
-		\item \el Αναφέρουμε την ειδική περίπτωση όπου όλα τα release times είναι ακέραιοι αριθμοί και κάθε \en time window \el έχει μέγεθος είτε μονάδα, είτε \([0,L]\), όπου \(L\) είναι κάποιος ακέραιος αριθμός.
-		\item \el Οι πόλεις που έχουν \en time window \el μεγέθους 1 χρωματίζονται με κόκκινο χρώμα.
-		\item \el Οι πόλεις που έχουν \en time window \el \([0,L]\) χρωματίζονται με μαύρο χρώμα. 
-		\item \el Για κάθε \(i \leq L\) υπάρχει τουλάχιστον μία κόκκινη πόλη τέτοια ώστε να έχει \en time window \([i-1,i]\).
-	\end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Time Window TSP στο χώρο}
-	\begin{itemize}
-		\item \el Ο πωλητής ξεκινάει από μία κόκκινη πόλη που έχει time window \([0,1]\)
-		\item \el Αμέσως μετά επισκέπτεται μία σειρά από γειτονικές μαύρες πόλεις, κάνοντας ένα "μαύρο κύκλο" και επιστρέφει στην πρώτη κόκκινη πόλη που επισκέφτηκε αρχικά.
-		\item \el Συνεχίζει με τις υπόλοιπες κόκκινες πόλεις με \en time window \([0,1]\).
-		\item \el Έπειτα ο πωλητής πηγαίνει σε μία κόκκινη πόλη που έχει \en time window \([1,2]\) \el κ.ο.κ. μέχρις ότου επισκεφτεί κάθε πόλη. 
-	\end{itemize}
-\end{frame}
-
 \section{Υλοποίηση}
-\subsection{title}
 \begin{frame}
 	\frametitle{\el Υλοποίηση}
 	\footnotesize
 	\tableofcontents[currentsubsection]
 \end{frame}
+
 \begin{frame}
-	\frametitle{\en title}
-	
+	\frametitle{\el Υλοποίηση \en - TSP}
+		\begin{columns}[t]
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/separate/tsp/convex_hull_040_1927_068.png}
+		\captionof{figure}{Convex Hull}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/separate/tsp/simulated_annealing_040_7392_075.png}
+		\captionof{figure}{Simulated Annealing}
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/separate/tsp/nearest_neighbor_040_4484_021.png}
+		\captionof{figure}{Nearest Neighbor}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/separate/tsp/opt_2_040_2685_019.png}
+		\captionof{figure}{Opt-2}
+	\end{columns}
 \end{frame}
 
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TSP}
+	\begin{columns}[t]
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/separate/tsp/genetic_algorithm_040_3689_062.png}
+		\captionof{figure}{Genetic Algorithm, mutation=None}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tspgenetics/genetic-algorithm mutation=random-city-swap.png}
+		\captionof{figure}{mutation=random-city-swap}
+		\column{.4\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tspgenetics/genetic-algorithm mutation=reverse-random-sublist.png}
+		\captionof{figure}{mutation=reverse-random-sublist}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tspgenetics/genetic-algorithm mutation=shift-1-move.png}
+		\captionof{figure}{mutation=shift-1-move}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TSP - chained}
+	\begin{columns}[t]
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ac_sa_o2/convex_hull_040_2833_037.png}
+		\captionof{figure}{Angle Comparison - Simulated Annealing - Opt-2 }
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ac_sa_o2/opt_2_040_1955_020.png}
+		\captionof{figure}{Angle Comparison - Simulated Annealing - Opt-2}
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ac_sa_o2/simulated_annealing_040_2833_037.png}
+		\captionof{figure}{Angle Comparison - Simulated Annealing - Opt-2}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TSP - chained}
+	\begin{columns}[t]
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ec_sa_o2/convex_hull_040_1927_068.png}
+		\captionof{figure}{Eccentricity Comparison - Simulated Annealing - Opt-2 }
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ec_sa_o2/opt_2_040_1857_035.png}
+		\captionof{figure}{Eccentricity Comparison - Simulated Annealing - Opt-2}
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/ec_sa_o2/simulated_annealing_040_1927_068.png}
+		\captionof{figure}{Eccentricity Comparison - Simulated Annealing - Opt-2}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TSP - chained}
+	\begin{columns}[t]
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/nn_sa_o2/nearest_neighbor_040_4484_021.png}
+		\captionof{figure}{Nearest Neighbor - Simulated Annealing - Opt-2 }
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/nn_sa_o2/opt_2_040_4036_043.png}
+		\captionof{figure}{Nearest Neighbor - Simulated Annealing - Opt-2}
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsp/nn_sa_o2/simulated_annealing_040_4484_021.png}
+		\captionof{figure}{Nearest Neighbor - Simulated Annealing - Opt-2}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TWTSP}
+	\begin{figure}
+		\includegraphics[scale=0.5]{images/img/separate/tsptw/compressed_annealing_040_3828_078.png}
+		\captionof{figure}{Compressed Annealing}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TWTSP}
+	\begin{columns}[t]
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tsptwgenetics/random-city-swap.png}
+		\captionof{figure}{Genetic Algrithm - mutation=random-city-swap}
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tsptwgenetics/reverse-random-sublist.png}
+		\captionof{figure}{Genetic Algrithm - mutation=reverse-random-sublist}
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/tsptwgenetics/shift-1-move.png}
+		\captionof{figure}{Genetic Algrithm - mutation=shift-1-move}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{\el Υλοποίηση - \en TWTSP - chained}
+	\begin{columns}[t]
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsptw/ec_ca_opt2/compressed_annealing_040_3705_073.png}
+		\captionof{figure}{Eccentricity Comparison - Compressed Annealing - Opt-2 }
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsptw/ec_ca_opt2/convex_hull_040_3641_010.png}
+		\captionof{figure}{Eccentricity Comparison - Compressed Annealing - Opt-2 }
+		\column{.3\textwidth}
+		\includegraphics[width=\columnwidth,height=2.8cm]{images/img/chained/tsptw/ec_ca_opt2/opt_2_040_3664_003.png}
+		\captionof{figure}{Eccentricity Comparison - Compressed Annealing - Opt-2 }
+	\end{columns}
+\end{frame}
+
+\section{Βιβλιογραφία}
 \begin{frame}
 	\frametitle{Βιβλιογραφία}
 	\footnotesize
