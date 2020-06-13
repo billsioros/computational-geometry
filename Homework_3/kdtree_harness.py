@@ -12,6 +12,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
+csv_file = 'benchmark.csv'
 base = Path('images/kdtree/')
 force, tree = base / 'force', base / 'tree'
 
@@ -66,8 +67,10 @@ for t, p in {'force': tree, 'tree': force}.items():
             }
         )
 
+
+logger.info('Writing to %s file' % (csv_file,))
 try:
-    with open('benchmark.csv', 'w') as file:
+    with open(csv_file, 'w') as file:
         writer = csv.DictWriter(file, fieldnames=headers, lineterminator='\n')
         writer.writeheader()
         for t, rows in data.items():
