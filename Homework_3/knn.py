@@ -121,7 +121,7 @@ class KNNTree(KNN):
         return np.array([
             self.label([
                 indices[i] for i in range(self.n_neighbors)
-            ]) if isinstance(indices, list) else self.labels[indices]
+            ])
             for indices in groups
         ])
 
