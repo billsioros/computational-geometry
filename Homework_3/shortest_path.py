@@ -1,5 +1,5 @@
 
-from random import randrange, seed
+import random
 
 import click
 import matplotlib.pyplot as plt
@@ -74,11 +74,15 @@ def cli(seed, number, x_axis, y_axis, metric, begin, end, filename):
     """Compute the shortest path of different set of vertices in a tri-angulation"""
 
     if seed is not None:
-        seed(seed)
+        random.seed(seed)
 
     points = set()
     while len(points) != number:
-        point = (randrange(0, x_axis), randrange(0, y_axis))
+        point = (
+            random.randrange(0, x_axis),
+            random.randrange(0, y_axis)
+        )
+
         if point not in points:
             points.add(point)
 

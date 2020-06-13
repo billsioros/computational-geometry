@@ -1,5 +1,5 @@
 
-from random import seed, uniform
+import random
 
 import click
 import matplotlib.pyplot as plt
@@ -38,12 +38,12 @@ def cli(seed, number, x_axis, y_axis, filename):
     """Compute Voronoi diagrams of different sets of vertices"""
 
     if seed is not None:
-        seed(seed)
+        random.seed(seed)
 
     points = np.array([
         (
-            uniform(x_axis[0], x_axis[1]),
-            uniform(y_axis[0], y_axis[1])
+            random.uniform(x_axis[0], x_axis[1]),
+            random.uniform(y_axis[0], y_axis[1])
         ) for _ in range(number)
     ])
 
@@ -55,6 +55,7 @@ def cli(seed, number, x_axis, y_axis, filename):
         plt.show()
     else:
         figure.savefig(filename, format="png")
+
 
 if __name__ == '__main__':
     cli()

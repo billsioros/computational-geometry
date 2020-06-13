@@ -1,11 +1,12 @@
 
-from random import seed, uniform
+import os
+import random
 
 import click
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import Delaunay
-import os
+
 
 @click.command()
 @click.option(
@@ -42,25 +43,26 @@ def cli(seed, number, x_axis, y_axis, filename):
     """Compute the Delaunay triangulation of different sets of vertices"""
 
     if seed is not None:
-        seed(seed)
+        random.seed(seed)
 
     points = np.array([
         (
-            uniform(x_axis[0], x_axis[1]),
-            uniform(y_axis[0], y_axis[1])
+            random.uniform(x_axis[0], x_axis[1]),
+            random.uniform(y_axis[0], y_axis[1])
         ) for _ in range(number)
     ])
 
     figure = plt.figure()
 
-    plt.triplot(points[:,0], points[:,1], Delaunay(points).simplices)
-    plt.plot(points[:,0], points[:,1], 'o')
+    plt.triplot(points[:, 0], points[:, 1], Delaunay(points).simplices)
+    plt.plot(points[:, 0], points[:, 1], 'o')
     plt.title(f"The Delaunay triangulation of {len(points)} random points")
 
     if filename is None:
         plt.show()
     else:
         figure.savefig(filename, format="png")
+
 
 if __name__ == '__main__':
     cli()

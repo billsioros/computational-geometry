@@ -40,7 +40,7 @@ from options import Dictionary
     help='brute force or kd-tree based k-neighborhood lookup'
 )
 @click.option(
-    '-s', '--meshgrid-step',
+    '-s', '--meshgrid-step', 'meshgrid_step',
     type=click.FLOAT,
     default=0.02, show_default=True,
     help=(
@@ -55,7 +55,7 @@ from options import Dictionary
     default=None,
     help='optionally save the figure in PNG format'
 )
-def cli(neighbors, train, labels, mode, filename):
+def cli(neighbors, train, labels, mode, meshgrid_step, filename):
     """Perform various KD-Tree associated experiments"""
 
     cmap_light = ListedColormap(['#FFAAAA', '#AAAAFF'])
@@ -71,8 +71,8 @@ def cli(neighbors, train, labels, mode, filename):
     y_min, y_max = train[:, 1].min() - 2, train[:, 1].max() + 2
 
     xx, yy = np.meshgrid(
-        np.arange(x_min, x_max, 0.01),
-        np.arange(y_min, y_max, 0.01)
+        np.arange(x_min, x_max, meshgrid_step),
+        np.arange(y_min, y_max, meshgrid_step)
     )
 
     Z = knn.predict(np.c_[xx.ravel(), yy.ravel()])
