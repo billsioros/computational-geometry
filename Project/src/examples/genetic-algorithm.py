@@ -1,17 +1,15 @@
 
 import sys
-sys.path.insert(0, 'C:\\Users\\Massiva\\Desktop\\CG\\Project\\src')
+sys.path.insert(0, '..')
 
 import logging
 from random import choice, randrange, random
 from string import printable
 
-from core import GeneticAlgorithm, TravellingSalesman
+from core import GeneticAlgorithm
 
 
 class GuessString(GeneticAlgorithm):
-    TRAITS = GeneticAlgorithm.TRAITS
-
     class Mutate:
         def randomize(self, individual):
             return ''.join([
