@@ -46,15 +46,15 @@ class GuessString(GeneticAlgorithm):
 
 
 if __name__ == '__main__':
-    target = 'Hello World!'
-
     logging.basicConfig(
         format='[%(asctime)s] %(name)s:%(levelname)s: %(message)s',
         level=logging.INFO,
         datefmt='%Y-%m-%d %H:%M:%S'
     )
 
-    gs = GuessString(
+    target = 'Hello World!'
+
+    string_guesser = GuessString(
         target,
         mutate='randomize',
         crossover='cut_and_stitch',
@@ -68,8 +68,8 @@ if __name__ == '__main__':
         for _ in range(len(target))
     ])
 
-    fittest = gs.fit(individual)
+    fittest = string_guesser.fit(individual)
 
-    logging.getLogger("GuessString").info(
-        "Fitest: %s, Fitness: %5.3f" % (fittest, gs.fitness(fittest))
+    logging.getLogger('GuessString').info(
+        'Fitest: %s, Fitness: %5.3f' % (fittest, string_guesser.fitness(fittest))
     )
