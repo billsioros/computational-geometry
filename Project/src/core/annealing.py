@@ -20,9 +20,9 @@ class SimulatedAnnealing(Trait, AnnealingMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.MAX_TEMPERATURE = kwargs.get('max_temperature', None)
-        self.COOLING_RATE = kwargs.get('cooling_rate', None)
-        self.MAX_ITERATIONS = kwargs.get('max_iterations', None)
+        self.MAX_TEMPERATURE = kwargs.get('max_temperature', 100000)
+        self.COOLING_RATE = kwargs.get('cooling_rate', 0.000625)
+        self.MAX_ITERATIONS = kwargs.get('max_iterations', 10000)
 
         self.logger = getLogger(self.__class__.__name__)
 
@@ -60,25 +60,25 @@ class CompressedAnnealing(Trait, AnnealingMixin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.COOLING_RATE = kwargs.get('cooling_rate', None)
-        self.ACCEPTANCE_RATIO = kwargs.get('acceptance_ratio', None)
-        self.INITIAL_PRESSURE = kwargs.get('initial_pressure', None)
-        self.COMPRESSION_RATE = kwargs.get('compression_rate', None)
-        self.PRESSURE_CAP_RATIO = kwargs.get('pressure_cap_ratio', None)
+        self.COOLING_RATE = kwargs.get('cooling_rate', 0.05)
+        self.ACCEPTANCE_RATIO = kwargs.get('acceptance_ratio', 0.94)
+        self.INITIAL_PRESSURE = kwargs.get('initial_pressure', 0)
+        self.COMPRESSION_RATE = kwargs.get('compression_rate', 0.06)
+        self.PRESSURE_CAP_RATIO = kwargs.get('pressure_cap_ratio', 0.9999)
         self.ITERATIONS_PER_TEMPERATURE = kwargs.get(
             'iterations_per_temperature',
-            None
+            1000
         )
         self.MINIMUM_TEMPERATURE_CHANGES = kwargs.get(
             'minimum_temperature_changes',
-            None
+            100
         )
         self.IDLE_TEMPERATURE_CHANGES = kwargs.get(
             'idle_temperature_changes',
-            None
+            75
         )
-        self.TRIAL_ITERATIONS = kwargs.get('trial_iterations', None)
-        self.TRIAL_NEIGHBOR_PAIRS = kwargs.get('trial_neighbor_pairs', None)
+        self.TRIAL_ITERATIONS = kwargs.get('trial_iterations', 30000)
+        self.TRIAL_NEIGHBOR_PAIRS = kwargs.get('trial_neighbor_pairs', 5000)
 
         self.logger = getLogger(self.__class__.__name__)
 
