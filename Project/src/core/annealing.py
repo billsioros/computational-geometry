@@ -3,7 +3,7 @@ from logging import getLogger
 from math import exp, log
 from random import random
 
-from trait import Trait
+from core.misc import Trait
 
 
 class AnnealingMixin:

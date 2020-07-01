@@ -1,8 +1,8 @@
 
 from logging import getLogger
-from random import randint, random
+from random import random
 
-from trait import Trait
+from core.misc import Trait
 
 
 class GeneticAlgorithm(Trait):
@@ -11,11 +11,11 @@ class GeneticAlgorithm(Trait):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.MUTATION_PROBABILITY = kwargs.get('mutation_probability', None)
-        self.FITNESS_THRESHOLD = kwargs.get('fitness_threshold', None)
+        self.MUTATION_PROBABILITY = kwargs.get('mutation_probability', 0.3)
+        self.FITNESS_THRESHOLD = kwargs.get('fitness_threshold', 0.65)
 
-        self.POPULATION_SIZE = kwargs.get('population_size', None)
-        self.MAX_ITERATIONS = kwargs.get('max_iterations', None)
+        self.POPULATION_SIZE = kwargs.get('population_size', 50)
+        self.MAX_ITERATIONS = kwargs.get('max_iterations', 1000)
 
         self.logger = getLogger(self.__class__.__name__)
 
@@ -26,9 +26,10 @@ class GeneticAlgorithm(Trait):
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
+            self.logger.info(f'Iteration: {i:04d}')
             self.logger.info(
-                f'Iteration: {i:04d}, '
-                f'fitness: {max_fitness:5.3f}'
+                f'Fitest: {fitest}, '
+                f'Fitness: {max_fitness:5.3f}'
             )
 
             _fitness = {

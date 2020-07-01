@@ -1,10 +1,8 @@
 
-from random import randint, random, randrange, shuffle
+from random import random, randrange, shuffle
 
-from annealing import CompressedAnnealing, SimulatedAnnealing
-from decorators import cached
-from genetic import GeneticAlgorithm
-from jarvis import jarvis
+from core import (CompressedAnnealing, GeneticAlgorithm, SimulatedAnnealing,
+                  cached, jarvis)
 
 
 class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
@@ -37,8 +35,11 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         def reverse_random_sublist(self, elements):
             neighbor = elements[:]
 
-            i, j = randrange(1, len(elements) -
-                             1), randrange(1, len(elements) - 1)
+            i = randrange(1, len(elements) - 1)
+            j = randrange(1, len(elements) - 1)
+
+            i, j = min([i, j]), max([i, j])
+
             neighbor[i:j] = neighbor[i:j][::-1]
 
             return neighbor
@@ -47,12 +48,12 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
         def cut_and_stitch(self, individual_a, individual_b):
             individual_a, individual_b
 
-            offsprint = individual_a[1:len(individual_a) // 2]
+            offspring = individual_a[1:len(individual_a) // 2]
             for b in individual_b[1:-1]:
-                if b not in offsprint:
-                    offsprint.append(b)
+                if b not in offspring:
+                    offspring.append(b)
 
-            return [individual_a[0]] + offsprint + [individual_b[0]]
+            return [individual_a[0]] + offspring + [individual_b[0]]
 
     class Metric:
         def euclidean(self, p1, p2):
@@ -103,7 +104,7 @@ class TravellingSalesman(SimulatedAnnealing, GeneticAlgorithm):
 
     class Select:
         def random_top_half(self, population):
-            return population[randint(0, len(population) // 2 - 1)]
+            return population[randrange(0, len(population) // 2)]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

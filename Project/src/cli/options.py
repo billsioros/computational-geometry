@@ -7,12 +7,15 @@ from click import Choice, Tuple
 class Dictionary(Choice):
     name = 'dictionary'
 
-    def __init__(self, choices):
+    def __init__(self, choices, case_sensitive=False):
         self.__choices = {}
         for k, v in choices.items():
             self.__choices[k.replace('_', '-')] = v
 
-        super().__init__(sorted(self.__choices.keys()), case_sensitive=False)
+        super().__init__(
+            sorted(self.__choices.keys()),
+            case_sensitive=case_sensitive
+        )
 
     def convert(self, value, param, ctx):
         value = value.replace('_', '-')
@@ -25,6 +28,8 @@ class Dictionary(Choice):
 
 
 class Timewindow(Tuple):
+    name = 'timewindow'
+
     def __init__(self):
         super().__init__([float, float])
 
@@ -41,13 +46,16 @@ class Timewindow(Tuple):
 
 
 class Trait(Choice):
-    def __init__(self, cls):
+    name = 'trait'
+
+    def __init__(self, cls, case_sensitive=False):
         super().__init__(
             [
                 name
                 for name, _ in getmembers(cls, predicate=isfunction)
                 if not name.startswith("_")
-            ], case_sensitive=False
+            ],
+            case_sensitive=case_sensitive
         )
 
     def convert(self, value, param, ctx):

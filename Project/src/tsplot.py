@@ -4,9 +4,9 @@ from random import seed, uniform
 
 import click
 
-from decorators import plot, safe
-from options import Dictionary, Timewindow, Trait
-from tsp import TravellingSalesman, TravellingSalesmanTimeWindows
+from cli import plot, safe
+from cli import Dictionary, Timewindow, Trait
+from core import TravellingSalesman, TravellingSalesmanTimeWindows
 
 
 @click.group()
@@ -103,9 +103,17 @@ def cli(
     }
 
     if verbose is False:
-        logging.basicConfig(level=logging_lvl)
+        logging.basicConfig(
+            format='[%(asctime)s] %(name)s:%(levelname)s: %(message)s',
+            level=logging_lvl,
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
     else:
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(
+            format='[%(asctime)s] %(name)s:%(levelname)s: %(message)s',
+            level=logging.DEBUG,
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
 
 
 @cli.group(chain=True)
