@@ -33,9 +33,16 @@ class SimulatedAnnealing(Trait, AnnealingMixin):
         temperature, iteration = self.MAX_TEMPERATURE, 0
         while iteration < self.MAX_ITERATIONS and temperature > 1:
             self.logger.info(
-                f'Iteration: {iteration:04d}, '
-                f'Temperature: {temperature:09.3f}, '
-                f'Cost: {best_cost:07.2f}'
+                'Iteration: %04d, Temperature: %09.3f' % (
+                    iteration,
+                    temperature
+                )
+            )
+            self.logger.info(
+                'Best: %s, Cost: %07.2f' % (
+                    best,
+                    best_cost
+                )
             )
 
             candidate = self.mutate(current)
@@ -86,8 +93,9 @@ class CompressedAnnealing(Trait, AnnealingMixin):
         dv, self.MAX_PRESSURE = 0, 0
         for r in range(0, 2 * self.TRIAL_NEIGHBOR_PAIRS):
             self.logger.info(
-                f'Maximum Pressure: '
-                f'{self.MAX_PRESSURE:09.3f}'
+                'Maximum Pressure: %09.3f' % (
+                    self.MAX_PRESSURE,
+                )
             )
 
             n1, n2 = self.mutate(initial), self.mutate(initial)
@@ -116,8 +124,9 @@ class CompressedAnnealing(Trait, AnnealingMixin):
         accepted = 0
         while True:
             self.logger.info(
-                f'Maximum Temperature: '
-                f'{self.MAX_TEMPERATURE:013.3f}'
+                'Maximum Temperature: %013.3f' % (
+                    self.MAX_TEMPERATURE,
+                )
             )
 
             accepted = 0
@@ -163,12 +172,17 @@ class CompressedAnnealing(Trait, AnnealingMixin):
             idle += 1
 
             self.logger.info(
-                f'Temperature: {temperature:013.3f}, '
-                f'Pressure: {pressure:09.3f}'
+                'Temperature: %013.3f, Pressure: %09.3f' % (
+                    temperature,
+                    pressure
+                )
             )
             self.logger.info(
-                f'Cost: {best_cost:07.2f}, '
-                f'Penalty: {best_penalty:07.2f}'
+                'Best: %s, Cost: %07.2f, Penalty: %07.2f' % (
+                    best,
+                    best_cost,
+                    best_penalty
+                )
             )
 
             for i in range(0, self.ITERATIONS_PER_TEMPERATURE):

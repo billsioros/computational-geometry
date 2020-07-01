@@ -26,10 +26,12 @@ class GeneticAlgorithm(Trait):
 
         fitest, max_fitness = None, 0
         for i in range(self.MAX_ITERATIONS):
-            self.logger.info(f'Iteration: {i:04d}')
+            self.logger.info('Iteration: %04d' % (i,))
             self.logger.info(
-                f'Fitest: {fitest}, '
-                f'Fitness: {max_fitness:5.3f}'
+                'Fitest: %s, Fitness: %5.3f' % (
+                    fitest,
+                    max_fitness
+                )
             )
 
             _fitness = {
