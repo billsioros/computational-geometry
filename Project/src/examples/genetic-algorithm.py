@@ -38,7 +38,7 @@ class GuessString(GeneticAlgorithm):
 
             return 1 / (squared_sum + 1)
 
-    def __init__(self, target, *args, per_character_mutation_probability=0.1, ** kwargs):
+    def __init__(self, target, *args, per_character_mutation_probability=0.1, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.target = target
