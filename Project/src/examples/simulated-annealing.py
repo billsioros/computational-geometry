@@ -1,11 +1,9 @@
 
-import sys
-sys.path.insert(0, '..')
+import logging
+from random import choice, random, randrange, shuffle
+from string import printable
 
 from core import SimulatedAnnealing
-from string import printable
-from random import choice, random, randrange, shuffle
-import logging
 
 
 class Sort(SimulatedAnnealing):

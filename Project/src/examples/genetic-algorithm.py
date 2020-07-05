@@ -1,9 +1,6 @@
 
-import sys
-sys.path.insert(0, '..')
-
 import logging
-from random import choice, randrange, random
+from random import choice, random, randrange
 from string import printable
 
 from core import GeneticAlgorithm
@@ -71,5 +68,6 @@ if __name__ == '__main__':
     fittest = string_guesser.fit(individual)
 
     logging.getLogger('GuessString').info(
-        'Fitest: %s, Fitness: %5.3f' % (fittest, string_guesser.fitness(fittest))
+        'Fitest: %s, Fitness: %5.3f' % (
+            fittest, string_guesser.fitness(fittest))
     )
